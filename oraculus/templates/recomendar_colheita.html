@@ -1,0 +1,212 @@
+{% load static %}
+
+{% include 'partials/head.html' %}
+
+{% include 'partials/header.html' %}
+
+<style>
+  .dropdown-toggle {
+    width: 200px;
+  }
+
+  .custom-margin {
+    margin-right: 20px;
+  }
+
+  .crop-result{
+    margin-top: 35px;
+  }
+
+  .numeric-input::-webkit-inner-spin-button,
+  .numeric-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .numeric-input {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 50px;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+
+
+<div class="container my-5">
+  <div class="mb-5">
+    <h1 class="text-body-emphasis">Recomendar Colheita</h1>
+    <p>
+      Escolha abaixo um tipo de colheita, e nosso Oráculo te recomendará as melhores características de solo para ela
+    </p>
+  </div>
+
+  <div class="d-flex justify-content align-items-center mt-3">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle custom-margin" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            Selecione uma cultura
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="max-height: 200px; overflow-y: auto;">
+            <li>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Pesquisar" id="searchInput">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                      <i class="bi bi-search pe-2"></i></button>
+                </div>
+            </li>
+            <li><a class="dropdown-item" href="">Arroz</a></li>
+              <li><a class="dropdown-item" href="">Milho</a></li>
+              <li><a class="dropdown-item" href="">Grão de bico</a></li>
+              <li><a class="dropdown-item" href="">Feijão</a></li>
+              <li><a class="dropdown-item" href="">Guandu</a></li>
+              <li><a class="dropdown-item" href="">Feijão Traça</a></li>
+              <li><a class="dropdown-item" href="">Feijão Mungu</a></li>
+              <li><a class="dropdown-item" href="">Feijão Preto</a></li>
+              <li><a class="dropdown-item" href="">Lentilha</a></li>
+              <li><a class="dropdown-item" href="">Romã</a></li>
+              <li><a class="dropdown-item" href="">Banana</a></li>
+              <li><a class="dropdown-item" href="">Manga</a></li>
+              <li><a class="dropdown-item" href="">Uva</a></li>
+              <li><a class="dropdown-item" href="">Melancia</a></li>
+              <li><a class="dropdown-item" href="">Melão</a></li>
+              <li><a class="dropdown-item" href="">Maçã</a></li>
+              <li><a class="dropdown-item" href="">Laranja</a></li>
+              <li><a class="dropdown-item" href="">Mamão Papaya</a></li>
+              <li><a class="dropdown-item" href="">Coco</a></li>
+              <li><a class="dropdown-item" href="">Algodão</a></li>
+              <li><a class="dropdown-item" href="">Juta</a></li>
+              <li><a class="dropdown-item" href="">Café</a></li>
+        </ul>
+    </div>
+
+    <button id="sendInfo" class="btn btn-success px-3" aria-expanded="false">
+      <i class="bi bi-arrow-up-right pe-2"></i> Recomendar Colheita
+      </button>
+
+  </div>
+
+  <div class="table-responsive small crop-result hidden" id="recommendationTable">
+    <p>Media dos valores do solo para a cultura</p>
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">N</th>
+          <th scope="col">P</th>
+          <th scope="col">K</th>
+          <th scope="col">Umidade</th>
+          <th scope="col">Temperatura</th>
+          <th scope="col">ph</th>
+          <th scope="col">Chuva</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input class="numeric-input" type="number" id="nInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="pInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="kInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="phInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Valores mínimos do solo para a cultura</p>
+
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">N</th>
+          <th scope="col">P</th>
+          <th scope="col">K</th>
+          <th scope="col">Umidade</th>
+          <th scope="col">Temperatura</th>
+          <th scope="col">ph</th>
+          <th scope="col">Chuva</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input class="numeric-input" type="number" id="nInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="pInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="kInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="phInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Valores maximos do solo para a cultura</p>
+
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">N</th>
+          <th scope="col">P</th>
+          <th scope="col">K</th>
+          <th scope="col">Umidade</th>
+          <th scope="col">Temperatura</th>
+          <th scope="col">ph</th>
+          <th scope="col">Chuva</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input class="numeric-input" type="number" id="nInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="pInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="kInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="phInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const dropdownItems = document.querySelectorAll('.dropdown-item');
+  const dropdownToggle = document.querySelector('.dropdown-toggle');
+  const selectedCropValue = document.getElementById('selectedCropValue');
+
+  searchInput.addEventListener('input', function() {
+      const searchTerm = searchInput.value.toLowerCase();
+
+      dropdownItems.forEach(item => {
+          const itemText = item.textContent.trim().toLowerCase();
+          if (itemText.includes(searchTerm)) {
+              item.style.display = 'block';
+          } else {
+              item.style.display = 'none';
+          }
+      });
+  });
+
+  dropdownItems.forEach(item => {
+    item.addEventListener('click', function(event) {
+      event.preventDefault();
+      dropdownToggle.textContent = item.textContent;
+      selectedCropValue.textContent = `${item.textContent}`;
+    });
+  });
+
+  const sendInfoButton = document.getElementById('sendInfo');
+    const recommendationTable = document.getElementById('recommendationTable');
+
+    sendInfoButton.addEventListener('click', () => {
+      recommendationTable.classList.toggle('hidden');
+    });
+  
+</script>
+
+{% include 'partials/footer.html' %}

@@ -31,6 +31,9 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     "usuario",
     'home',
+    'inserir_analise',
+    'recomendar_colheita',
+    'acessar_dados',
 ]
 
 MIDDLEWARE = [

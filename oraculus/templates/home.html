@@ -1,1 +1,46 @@
-home
+{% load static %}
+
+{% include 'partials/head.html' %}
+
+{% include 'partials/header.html' %}
+
+<body>
+    <div class="container px-4 py-5" id="featured-3">
+        <h2 class="pb-2 border-bottom">Oraculus - Funcionalidades</h2>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+          <div class="feature col">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
+                <img src="../static/img/clipboard-data.svg" alt="logo-oraculus" width="64px" height="64px">
+            </div>
+
+            <h3 class="fs-2 text-body-emphasis">Inserir análise</h3>
+            <p>Insira os dados de uma análise de solo para recomendar o melhor tipo de plantio</p>
+            <a class="w-40 btn btn-lg btn-primary" href="{% url 'inserir_analise' %}">Inserir análise</a>
+
+          </div>
+          <div class="feature col">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
+                <img src="../static/img/graph-up-arrow.svg" alt="logo-oraculus" width="64px" height="64px">
+            </div>
+
+            <h3 class="fs-2 text-body-emphasis">Recomendar colheita</h3>
+            <p>Realize uma consulta para recomendar as melhores características do solo para um tipo de colheita</p>
+            <a class="w-40 btn btn-lg btn-primary" href="{% url 'recomendar_colheita' %}">Recomendar colheita</a>
+
+          </div>
+          <div class="feature col">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient fs-2 mb-3">
+                <img src="../static/img/database.svg" alt="logo-oraculus" width="64px" height="64px">
+            </div>
+
+            <h3 class="fs-2 text-body-emphasis">Acessar dados</h3>
+            <p>Gerencie os dados das suas análises de solo e recomendações de colheita e tire relatórios deles</p>
+            <a class="w-40 btn btn-lg btn-primary" href="{% url 'acessar_dados' %}">Acessar dados</a>
+
+          </div>
+        </div>
+      </div>
+</body>
+
+{% include 'partials/footer.html' %}
+
