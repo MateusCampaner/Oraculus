@@ -5,7 +5,7 @@ from django.http import JsonResponse
 
 import csv
 
-#@login_required
+@login_required
 def recomendar_colheita(request):
     return render(request, "recomendar_colheita.html")
 

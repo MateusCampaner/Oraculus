@@ -42,7 +42,7 @@ def login(request):
         else:
             return HttpResponse('Usuário ou senha inválidos')
 
-@login_required(login_url='/auth/login/')
+@login_required
 def plataforma(request):
     if request.user.is_authenticated:
         return render(request, "home.html")
