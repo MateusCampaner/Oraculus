@@ -27,16 +27,18 @@
         
         <div class="row align-items-center g-lg-5 py-5">
           <div class="col-md-10 mx-auto col-lg-5">
+            
+            <form action="{% url 'login' %}" method="POST" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
 
-            <form method="POST" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
-
+              {% csrf_token %}
+      
               <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="">
+                <input type="text" class="form-control" placeholder="Username" name="username">
                 <label for="floatingInput">Email</label>
               </div>
-
+              
               <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="">
+                <input type="password" class="form-control" placeholder="Senha" name="senha">
                 <label for="floatingPassword">Senha</label>
               </div>
 
@@ -46,32 +48,16 @@
                 </label>
               </div>
 
-              <a class="w-100 btn btn-lg btn-primary" href="{% url 'plataforma' %}">Login</a>
-          
+              <input type="submit" class="w-100 btn btn-lg btn-primary" value="Login">
+
               <hr class="my-4">
-
+              
               <a class="w-100 btn btn-lg btn-secondary" href="{% url 'registrar' %}">Cadastrar</a>
-
+      
             </form>
           </div>
         </div>
 
-        <div>
-          <form action="{% url 'login' %}" method="POST">
-
-            {% csrf_token %}
-    
-            <input type="text" placeholder="Username" name="username">
-            <br>
-            <br>
-            <input type="password" placeholder="Senha" name="senha">
-            <br>
-            <br>
-            <input type="submit" value="Logar">
-    
-          </form>
-        <div>
-        
       </div>
     </body> 
 
