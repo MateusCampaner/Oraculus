@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     "usuario",
     'home',
+    'analise',
     'inserir_analise',
     'recomendar_colheita',
     'acessar_dados',
