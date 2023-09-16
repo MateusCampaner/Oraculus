@@ -64,7 +64,7 @@ def fazer_previsao_knn(modelo, dados_de_entrada):
 
     return colheita_prevista
 
-def post_inserir_analise(request):
+def rodar_algoritmo_analise(request):
     N = request.POST.get('N')
     P = request.POST.get('P')
     K = request.POST.get('K')
@@ -73,11 +73,23 @@ def post_inserir_analise(request):
     pH = request.POST.get('pH')
     Chuva = request.POST.get('Chuva')
     
-    Analise.objects.create(N=N, P=P, K=K, Umidade=Umidade, Temperatura=Temperatura, pH=pH, Chuva=Chuva)
-
     dados_analise = np.array([N, P, K, Umidade, Temperatura, pH, Chuva])
 
     colheita_prevista = fazer_previsao_knn(knn, dados_analise)
+
+    inclusao_colheita = Analise(
+            N=N,
+            P=P,
+            K=K,
+            Umidade=Umidade,
+            Temperatura=Temperatura,
+            pH=pH,
+            Chuva=Chuva,
+            Colheita=colheita_prevista,
+        )
+
+
+    inclusao_colheita.save()
 
     print("Com base nos dados de solo inseridos, a melhor colheita recomendada é:", colheita_prevista)
 

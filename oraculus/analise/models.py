@@ -8,5 +8,6 @@ class Analise(models.Model):
     Umidade = models.FloatField()
     pH = models.FloatField()
     Chuva = models.FloatField()
+    Colheita = models.CharField(max_length=50)
 
 
