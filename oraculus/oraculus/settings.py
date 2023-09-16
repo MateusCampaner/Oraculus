@@ -32,6 +32,7 @@ INSTALLED_APPS += [
     "usuario",
     'home',
     'analise',
+    'colheitas',
     'inserir_analise',
     'recomendar_colheita',
     'acessar_dados',
