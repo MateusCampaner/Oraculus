@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from analise.models import Analise
@@ -11,3 +11,13 @@ def acessar_dados(request):
 def get_analises(request):
     analises = Analise.objects.all()
     return render(request, 'acessar_dados.html', {'analises': analises})
+
+def delete_analises(request, id):
+    analises = Analise.objects.get(id=id)
+    analises.delete()
+    return redirect(acessar_dados)
+
+def delete_inserir_analise(request, id):
+    analise = Analise.objects.get(id=id)
+    analise.delete()
+    return render(request, 'acessar_dados.html')

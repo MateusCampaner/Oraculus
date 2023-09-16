@@ -83,10 +83,4 @@ def post_inserir_analise(request):
 
     return render(request, 'resultado.html', {'colheita_prevista': colheita_prevista})
 
-def delete_inserir_analise(request, id):
-    analise = Analise.objects.get(id=id)
-    analise.delete()
-    return render(request, 'acessar_dados.html')
-
-
 #jogar o crud da analise aqui

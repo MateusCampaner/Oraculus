@@ -22,11 +22,12 @@
 
           {% for analise in analises %}
           <div class="d-flex text-body-secondary pt-3">
-            <i class="bi bi-clipboard-data"></i>
+            <i class="bi bi-clipboard-data pe-2"></i>
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+              
               <div class="d-flex justify-content-between">
-
-                <strong class="text-gray-dark">{{ analise.id }}</strong>
+                
+                <strong class="text-gray-dark">Análise {{ analise.id }}</strong>
 
                 <a href="{% url 'delete_inserir_analise' analise.id %}" class="btn btn-danger rounded-pill px-3">Deletar</a>
               </div>
