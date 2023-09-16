@@ -16,8 +16,3 @@ def delete_analises(request, id):
     analises = Analise.objects.get(id=id)
     analises.delete()
     return redirect(acessar_dados)
-
-def delete_inserir_analise(request, id):
-    analise = Analise.objects.get(id=id)
-    analise.delete()
-    return render(request, 'acessar_dados.html')
