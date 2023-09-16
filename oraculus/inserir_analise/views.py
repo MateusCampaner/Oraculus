@@ -26,24 +26,6 @@ def inserir_dados_analise(request):
 
     return render(request, 'inserir_analise.html', {'dataset': dataset})
 
-def post_inserir_analise(request):
-    N = request.POST.get('N')
-    P = request.POST.get('P')
-    K = request.POST.get('K')
-    Umidade = request.POST.get('Umidade')
-    Temperatura = request.POST.get('Temperatura')
-    pH = request.POST.get('pH')
-    Chuva = request.POST.get('Chuva')
-    
-    Analise.objects.create(N=N, P=P, K=K, Umidade=Umidade, Temperatura=Temperatura, pH=pH, Chuva=Chuva)
-
-    return render(request, 'acessar_dados.html')
-
-def delete_inserir_analise(request, id):
-    analise = Analise.objects.get(id=id)
-    analise.delete()
-    return render(request, 'acessar_dados.html')
-
 # Leitura do csv
 df=pd.read_csv('crop.csv')
 df.head()
@@ -82,11 +64,29 @@ def fazer_previsao_knn(modelo, dados_de_entrada):
 
     return colheita_prevista
 
-dados_de_entrada_manual = np.array([90, 42, 43, 20, 82, 6.5, 202])
+def post_inserir_analise(request):
+    N = request.POST.get('N')
+    P = request.POST.get('P')
+    K = request.POST.get('K')
+    Umidade = request.POST.get('Umidade')
+    Temperatura = request.POST.get('Temperatura')
+    pH = request.POST.get('pH')
+    Chuva = request.POST.get('Chuva')
+    
+    Analise.objects.create(N=N, P=P, K=K, Umidade=Umidade, Temperatura=Temperatura, pH=pH, Chuva=Chuva)
 
+    dados_analise = np.array([N, P, K, Umidade, Temperatura, pH, Chuva])
 
-colheita_prevista = fazer_previsao_knn(knn, dados_de_entrada_manual)
+    colheita_prevista = fazer_previsao_knn(knn, dados_analise)
 
-print("Com base nos dados de solo inseridos, a melhor colheita recomendada é:", colheita_prevista)
+    print("Com base nos dados de solo inseridos, a melhor colheita recomendada é:", colheita_prevista)
+
+    return render(request, 'resultado.html', {'colheita_prevista': colheita_prevista})
+
+def delete_inserir_analise(request, id):
+    analise = Analise.objects.get(id=id)
+    analise.delete()
+    return render(request, 'acessar_dados.html')
+
 
 #jogar o crud da analise aqui

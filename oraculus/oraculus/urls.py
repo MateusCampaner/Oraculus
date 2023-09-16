@@ -22,7 +22,7 @@ urlpatterns = [
     path("resultado/", resultado, name="resultado"),
 
     #botar as urls do crud de colheita aqui
-    path("acessar_dados/", post_inserir_analise, name="post_inserir_analise"),
-    path("acessar_dados/<int:id>", delete_inserir_analise, name="delete_inserir_analise"),
+    path("post_inserir_analise/", post_inserir_analise, name="post_inserir_analise"),
+    path("acessar_dados/<int:id>/", delete_inserir_analise, name="delete_inserir_analise"),
 
 ]
