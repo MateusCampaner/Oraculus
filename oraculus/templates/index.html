@@ -12,37 +12,55 @@
         <link rel="shortcut icon" href="../static/img/logo-oraculus.png">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static '/style.css' %}">
+
+        <style>
+          body, sidebar-oraculus {
+            background-image: url('../static/img/campo.jpg');
+            background-size: cover;
+            background-repeat: no-repeat; 
+          }
+
+          html, body {
+            height: 100%;
+          }
+      </style>
         
     </head>
 
-    <header>
-      <div class="px-1 py-1 my-1 text-center">
-        <img src="../static/img/logo-oraculus.png" alt="logo-oraculus">
-        <h1 class="display-5 fw-bold text-body-emphasis">Oraculus</h1>
-      </div>
-    </header>
-
     <body>
+      <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary ml-auto h-100" style="width: 40%; margin-left: auto;">
+        <ul class="nav nav-pills flex-column mb-auto">
 
-        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
-            <div class="col-md-6 p-lg-5 mx-auto my-5">
-              <h2 class="display-3 fw-bold">Oraculus</h2>
-              <h3 class="fw-normal text-muted mb-3">Sua ferramenta para gerenciamento de análises de solo</h3>
-              <div class="d-flex gap-3 justify-content-center lead fw-normal">
+          <li class="nav-item text-center">
+            <img src="../static/img/logo-oraculus.png" alt="logo-oraculus">
+            <h2 class="display-6 fw-bold text-body-emphasis">Oraculus</h2>
+            <hr>
+          </li>
 
-                <a class="w-100 btn btn-lg btn-primary" href="{% url 'login' %}">Login</a>
-                <a class="w-100 btn btn-lg btn-secondary" href="{% url 'registrar' %}">Cadastrar</a>
+          <li>
+            <h4 class="fw-bold text-center">Sua ferramenta para gerenciamento de análises de solo</h4>
+            <hr>
+          </li>
 
-              </div>
-            </div>
-            <div class="product-device shadow-sm d-none d-md-block"></div>
-            <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
-          </div>
+          <li>
+            <a class="w-100 btn btn-lg btn-primary mb-4" href="{% url 'login' %}">Login</a>
+          </li>
+
+          <li>
+            <a class="w-100 btn btn-lg btn-secondary" href="{% url 'registrar' %}">Cadastrar</a>
+          </li>
+
+          <hr>
+
+          <li>
+            {% include 'partials/footer.html' %}
+          </li>
+
+        </ul>
+      </div>
   
     </body> 
-
-    {% include 'partials/footer.html' %}
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="{% static 'index.js' %}"></script>
     

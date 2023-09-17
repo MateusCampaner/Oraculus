@@ -73,7 +73,7 @@
                 <td><input class="numeric-input" type="float" name="pH" value=""></td>
                 <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
   
-                <td><button class="remove-row-button">Remover</button></td>
+                <td><button class="remove-row-button btn btn-danger rounded-pill">X</button></td>
               </tr>
 
           </tbody>
@@ -96,13 +96,13 @@
           const tbody = document.querySelector("tbody");
           const newRow = document.createElement("tr");
           newRow.innerHTML = `
-          <td><input class="numeric-input" type="number" value="New"></td>
-          <td><input class="numeric-input" type="number" value="Row"></td>
-          <td><input class="numeric-input" type="number" value="Data"></td>
-          <td><input class="numeric-input" type="number" value="Here"></td>
-          <td><input class="numeric-input" type="number" value="New"></td>
-          <td><input class="numeric-input" type="number" value="Row"></td>
-          <td><input class="numeric-input" type="number" value="Data"></td>
+                <td><input class="numeric-input" type="number" name="N" value=""></td>
+                <td><input class="numeric-input" type="number" name="P" value=""></td>
+                <td><input class="numeric-input" type="number" name="K" value=""></td>
+                <td><input class="numeric-input" type="float" name="Umidade" value=""></td>
+                <td><input class="numeric-input" type="float" name="Temperatura" value=""></td>
+                <td><input class="numeric-input" type="float" name="pH" value=""></td>
+                <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
           <td><button class="remove-row-button btn btn-danger rounded-pill px-2.5">X</button></td>
           `;
           tbody.appendChild(newRow);

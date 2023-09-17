@@ -72,7 +72,7 @@ def rodar_algoritmo_analise(request):
     Temperatura = request.POST.get('Temperatura')
     pH = request.POST.get('pH')
     Chuva = request.POST.get('Chuva')
-    
+
     dados_analise = np.array([N, P, K, Umidade, Temperatura, pH, Chuva])
 
     colheita_prevista = fazer_previsao_knn(knn, dados_analise)
