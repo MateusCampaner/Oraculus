@@ -22,12 +22,12 @@
 
           {% for analise in analises %}
           <div class="d-flex text-body-secondary pt-3">
-            <i class="bi bi-clipboard-data pe-2"></i>
+            <img src="../static/img/clipboard-data.svg" alt="logo-oraculus" width="32px" height="32px">
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
               
               <div class="d-flex justify-content-between">
-                
-                <strong class="text-gray-dark">Análise {{ analise.id }}</strong>
+
+              <h4><strong class="text-body-emphasis ps-2">Análise {{ analise.id }}</strong></h4>
 
                 <a href="{% url 'delete_inserir_analise' analise.id %}" class="btn btn-danger rounded-pill px-3">Deletar</a>
               </div>
@@ -41,7 +41,7 @@
                 <li>Chuva {{analise.Chuva}}</li>
                 <li>Colheita {{analise.Colheita}}</li>
               </ul>
-              <span class="d-block">{{nome_usuario}}</span>
+              <span class="d-block">{{ user.username }}</span>
             </div>
           </div>
           {% endfor %}

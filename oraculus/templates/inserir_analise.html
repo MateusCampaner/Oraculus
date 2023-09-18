@@ -48,14 +48,14 @@
     </div>
 
       <div class="table-responsive small">
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm tabela-dados">
           <thead>
             <tr>
               <th scope="col">N</th>
               <th scope="col">P</th>
               <th scope="col">K</th>
-              <th scope="col">Umidade</th>
               <th scope="col">Temperatura</th>
+              <th scope="col">Umidade</th>
               <th scope="col">ph</th>
               <th scope="col">Chuva</th>
             </tr>
@@ -68,12 +68,12 @@
                 <td><input class="numeric-input" type="number" name="N" value=""></td>
                 <td><input class="numeric-input" type="number" name="P" value=""></td>
                 <td><input class="numeric-input" type="number" name="K" value=""></td>
-                <td><input class="numeric-input" type="float" name="Umidade" value=""></td>
                 <td><input class="numeric-input" type="float" name="Temperatura" value=""></td>
+                <td><input class="numeric-input" type="float" name="Umidade" value=""></td>
                 <td><input class="numeric-input" type="float" name="pH" value=""></td>
                 <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
   
-                <td><button class="remove-row-button btn btn-danger rounded-pill">X</button></td>
+                <td><button type="button" class="btn btn-danger remove-row-button"><img src="../static/img/trash3.svg" alt="logo-oraculus" width="16px" height="16px"></button></td>
               </tr>
 
           </tbody>
@@ -87,8 +87,13 @@
 
       </form>
 
-      <button id="addRowButton" class="btn btn-primary rounded-pill px-3">
+      <button class="btn btn-primary rounded-pill px-3">
         <i class="bi bi-plus-circle pe-2"></i> Adicionar Linha</button>
+      <!--
+        <button id="addRowButton" class="btn btn-primary rounded-pill px-3">
+        <i class="bi bi-plus-circle pe-2"></i> Adicionar Linha</button>
+      -->  
+      
 
       <script>
         const addRowButton = document.getElementById("addRowButton");
@@ -103,7 +108,7 @@
                 <td><input class="numeric-input" type="float" name="Temperatura" value=""></td>
                 <td><input class="numeric-input" type="float" name="pH" value=""></td>
                 <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
-          <td><button class="remove-row-button btn btn-danger rounded-pill px-2.5">X</button></td>
+                <td><button type="button" class="btn btn-danger remove-row-button"><img src="../static/img/trash3.svg" alt="logo-oraculus" width="16px" height="16px"></button></td>
           `;
           tbody.appendChild(newRow);
       
@@ -115,6 +120,26 @@
             });
           });
         });
+
+        document.addEventListener("DOMContentLoaded", function () {
+      const addRowButton = document.getElementById("addRowButton");
+      const tabelaDados = document.getElementById("tabela-dados").getElementsByTagName('tbody')[0];
+
+      addRowButton.addEventListener("click", function () {
+         const newRow = document.createElement("tr");
+         newRow.innerHTML = `
+            <td><input class="numeric-input" type="number" name="N" value=""></td>
+            <td><input class="numeric-input" type="number" name="P" value=""></td>
+            <td><input class="numeric-input" type="number" name="K" value=""></td>
+            <td><input class="numeric-input" type="float" name="Umidade" value=""></td>
+            <td><input class="numeric-input" type="float" name="Temperatura" value=""></td>
+            <td><input class="numeric-input" type="float" name="pH" value=""></td>
+            <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
+            <td><button type="button" class="btn btn-danger remove-row-button"><img src="../static/img/trash3.svg" alt="logo-oraculus" width="16px" height="16px"></button></td>
+         `;
+         tabelaDados.appendChild(newRow);
+      });
+   });
       </script>
 
 {% include 'partials/footer.html' %}

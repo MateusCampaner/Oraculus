@@ -36,7 +36,7 @@
         <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
           <div class="d-flex justify-content-between">
 
-            <strong class="text-gray-dark">{{ colheita_prevista }}</strong>
+            <h3 class="text-body-emphasis">{{ colheita_prevista }}</h3>
 
           </div>
 
@@ -69,20 +69,53 @@
           </tr>
         </thead>
         <tbody>
+          <form action="{% url 'salvar_algoritmo_analise' %}" method="POST">
+
+            {% csrf_token %}
           <tr>
-            <td><input class="numeric-input" type="number" value="{{ dados_analise.n }}"></td>
-            <td><input class="numeric-input" type="number" value="{{ dados_analise.p }}"></td>
-            <td><input class="numeric-input" type="number" value="{{ dados_analise.k }}"></td>
-            <td><input class="numeric-input" type="number" value="{{ dados_analise.umidade }}"></td>
-            <td><input class="numeric-input" type="number" value="{{ dados_analise.temperatura }}"></td>
-            <td><input class="numeric-input" type="number" value="{{ dados_analise.ph }}"></td>
-            <td><input class="numeric-input" type="number" value="{{ dados_analise.chuva }}"></td>
+            <td><input class="numeric-input" type="number" value="{{ N }}" readonly></td>
+            <td><input class="numeric-input" type="number" value="{{ P }}" readonly></td>
+            <td><input class="numeric-input" type="number" value="{{ K }}" readonly></td>
+            <td><input class="numeric-input" type="number" value="{{ Umidade }}" readonly></td>
+            <td><input class="numeric-input" type="number" value="{{ Temperatura }}" readonly></td>
+            <td><input class="numeric-input" type="number" value="{{ pH }}" readonly></td>
+            <td><input class="numeric-input" type="number" value="{{ Chuva }}" readonly></td>
           </tr>
+
+          <button type="submit" id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false"
+      data-toggle="modal">
+      <i class="bi bi-arrow-up-right pe-2"></i> Enviar dados
+      </button>
+
+    </form>
         </tbody>
       </table>
     </div>
+
+    <form action="{% url 'salvar_algoritmo_analise' %}" method="POST">
+
+              {% csrf_token %}
+              <tr>
+                <td><input class="numeric-input" type="number" value="{{ N }}" readonly></td>
+                <td><input class="numeric-input" type="number" value="{{ P }}" readonly></td>
+                <td><input class="numeric-input" type="number" value="{{ K }}" readonly></td>
+                <td><input class="numeric-input" type="number" value="{{ Umidade }}" readonly></td>
+                <td><input class="numeric-input" type="number" value="{{ Temperatura }}" readonly></td>
+                <td><input class="numeric-input" type="number" value="{{ pH }}" readonly></td>
+                <td><input class="numeric-input" type="number" value="{{ Chuva }}" readonly></td>
+              </tr>
+
+      <button type="submit" id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false"
+      data-toggle="modal">
+      <i class="bi bi-arrow-up-right pe-2"></i> Enviar dados
+      </button>
+
+    </form>
+
   </div>
 </div>
+
+
 
 <script>
   const sendInfoButton = document.getElementById('showInfo');

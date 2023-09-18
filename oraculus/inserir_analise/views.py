@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from analise.models import Analise
+from resultado.views import resultado
 
 import numpy as np
 import pandas as pd
@@ -64,7 +65,7 @@ def fazer_previsao_knn(modelo, dados_de_entrada):
 
     return colheita_prevista
 
-def rodar_algoritmo_analise(request):
+def salvar_algoritmo_analise(request):
     N = request.POST.get('N')
     P = request.POST.get('P')
     K = request.POST.get('K')
@@ -88,11 +89,45 @@ def rodar_algoritmo_analise(request):
             Colheita=colheita_prevista,
         )
 
-
     inclusao_colheita.save()
 
-    print("Com base nos dados de solo inseridos, a melhor colheita recomendada é:", colheita_prevista)
+    context = {
+        'colheita_prevista': colheita_prevista,
+        'N': N,
+        'P': P,
+        'K': K,
+        'Umidade': Umidade,
+        'Temperatura': Temperatura,
+        'pH': pH,
+        'Chuva': Chuva,
+    }
 
-    return render(request, 'resultado.html', {'colheita_prevista': colheita_prevista})
+    return render(request, 'resultado.html', context)
+
+def rodar_algoritmo_analise(request):
+    N = request.POST.get('N')
+    P = request.POST.get('P')
+    K = request.POST.get('K')
+    Umidade = request.POST.get('Umidade')
+    Temperatura = request.POST.get('Temperatura')
+    pH = request.POST.get('pH')
+    Chuva = request.POST.get('Chuva')
+
+    dados_analise = np.array([N, P, K, Umidade, Temperatura, pH, Chuva])
+
+    colheita_prevista = fazer_previsao_knn(knn, dados_analise)
+
+    context = {
+        'colheita_prevista': colheita_prevista,
+        'N': N,
+        'P': P,
+        'K': K,
+        'Umidade': Umidade,
+        'Temperatura': Temperatura,
+        'pH': pH,
+        'Chuva': Chuva,
+    }
+
+    return render(request, 'resultado.html', context)
 
 #jogar o crud da analise aqui
