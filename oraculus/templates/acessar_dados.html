@@ -4,6 +4,22 @@
 
 {% include 'partials/header.html' %}
 
+<style>
+  .numeric-input::-webkit-inner-spin-button,
+  .numeric-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .numeric-input {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 50px;
+  }
+</style>
+
 <body>
 
   <div class="container my-5">
@@ -29,22 +45,45 @@
 
               <h4><strong class="text-body-emphasis ps-2">Análise {{ analise.id }}</strong></h4>
 
-                <a href="{% url 'delete_inserir_analise' analise.id %}" class="btn btn-danger rounded-pill px-3">Deletar</a>
+                <a href="{% url 'delete_inserir_analise' analise.id %}" class="btn btn-danger rounded-pill px-3 pe-3"></i>Deletar</a>
               </div>
-              <ul>
-                <li>N {{analise.N}}</li>
-                <li>P {{analise.P}}</li>
-                <li>K {{analise.K}}</li>
-                <li>Temperatura {{analise.Temperatura}}</li>
-                <li>Humidade {{analise.Humidade}}</li>
-                <li>pH {{analise.pH}}</li>
-                <li>Chuva {{analise.Chuva}}</li>
-                <li>Colheita {{analise.Colheita}}</li>
-              </ul>
-              <span class="d-block">{{ user.username }}</span>
+
+              <h4 class="text-body-emphasis pt-3 pb-1">{{ analise.Colheita }}</h4>
+
+              <div class="table-responsive small">
+                <table class="table table-striped table-sm tabela-dados">
+                  <thead>
+                    <tr>
+                      <th scope="col">N</th>
+                      <th scope="col">P</th>
+                      <th scope="col">K</th>
+                      <th scope="col">Temperatura</th>
+                      <th scope="col">Umidade</th>
+                      <th scope="col">ph</th>
+                      <th scope="col">Chuva</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                
+                      <tr>
+                        <td><input class="numeric-input" type="number" name="N" value="{{analise.N}}"></td>
+                        <td><input class="numeric-input" type="number" name="P" value="{{analise.P}}"></td>
+                        <td><input class="numeric-input" type="number" name="K" value="{{analise.K}}"></td>
+                        <td><input class="numeric-input" type="float" name="Temperatura" value="{{analise.Temperatura}}"></td>
+                        <td><input class="numeric-input" type="float" name="Umidade" value="{{analise.Umidade}}"></td>
+                        <td><input class="numeric-input" type="float" name="pH" value="{{analise.pH}}"></td>
+                        <td><input class="numeric-input" type="float" name="Chuva" value="{{analise.Chuva}}"></td>
+                      </tr>
+        
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
+          
           {% endfor %}
+
+          
       
       </main>
 
