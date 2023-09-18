@@ -91,6 +91,7 @@ def salvar_algoritmo_analise(request):
 
     inclusao_colheita.save()
 
+
     context = {
         'colheita_prevista': colheita_prevista,
         'N': N,

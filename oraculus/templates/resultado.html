@@ -49,9 +49,12 @@
     <i id="icon" class="bi bi-eye pe-2"></i>Ver dados inseridos</button>
    </a>
 
-   <button type=submit class="btn btn-success rounded-pill px-3 mx-right">
+   <!--
+    <button type=submit class="btn btn-success rounded-pill px-3 mx-right">
     <i class="bi bi-save pe-2"></i> Salvar análise
    </button>
+   -->
+   
 
   </div>
 
@@ -82,35 +85,10 @@
             <td><input class="numeric-input" type="number" value="{{ Chuva }}" readonly></td>
           </tr>
 
-          <button type="submit" id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false"
-      data-toggle="modal">
-      <i class="bi bi-arrow-up-right pe-2"></i> Enviar dados
-      </button>
-
     </form>
         </tbody>
       </table>
     </div>
-
-    <form action="{% url 'salvar_algoritmo_analise' %}" method="POST">
-
-              {% csrf_token %}
-              <tr>
-                <td><input class="numeric-input" type="number" value="{{ N }}" readonly></td>
-                <td><input class="numeric-input" type="number" value="{{ P }}" readonly></td>
-                <td><input class="numeric-input" type="number" value="{{ K }}" readonly></td>
-                <td><input class="numeric-input" type="number" value="{{ Umidade }}" readonly></td>
-                <td><input class="numeric-input" type="number" value="{{ Temperatura }}" readonly></td>
-                <td><input class="numeric-input" type="number" value="{{ pH }}" readonly></td>
-                <td><input class="numeric-input" type="number" value="{{ Chuva }}" readonly></td>
-              </tr>
-
-      <button type="submit" id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false"
-      data-toggle="modal">
-      <i class="bi bi-arrow-up-right pe-2"></i> Enviar dados
-      </button>
-
-    </form>
 
   </div>
 </div>
