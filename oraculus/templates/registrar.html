@@ -1,5 +1,9 @@
 {% load static %}
 
+{% include 'partials/modal_cadastro_usuario_sucesso.html' %}
+
+{% include 'partials/modal_cadastro_usuario_falha.html' %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -64,6 +68,18 @@
 
                 <a class="w-100 btn btn-lg btn-secondary" href="{% url 'login' %}">Ir para o login</a>
             </form>
+
+            <button type="submit" id="user_success" class="btn btn-success rounded-pill px-3" aria-expanded="false"
+      data-toggle="modal" data-target="#user_success">
+      <i class="bi bi-arrow-up-right pe-2"></i> Sucesso
+      </button>
+
+      <button type="submit" id="user_error" class="btn btn-danger rounded-pill px-3" aria-expanded="false"
+      data-toggle="modal" data-target="#user_error">
+      <i class="bi bi-arrow-up-right pe-2"></i> Falha
+      </button>
+
+
             </div>
             
             </div>

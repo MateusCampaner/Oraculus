@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from home.views import home
+from home.views import home, ajuda, sobre
 from usuario.views import index
 from django.contrib.auth import views as auth_views
 from inserir_analise.views import inserir_analise, rodar_algoritmo_analise, salvar_algoritmo_analise
@@ -14,6 +14,9 @@ urlpatterns = [
     path("home/", home, name="home"),
     path("", index, name="index"),
     path("logout/", auth_views.LogoutView.as_view(template_name="logout.html"), name="logout"),
+
+    path("ajuda", ajuda, name="ajuda"),
+    path("sobre", sobre, name="sobre"),
 
     path("inserir_analise/", inserir_analise, name="inserir_analise"),
     path("recomendar_colheita/", recomendar_colheita, name="recomendar_colheita"),
