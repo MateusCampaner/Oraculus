@@ -4,26 +4,91 @@
 
 {% include 'partials/header.html' %}
 
+<style>
+  .numeric-input::-webkit-inner-spin-button,
+  .numeric-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .numeric-input {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 50px;
+  }
+</style>
+
 <body>
 
-    <div class="container my-5">
-        <div class="p-5 text-center bg-body-tertiary rounded-3">
-          <svg class="bi mt-4 mb-3" style="color: var(--bs-indigo);" width="100" height="100"><use xlink:href="#bootstrap"></use></svg>
-          <h1 class="text-body-emphasis">Dados</h1>
-          <p class="col-lg-8 mx-auto fs-5 text-muted">
-            This is a custom jumbotron featuring an SVG image at the top, some longer text that wraps early thanks to a responsive <code>.col-*</code> class, and a customized call to action.
-          </p>
-          <div class="d-inline-flex gap-2 mb-5">
-            <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
-              Call to action
-              <svg class="bi ms-2" width="24" height="24"><use xlink:href="#arrow-right-short"></use></svg>
-            </button>
-            <button class="btn btn-outline-secondary btn-lg px-4 rounded-pill" type="button">
-              Secondary link
-            </button>
+  <div class="container my-5">
+    <div class="mb-5">
+      <h1 class="text-body-emphasis">Acessar Dados</h1>
+      <p>
+        Acesse os dados das suas analises de solo e recomendações de solo
+      </p>
+
+      <br>
+
+      <main class="container">
+
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+          <h6 class="border-bottom pb-2 mb-0">Análises</h6>
+
+          {% for analise in analises %}
+          <div class="d-flex text-body-secondary pt-3">
+            <img src="../static/img/clipboard-data.svg" alt="logo-oraculus" width="32px" height="32px">
+            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+              
+              <div class="d-flex justify-content-between">
+
+              <h4><strong class="text-body-emphasis ps-2">Análise {{ analise.id }}</strong></h4>
+
+                <a href="{% url 'delete_inserir_analise' analise.id %}" class="btn btn-danger rounded-pill px-3 pe-3"></i>Deletar</a>
+              </div>
+
+              <h4 class="text-body-emphasis pt-3 pb-1">{{ analise.Colheita }}</h4>
+
+              <div class="table-responsive small">
+                <table class="table table-striped table-sm tabela-dados">
+                  <thead>
+                    <tr>
+                      <th scope="col">N</th>
+                      <th scope="col">P</th>
+                      <th scope="col">K</th>
+                      <th scope="col">Temperatura</th>
+                      <th scope="col">Umidade</th>
+                      <th scope="col">ph</th>
+                      <th scope="col">Chuva</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                
+                      <tr>
+                        <td><input class="numeric-input" type="number" name="N" value="{{analise.N}}" readonly></td>
+                        <td><input class="numeric-input" type="number" name="P" value="{{analise.P}}" readonly></td>
+                        <td><input class="numeric-input" type="number" name="K" value="{{analise.K}}" readonly></td>
+                        <td><input class="numeric-input" type="float" name="Temperatura" value="{{analise.Temperatura}}" readonly></td>
+                        <td><input class="numeric-input" type="float" name="Umidade" value="{{analise.Umidade}}" readonly></td>
+                        <td><input class="numeric-input" type="float" name="pH" value="{{analise.pH}}" readonly></td>
+                        <td><input class="numeric-input" type="float" name="Chuva" value="{{analise.Chuva}}" readonly></td>
+                      </tr>
+        
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+          
+          {% endfor %}
+
+          
+      
+      </main>
+
+    </div>
+  </div>
 
 </body>
 

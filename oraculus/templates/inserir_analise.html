@@ -33,6 +33,8 @@
         Insira os dados de uma análise de solo para recomendar o melhor tipo de plantio
       </p>
 
+      <br>
+
       <a href="#" class="link-body-emphasis text-decoration-none" aria-expanded="false"
      data-toggle="modal" data-target="#modalUploadCSV">
       <button id="uploadCSV" class="btn btn-primary rounded-pill px-3 mx-right">
@@ -46,42 +48,49 @@
     </div>
 
       <div class="table-responsive small">
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm tabela-dados">
           <thead>
             <tr>
               <th scope="col">N</th>
               <th scope="col">P</th>
               <th scope="col">K</th>
-              <th scope="col">Umidade</th>
               <th scope="col">Temperatura</th>
+              <th scope="col">Umidade</th>
               <th scope="col">ph</th>
               <th scope="col">Chuva</th>
             </tr>
           </thead>
           <tbody>
-            {% for item in items %}
-            <tr>
-              <td><input class="numeric-input" type="number" value="{{ item.n }}"></td>
-              <td><input class="numeric-input" type="number" value="{{ item.p }}"></td>
-              <td><input class="numeric-input" type="number" value="{{ item.k }}"></td>
-              <td><input class="numeric-input" type="number" value="{{ item.umidade }}"></td>
-              <td><input class="numeric-input" type="number" value="{{ item.temperatura }}"></td>
-              <td><input class="numeric-input" type="number" value="{{ item.ph }}"></td>
-              <td><input class="numeric-input" type="number" value="{{ item.chuva }}"></td>
-              <td><button class="remove-row-button">Remover</button></td>
-            </tr>
-            {% endfor %}
+            <form action="{% url 'salvar_algoritmo_analise' %}" method="POST">
+
+              {% csrf_token %}
+              <tr>
+                <td><input class="numeric-input" type="number" name="N" value=""></td>
+                <td><input class="numeric-input" type="number" name="P" value=""></td>
+                <td><input class="numeric-input" type="number" name="K" value=""></td>
+                <td><input class="numeric-input" type="float" name="Temperatura" value=""></td>
+                <td><input class="numeric-input" type="float" name="Umidade" value=""></td>
+                <td><input class="numeric-input" type="float" name="pH" value=""></td>
+                <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
+  
+                <td><button type="button" class="btn btn-danger remove-row-button"><img src="../static/img/trash3.svg" alt="logo-oraculus" width="16px" height="16px"></button></td>
+              </tr>
+
           </tbody>
         </table>
       </div>
-    
-      <button id="addRowButton" class="btn btn-primary rounded-pill px-3">
-        <i class="bi bi-plus-circle pe-2"></i> Adicionar Linha</button>
 
-      <button id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false"
+      <button type="submit" id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false"
       data-toggle="modal" data-target="#modalConfirm">
       <i class="bi bi-arrow-up-right pe-2"></i> Enviar dados
       </button>
+
+      </form>
+      
+      <button id="addRowButton" class="btn btn-primary rounded-pill px-3">
+      <i class="bi bi-plus-circle pe-2"></i> Adicionar Linha</button>
+      
+      
 
       <script>
         const addRowButton = document.getElementById("addRowButton");
@@ -89,14 +98,14 @@
           const tbody = document.querySelector("tbody");
           const newRow = document.createElement("tr");
           newRow.innerHTML = `
-          <td><input class="numeric-input" type="number" value="New"></td>
-          <td><input class="numeric-input" type="number" value="Row"></td>
-          <td><input class="numeric-input" type="number" value="Data"></td>
-          <td><input class="numeric-input" type="number" value="Here"></td>
-          <td><input class="numeric-input" type="number" value="New"></td>
-          <td><input class="numeric-input" type="number" value="Row"></td>
-          <td><input class="numeric-input" type="number" value="Data"></td>
-          <td><button class="remove-row-button btn btn-danger rounded-pill px-2.5">X</button></td>
+                <td><input class="numeric-input" type="number" name="N" value=""></td>
+                <td><input class="numeric-input" type="number" name="P" value=""></td>
+                <td><input class="numeric-input" type="number" name="K" value=""></td>
+                <td><input class="numeric-input" type="float" name="Umidade" value=""></td>
+                <td><input class="numeric-input" type="float" name="Temperatura" value=""></td>
+                <td><input class="numeric-input" type="float" name="pH" value=""></td>
+                <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
+                <td><button type="button" class="btn btn-danger remove-row-button"><img src="../static/img/trash3.svg" alt="logo-oraculus" width="16px" height="16px"></button></td>
           `;
           tbody.appendChild(newRow);
       
@@ -108,6 +117,26 @@
             });
           });
         });
+
+        document.addEventListener("DOMContentLoaded", function () {
+      const addRowButton = document.getElementById("addRowButton");
+      const tabelaDados = document.getElementById("tabela-dados").getElementsByTagName('tbody')[0];
+
+      addRowButton.addEventListener("click", function () {
+         const newRow = document.createElement("tr");
+         newRow.innerHTML = `
+            <td><input class="numeric-input" type="number" name="N" value=""></td>
+            <td><input class="numeric-input" type="number" name="P" value=""></td>
+            <td><input class="numeric-input" type="number" name="K" value=""></td>
+            <td><input class="numeric-input" type="float" name="Umidade" value=""></td>
+            <td><input class="numeric-input" type="float" name="Temperatura" value=""></td>
+            <td><input class="numeric-input" type="float" name="pH" value=""></td>
+            <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
+            <td><button type="button" class="btn btn-danger remove-row-button"><img src="../static/img/trash3.svg" alt="logo-oraculus" width="16px" height="16px"></button></td>
+         `;
+         tabelaDados.appendChild(newRow);
+      });
+   });
       </script>
 
 {% include 'partials/footer.html' %}

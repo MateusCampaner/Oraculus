@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib.auth.decorators import login_required
+from home.views import home
 
 def index(request):
     return render(request, "index.html")
@@ -38,7 +39,7 @@ def login(request):
         if user:
             login_django(request, user)
 
-            return render(request, "home.html")
+            return redirect(home)
         else:
             return HttpResponse('Usuário ou senha inválidos')
 
@@ -46,3 +47,4 @@ def login(request):
 def plataforma(request):
     if request.user.is_authenticated:
         return render(request, "home.html")
+
