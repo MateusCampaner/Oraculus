@@ -14,8 +14,6 @@ warnings.simplefilter(action='ignore', category=UserWarning)
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-
-
 @login_required
 def inserir_analise(request):
     return render(request, "inserir_analise.html")
