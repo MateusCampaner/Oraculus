@@ -16,3 +16,7 @@ def delete_analises(request, id):
     analises = Analise.objects.get(id=id)
     analises.delete()
     return redirect(acessar_dados)
+
+def visualizar_analise(request, id):
+    analises = Analise.objects.get(id=id)
+    return render(request, 'visualizar_analise.html', {'analises': analises})

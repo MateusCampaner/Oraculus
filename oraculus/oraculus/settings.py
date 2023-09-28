@@ -37,6 +37,7 @@ INSTALLED_APPS += [
     'recomendar_colheita',
     'acessar_dados',
     'resultado',
+    'visualizar_analise',
 ]
 
 MIDDLEWARE = [

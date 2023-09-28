@@ -1,0 +1,68 @@
+{% load static %}
+
+{% include 'partials/head.html' %}
+
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="/static/img/logo-oraculus.png" alt="logo-oraculus" width="62px" height="56px">
+        <span class="fs-2 fw-bold">Oraculus</span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link active" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="{% url 'ajuda' %}" class="nav-link">Ajuda</a></li>
+        <li class="nav-item"><a href="{% url 'sobre' %}" class="nav-link">Sobre</a></li>
+
+        <li class="nav-item">
+            <a href="#" class="d-block link-body-emphasis text-decoration-none" aria-expanded="false"
+               data-toggle="modal" data-target="#profileModal">
+                <img src="/static/img/person-circle.svg" alt="mdo" width="48" height="48" class="rounded-circle">
+            </a>
+        </li>
+         
+      </ul>
+    </header>
+</div>
+
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                    <img src="/static/img/logo-oraculus.png" alt="logo-oraculus" width="62px" height="56px">
+                    <span class="fs-2 fw-bold">Oraculus</span>
+                </div>
+            </div>
+
+            <div class="modal-body fw-bold">
+                <ul>
+                    <li>Conectado como: {{ user.username }}</li>
+                </ul>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <a href="{% url 'logout' %}" class="btn btn-danger" aria-current="page">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<body>
+
+    <div class="container my-5">
+      <div class="mb-5">
+        <h1 class="text-body-emphasis">Visualizar Análise {{ analise.id }}</h1>
+       
+        <br>
+
+        <a href="{% url 'acessar_dados' %}" class="btn btn-primary rounded-pill px-3 pe-3"></i>Voltar</a>
+
+
+      </div>
+    </div>
+  
+  </body>
+
+{% include 'partials/footer.html' %}

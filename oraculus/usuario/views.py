@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib.auth.decorators import login_required
@@ -20,12 +21,15 @@ def registrar(request):
         user = User.objects.filter(username=username).first()
 
         if user:
-            return HttpResponse('Usuário já cadastrado')
+            return render(request, "modal_cadastro_usuario_falha.html")
+          
         
-        user = User.objects.create_user(username=username, email=email, password=senha)
-        user.save()
+        else:
+            user = User.objects.create_user(username=username, email=email, password=senha)
+            user.save()
+            messages.success(request, 'Usuário cadastrado com sucesso')
 
-        return HttpResponse('Usuário castrado com sucesso')
+    return render(request, 'registrar.html')
 
 def login(request):
     if request.method == 'GET':

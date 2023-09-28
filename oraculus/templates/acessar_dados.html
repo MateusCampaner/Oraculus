@@ -34,7 +34,7 @@
       <main class="container">
 
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Pesquisar por id" id="searchInput">
+          <input type="text" class="form-control link-body-emphasis text-decoration-none" placeholder="Pesquisar por id" id="searchInput">
           <button class="btn btn-outline-secondary" type="button" id="button-addon2">
             <i class="bi bi-search pe-2"></i></button>
         </div>
@@ -56,8 +56,11 @@
               <div class="d-flex justify-content-between">
 
               <h4><strong class="text-body-emphasis ps-2">Análise {{ analise.id }}</strong></h4>
+                
+              <a href="{% url 'visualizar_analise' analise.id %}" class="btn btn-primary rounded-pill px-3 pe-3"></i><i class="bi bi-eye pe-2"></i> Visualizar</a>
 
-                <a href="{% url 'delete_inserir_analise' analise.id %}" class="btn btn-danger rounded-pill px-3 pe-3"></i>Deletar</a>
+              <a href="{% url 'delete_inserir_analise' analise.id %}" class="btn btn-danger rounded-pill px-3 pe-3"></i>Deletar</a>
+
               </div>
 
               <h4 class="text-body-emphasis pt-3 pb-1">{{ analise.Colheita }}</h4>
@@ -95,8 +98,6 @@
           
           {% endfor %}
 
-          
-      
       </main>
 
     </div>
