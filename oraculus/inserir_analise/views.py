@@ -83,8 +83,7 @@ def salvar_algoritmo_analise(request):
             Umidade=Umidade,
             Temperatura=Temperatura,
             pH=pH,
-            Chuva=Chuva,
-            Colheita=colheita_prevista,
+            Chuva=Chuva
         )
 
     inclusao_colheita.save()
