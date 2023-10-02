@@ -75,7 +75,14 @@
 
         <a href="{% url 'acessar_dados' %}" class="btn btn-primary rounded-pill px-3 pe-3"><i class="bi bi-arrow-left pe-2"></i>Voltar</a>
 
-        <h2 class="text-body-emphasis pt-3 pb-1">Resultado: {{ analises.Colheita }}</h2>
+        <hr>
+
+        <h4 class="text-body-emphasis pt-3 pb-1">Usuário: {{ user.username }}</h4>
+        <h4 class="text-body-emphasis pt-3 pb-1">Data: 01/10/2023</h4>
+
+        <hr>
+
+        <h4 class="text-body-emphasis pt-3 pb-1">Colheita recomendada: {{ analises.Colheita }}</h4>
 
               <div class="table-responsive small">
                 <table class="table table-striped table-sm tabela-dados">
@@ -105,6 +112,51 @@
                   </tbody>
                 </table>
               </div>
+
+              <h4 class="text-body-emphasis pt-3 pb-1">Acurácia: 97.8%</h4>
+
+              <hr>
+
+              <h4 class="text-body-emphasis pt-3 pb-1">Score-z dos valores</h4>
+
+              <div class="table-responsive small">
+                <table class="table table-striped table-sm tabela-dados">
+                  <thead>
+                    <tr>
+                      <th scope="col">N</th>
+                      <th scope="col">P</th>
+                      <th scope="col">K</th>
+                      <th scope="col">Temperatura</th>
+                      <th scope="col">Umidade</th>
+                      <th scope="col">ph</th>
+                      <th scope="col">Chuva</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                
+                      <tr>
+                        <td><input class="numeric-input" type="number" name="N" value="{{analises.N}}" readonly></td>
+                        <td><input class="numeric-input" type="number" name="P" value="{{analises.P}}" readonly></td>
+                        <td><input class="numeric-input" type="number" name="K" value="{{analises.K}}" readonly></td>
+                        <td><input class="numeric-input" type="float" name="Temperatura" value="{{analises.Temperatura}}" readonly></td>
+                        <td><input class="numeric-input" type="float" name="Umidade" value="{{analises.Umidade}}" readonly></td>
+                        <td><input class="numeric-input" type="float" name="pH" value="{{analises.pH}}" readonly></td>
+                        <td><input class="numeric-input" type="float" name="Chuva" value="{{analises.Chuva}}" readonly></td>
+                      </tr>
+        
+                  </tbody>
+                </table>
+              </div>
+
+              <hr>
+
+              <button id="downloadCSV" class="btn btn-success rounded-pill px-3 mx-right">
+                <i class="bi bi-journal-arrow-down pe-2"></i> Gerar Relatório
+              </button>
+
+              <button id="downloadCSV" class="btn btn-danger rounded-pill px-3 mx-right">
+                <i class="bi bi-trash-fill pe-2 "></i> Deletar
+              </button>
 
 
       </div>

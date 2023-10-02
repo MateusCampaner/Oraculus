@@ -21,13 +21,13 @@ def registrar(request):
         user = User.objects.filter(username=username).first()
 
         if user:
-            return render(request, "modal_cadastro_usuario_falha.html")
-          
+            return HttpResponse('Usuário já existe')
         
+          
         else:
             user = User.objects.create_user(username=username, email=email, password=senha)
             user.save()
-            messages.success(request, 'Usuário cadastrado com sucesso')
+            return HttpResponse('Usuário cadastrado com sucesso')
 
     return render(request, 'registrar.html')
 
