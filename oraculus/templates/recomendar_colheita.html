@@ -58,28 +58,29 @@
                       <i class="bi bi-search pe-2"></i></button>
                 </div>
             </li>
-            <li><a class="dropdown-item" href="">Arroz</a></li>
-              <li><a class="dropdown-item" href="">Milho</a></li>
-              <li><a class="dropdown-item" href="">Grão de bico</a></li>
-              <li><a class="dropdown-item" href="">Feijão</a></li>
-              <li><a class="dropdown-item" href="">Guandu</a></li>
-              <li><a class="dropdown-item" href="">Feijão Traça</a></li>
-              <li><a class="dropdown-item" href="">Feijão Mungu</a></li>
-              <li><a class="dropdown-item" href="">Feijão Preto</a></li>
-              <li><a class="dropdown-item" href="">Lentilha</a></li>
-              <li><a class="dropdown-item" href="">Romã</a></li>
-              <li><a class="dropdown-item" href="">Banana</a></li>
-              <li><a class="dropdown-item" href="">Manga</a></li>
-              <li><a class="dropdown-item" href="">Uva</a></li>
-              <li><a class="dropdown-item" href="">Melancia</a></li>
-              <li><a class="dropdown-item" href="">Melão</a></li>
-              <li><a class="dropdown-item" href="">Maçã</a></li>
-              <li><a class="dropdown-item" href="">Laranja</a></li>
-              <li><a class="dropdown-item" href="">Mamão Papaya</a></li>
-              <li><a class="dropdown-item" href="">Coco</a></li>
-              <li><a class="dropdown-item" href="">Algodão</a></li>
-              <li><a class="dropdown-item" href="">Juta</a></li>
-              <li><a class="dropdown-item" href="">Café</a></li>
+            <li>
+              <li><a class="dropdown-item" href="" data-value="Arroz">Arroz</a></li>
+              <li><a class="dropdown-item" href="" data-value="Milho">Milho</a></li>
+              <li><a class="dropdown-item" href="" data-value="Grão de bico">Grão de bico</a></li>
+              <li><a class="dropdown-item" href="" data-value="Feijão">Feijão</a></li>
+              <li><a class="dropdown-item" href="" data-value="Guandu">Guandu</a></li>
+              <li><a class="dropdown-item" href="" data-value="Feijão Traça">Feijão Traça</a></li>
+              <li><a class="dropdown-item" href="" data-value="Feijão Mungu">Feijão Mungu</a></li>
+              <li><a class="dropdown-item" href="" data-value="Feijão Preto">Feijão Preto</a></li>
+              <li><a class="dropdown-item" href="" data-value="Lentilhaha">Lentilhaha</a></li>
+              <li><a class="dropdown-item" href="" data-value="Romã">Romã</a></li>
+              <li><a class="dropdown-item" href="" data-value="Banana">Banana</a></li>
+              <li><a class="dropdown-item" href="" data-value="Manga">Manga</a></li>
+              <li><a class="dropdown-item" href="" data-value="Uva">Uva</a></li>
+              <li><a class="dropdown-item" href="" data-value="Melancia">Melancia</a></li>
+              <li><a class="dropdown-item" href="" data-value="Melão">Melão</a></li>
+              <li><a class="dropdown-item" href="" data-value="Maçã">Maçã</a></li>
+              <li><a class="dropdown-item" href="" data-value="Laranja">Laranja</a></li>
+              <li><a class="dropdown-item" href="" data-value="Mamão Papaya">Mamão Papaya</a></li>
+              <li><a class="dropdown-item" href="" data-value="Coco">Coco</a></li>
+              <li><a class="dropdown-item" href="" data-value="Algodão">Algodão</a></li>
+              <li><a class="dropdown-item" href="" data-value="Juta">Juta</a></li>
+              <li><a class="dropdown-item" href="" data-value="Café">Café</a></li>
         </ul>
     </div>
 
@@ -90,15 +91,15 @@
   </div>
 
   <div class="table-responsive small crop-result hidden" id="recommendationTable">
-    <p>Media dos valores do solo para a cultura</p>
+    <h4 class="text-body-emphasis pt-3 pb-1">Media dos valores da colheita: </h4>
     <table class="table table-striped table-sm">
       <thead>
         <tr>
           <th scope="col">N</th>
           <th scope="col">P</th>
           <th scope="col">K</th>
-          <th scope="col">Umidade</th>
           <th scope="col">Temperatura</th>
+          <th scope="col">Umidade</th>
           <th scope="col">ph</th>
           <th scope="col">Chuva</th>
         </tr>
@@ -108,15 +109,15 @@
           <td><input class="numeric-input" type="number" id="nInput" value=""></td>
           <td><input class="numeric-input" type="number" id="pInput" value=""></td>
           <td><input class="numeric-input" type="number" id="kInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
           <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
           <td><input class="numeric-input" type="number" id="phInput" value=""></td>
           <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Valores mínimos do solo para a cultura</p>
+    <h4 class="text-body-emphasis pt-3 pb-1">Valores mínimos do solo para a colheita: </h4>
 
     <table class="table table-striped table-sm">
       <thead>
@@ -124,8 +125,8 @@
           <th scope="col">N</th>
           <th scope="col">P</th>
           <th scope="col">K</th>
-          <th scope="col">Umidade</th>
           <th scope="col">Temperatura</th>
+          <th scope="col">Umidade</th>
           <th scope="col">ph</th>
           <th scope="col">Chuva</th>
         </tr>
@@ -135,15 +136,15 @@
           <td><input class="numeric-input" type="number" id="nInput" value=""></td>
           <td><input class="numeric-input" type="number" id="pInput" value=""></td>
           <td><input class="numeric-input" type="number" id="kInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
           <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
           <td><input class="numeric-input" type="number" id="phInput" value=""></td>
           <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Valores maximos do solo para a cultura</p>
+    <h4 class="text-body-emphasis pt-3 pb-1">Valores maximos do solo para a colheita: </h4>
 
     <table class="table table-striped table-sm">
       <thead>
@@ -151,8 +152,8 @@
           <th scope="col">N</th>
           <th scope="col">P</th>
           <th scope="col">K</th>
-          <th scope="col">Umidade</th>
           <th scope="col">Temperatura</th>
+          <th scope="col">Umidade</th>
           <th scope="col">ph</th>
           <th scope="col">Chuva</th>
         </tr>
@@ -162,13 +163,47 @@
           <td><input class="numeric-input" type="number" id="nInput" value=""></td>
           <td><input class="numeric-input" type="number" id="pInput" value=""></td>
           <td><input class="numeric-input" type="number" id="kInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
           <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
           <td><input class="numeric-input" type="number" id="phInput" value=""></td>
           <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
         </tr>
       </tbody>
     </table>
+
+    <h4 class="text-body-emphasis pt-3 pb-1">Desvio padrão para a colheita: </h4>
+
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">N</th>
+          <th scope="col">P</th>
+          <th scope="col">K</th>
+          <th scope="col">Temperatura</th>
+          <th scope="col">Umidade</th>
+          <th scope="col">ph</th>
+          <th scope="col">Chuva</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input class="numeric-input" type="number" id="nInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="pInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="kInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="phInput" value=""></td>
+          <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+      <button id="downloadCSV" class="btn btn-success rounded-pill px-3 mx-right">
+        <i class="bi bi-journal-arrow-down pe-2"></i> Gerar Relatório
+      </button>
+      
   </div>
 
 </div>
