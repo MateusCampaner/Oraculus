@@ -82,15 +82,55 @@
               <li><a class="dropdown-item" href="" data-value="Juta">Juta</a></li>
               <li><a class="dropdown-item" href="" data-value="Café">Café</a></li>
         </ul>
-    </div>
 
-    <button id="sendInfo" class="btn btn-success px-3" aria-expanded="false">
-      <i class="bi bi-arrow-up-right pe-2"></i> Recomendar Colheita
-      </button>
+        <form method="POST" id="selecionar-form" action="{% url 'calcular_media' %}">
+
+          {% csrf_token %}
+
+          <select name="label" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin">
+            
+              <option value="Arroz" class="dropdown-item">Arroz</option>
+              <option value="Milho" class="dropdown-item">Milho</option>
+              <option value="Grão de bico" class="dropdown-item">Grão de bico</option>
+              <option value="Feijão" class="dropdown-item">Feijão</option>
+              <option value="Guandu" class="dropdown-item">Guandu</option>
+              <option value="Feijão Traça" class="dropdown-item">Feijão Traça</option>
+              <option value="Feijão Mungu" class="dropdown-item">Feijão Mungu</option>
+              <option value="Feijão Preto" class="dropdown-item">Feijão Preto</option>
+              <option value="Lentilhaha" class="dropdown-item">Lentilhaha</option>
+              <option value="Romã" class="dropdown-item">Romã</option>
+              <option value="Banana" class="dropdown-item">Banana</option>
+              <option value="Manga" class="dropdown-item">Manga</option>
+              <option value="Uva" class="dropdown-item">Uva</option>
+              <option value="Melancia" class="dropdown-item">Melancia</option>
+              <option value="Melão" class="dropdown-item">Melão</option>
+              <option value="Maçã" class="dropdown-item">Maçã</option>
+              <option value="Laranja" class="dropdown-item">Laranja</option>
+              <option value="Mamão Papaya" class="dropdown-item">Mamão Papaya</option>
+              <option value="Coco" class="dropdown-item">Coco</option>
+              <option value="Algodão" class="dropdown-item">Algodão</option>
+              <option value="Juta" class="dropdown-item">Juta</option>
+              <option value="Café" class="dropdown-item">Café</option>
+          </select>
+
+          <button id="sendInfo" class="btn btn-success px-3" aria-expanded="false">
+            <i class="bi bi-arrow-up-right pe-2"></i> Recomendar Colheita
+          </button>
+
+      </form>
 
   </div>
 
-  <div class="table-responsive small crop-result hidden" id="recommendationTable">
+  </div>
+
+  <div class="table-responsive small crop-result" id="recommendationTable">
+
+  <hr>
+
+  <h4 class="text-body-emphasis pt-3 pb-1">Colheita: {{ colheita }}</h4>
+
+  <hr>
+
     <h4 class="text-body-emphasis pt-3 pb-1">Media dos valores da colheita: </h4>
     <table class="table table-striped table-sm">
       <thead>
@@ -106,13 +146,13 @@
       </thead>
       <tbody>
         <tr>
-          <td><input class="numeric-input" type="number" id="nInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="pInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="kInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="phInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
+          <td><input class="numeric-input" type="text" value="{{ media_n }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ media_p }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ media_k }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ media_temperature }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ media_humidity }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ media_ph }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ media_rainfall }}" readonly></td>
         </tr>
       </tbody>
     </table>
@@ -133,13 +173,13 @@
       </thead>
       <tbody>
         <tr>
-          <td><input class="numeric-input" type="number" id="nInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="pInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="kInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="phInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
+          <td><input class="numeric-input" type="text" value="{{ min_n }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ min_p }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ min_k }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ min_temperature }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ min_humidity }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ min_ph }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ min_rainfall }}" readonly></td>
         </tr>
       </tbody>
     </table>
@@ -160,13 +200,13 @@
       </thead>
       <tbody>
         <tr>
-          <td><input class="numeric-input" type="number" id="nInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="pInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="kInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="phInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
+          <td><input class="numeric-input" type="text" value="{{ max_n }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ max_p }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ max_k }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ max_temperature }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ max_humidity }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ max_ph }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ max_rainfall }}" readonly></td>
         </tr>
       </tbody>
     </table>
@@ -187,13 +227,13 @@
       </thead>
       <tbody>
         <tr>
-          <td><input class="numeric-input" type="number" id="nInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="pInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="kInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="temperaturaInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="umidadeInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="phInput" value=""></td>
-          <td><input class="numeric-input" type="number" id="chuvaInput" value=""></td>
+          <td><input class="numeric-input" type="text" value="{{ std_n }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ std_p }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ std_k }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ std_temperature }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ std_humidity }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ std_ph }}" readonly></td>
+          <td><input class="numeric-input" type="text" value="{{ std_rainfall }}" readonly></td>
         </tr>
       </tbody>
     </table>

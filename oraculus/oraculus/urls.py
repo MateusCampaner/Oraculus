@@ -4,7 +4,7 @@ from home.views import home, ajuda, sobre
 from usuario.views import index
 from django.contrib.auth import views as auth_views
 from inserir_analise.views import inserir_analise, rodar_algoritmo_analise, salvar_algoritmo_analise
-from recomendar_colheita.views import recomendar_colheita
+from recomendar_colheita.views import recomendar_colheita, enviar_colheita, calcular_media
 from acessar_dados.views import acessar_dados, delete_analises, visualizar_analise
 from visualizar_analise.views import delete_analise
 from resultado.views import resultado
@@ -34,5 +34,9 @@ urlpatterns = [
     #Crud de Acessar Dados
     path("visualizar_analise/<int:id>/", visualizar_analise, name="visualizar_analise"),
     path("delete_analise/<int:id>/", delete_analise, name="delete_analise"),
+
+    #Recomendar Colheita
+    path('enviar_colheita/', enviar_colheita, name='enviar_colheita'),
+    path('calcular_media/', calcular_media, name='calcular_media'),
 
 ]
