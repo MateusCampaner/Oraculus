@@ -20,7 +20,7 @@ def inserir_analise(request):
 
 def inserir_dados_analise(request):
     dataset = [
-        {'n': '', 'p': '', 'k': '', 'humidade': '', 'temperatura': '', 'ph': '', 'chuva': ''},
+        {'n': '', 'p': '', 'k': '', 'temperatura': '', 'humidade': '',  'ph': '', 'chuva': ''},
     ]
 
     return render(request, 'inserir_analise.html', {'dataset': dataset})
@@ -67,12 +67,12 @@ def salvar_algoritmo_analise(request):
     N = request.POST.get('N')
     P = request.POST.get('P')
     K = request.POST.get('K')
-    Umidade = request.POST.get('Umidade')
     Temperatura = request.POST.get('Temperatura')
+    Umidade = request.POST.get('Umidade')
     pH = request.POST.get('pH')
     Chuva = request.POST.get('Chuva')
 
-    dados_analise = np.array([N, P, K, Umidade, Temperatura, pH, Chuva])
+    dados_analise = np.array([N, P, K, Temperatura, Umidade, pH, Chuva])
 
     colheita_prevista = fazer_previsao_knn(knn, dados_analise)
 
@@ -80,10 +80,11 @@ def salvar_algoritmo_analise(request):
             N=N,
             P=P,
             K=K,
-            Umidade=Umidade,
             Temperatura=Temperatura,
+            Umidade=Umidade,
             pH=pH,
-            Chuva=Chuva
+            Chuva=Chuva,
+            Colheita=colheita_prevista
         )
 
     inclusao_colheita.save()
@@ -94,8 +95,8 @@ def salvar_algoritmo_analise(request):
         'N': N,
         'P': P,
         'K': K,
-        'Umidade': Umidade,
         'Temperatura': Temperatura,
+        'Umidade': Umidade,
         'pH': pH,
         'Chuva': Chuva,
     }
@@ -120,8 +121,8 @@ def rodar_algoritmo_analise(request):
         'N': N,
         'P': P,
         'K': K,
-        'Umidade': Umidade,
         'Temperatura': Temperatura,
+        'Umidade': Umidade,
         'pH': pH,
         'Chuva': Chuva,
     }
