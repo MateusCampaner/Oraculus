@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 import csv
 import pandas as pd
+import tkinter as tk
 
 df=pd.read_csv('crop.csv')
 print(df.describe())
@@ -67,6 +68,8 @@ def calcular_media(request):
         std_ph = dados_filtrados['ph'].std()
         std_rainfall = dados_filtrados['rainfall'].std()
 
+        request.session['resultados'] = context
+
         context = {
         'colheita': label_selecionado,
         'media_n': round(media_n, 2),
@@ -102,7 +105,122 @@ def calcular_media(request):
 
         return render(request, 'recomendar_colheita.html', context)
 
-   
+from django.http import FileResponse
+from django.shortcuts import render
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from io import BytesIO
 
+
+def gerar_relatorio_colheita(request):
+
+    resultados = request.session.get('resultados', {})
+    # Cria um buffer para armazenar o PDF em memória
+    buffer = BytesIO()
+
+    # Cria o PDF no buffer
+    cnv = canvas.Canvas(buffer, pagesize=A4)
+    #cnv  = canvas.Canvas("./relatorio/relatorio_colheita.pdf", pagesize=A4)
+    cnv.setFont('Helvetica-Bold', 18)
+    
+    # Desenhar a imagem do cabeçalho (ajuste as coordenadas conforme necessário)
+    #cnv.drawImage("cabecalho.png", 15, 770)
+
+    # Adicionar texto (ajuste as coordenadas conforme necessário)
+    cnv.drawString(35, 720, f"Colheita: {resultados.get('colheita', '')}")
+    cnv.drawString(35, 690, "Media dos valores da colheita")
+
+    cnv.setFont('Helvetica', 14)
+
+    data = [
+        ["Nitrogênio", "Potássio", "Fósforo", "Temperatura", "Umidade", "pH", "Chuva"],
+        ["00000", "00000", "00000", "00000", "00000", "00000", "00000"],
+    ]
+
+    media_x = 35
+    media_y = 650
+
+    col_widths = [72, 72, 72, 90, 72, 72, 72]
+
+    row_height = 20
+
+    for row in data:
+        for i, cell in enumerate(row):
+            cnv.rect(media_x, media_y, col_widths[i], row_height)
+            cnv.drawString(media_x + 5, media_y + 5, cell)
+            media_x += col_widths[i]
+        media_y -= row_height
+        media_x = 35
+
+    cnv.setFont('Helvetica-Bold', 18)
+    cnv.drawString(35, 600, "Valores mínimos do solo para a colheita")
+
+    cnv.setFont('Helvetica', 14)
+
+    min_x = 35
+    min_y = 560
+
+    col_widths = [72, 72, 72, 90, 72, 72, 72]
+
+    row_height = 20
+
+    for row in data:
+        for i, cell in enumerate(row):
+            cnv.rect(min_x, min_y, col_widths[i], row_height)
+            cnv.drawString(min_x + 5, min_y + 5, cell)
+            min_x += col_widths[i]
+        min_y -= row_height
+        min_x = 35
+
+    cnv.setFont('Helvetica-Bold', 18)
+    cnv.drawString(35, 510, "Valores maximos do solo para a colheita")
+
+    cnv.setFont('Helvetica', 14)
+
+    max_x = 35
+    max_y = 470
+
+    col_widths = [72, 72, 72, 90, 72, 72, 72]
+
+    row_height = 20
+
+    for row in data:
+        for i, cell in enumerate(row):
+            cnv.rect(max_x, max_y, col_widths[i], row_height)
+            cnv.drawString(max_x + 5, max_y + 5, cell)
+            max_x += col_widths[i]
+        max_y -= row_height
+        max_x = 35
+    cnv.setFont('Helvetica-Bold', 18)
+    cnv.drawString(35, 420, "Desvio padrão para a colheita")
+
+    cnv.setFont('Helvetica', 14)
+
+    std_x = 35
+    std_y = 380
+
+    col_widths = [72, 72, 72, 90, 72, 72, 72]
+
+    row_height = 20
+
+    for row in data:
+        for i, cell in enumerate(row):
+            cnv.rect(std_x, std_y, col_widths[i], row_height)
+            cnv.drawString(std_x + 5, std_y + 5, cell)
+            std_x += col_widths[i]
+        std_y -= row_height
+        std_x = 35
+        
+    cnv.showPage()
+    cnv.save()
+
+    # Move o ponteiro do buffer para o início
+    buffer.seek(0)
+
+    # Retorna o PDF como uma resposta HTTP
+    response = FileResponse(buffer, as_attachment=True, filename="relatorio_colheita.pdf")
+    del request.session['resultados']
+
+    return response
 
 
