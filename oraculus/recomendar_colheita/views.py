@@ -71,6 +71,18 @@ def calcular_valores(request):
         std_ph = dados_filtrados['ph'].std()
         std_rainfall = dados_filtrados['rainfall'].std()
 
+
+    
+
+        # Filtrar o DataFrame para a plantação selecionada.
+        df_plantacao = df[df['label'] == label_selecionado]
+
+        # Criar o gráfico de boxplot para a plantação selecionada.
+        plt.figure(figsize=(5, 4))  # Define o tamanho do gráfico.
+        sns.boxplot(y='label', x='ph', data=df_plantacao)
+        plt.title(f'Boxplot do pH da {label_selecionado}')
+        plt.show()
+
         context = {
         'colheita': label_selecionado,
         'media_n': round(media_n, 2),
@@ -116,7 +128,7 @@ def gerar_relatorio_colheita(request):
 
     #cnv  = canvas.Canvas("./relatorio/relatorio_colheita.pdf", pagesize=A4)
     cnv.setFont('Helvetica-Bold', 18)
-    #cnv.drawImage("cabecalho.png", 15, 770)
+    cnv.drawImage("./recomendar_colheita/relatorio/cabecalho.png", 15, 750)
 
     colheita = context.get('colheita')
 
