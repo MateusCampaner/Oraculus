@@ -71,18 +71,6 @@ def calcular_valores(request):
         std_ph = dados_filtrados['ph'].std()
         std_rainfall = dados_filtrados['rainfall'].std()
 
-
-    
-
-        # Filtrar o DataFrame para a plantação selecionada.
-        df_plantacao = df[df['label'] == label_selecionado]
-
-        # Criar o gráfico de boxplot para a plantação selecionada.
-        plt.figure(figsize=(5, 4))  # Define o tamanho do gráfico.
-        sns.boxplot(y='label', x='ph', data=df_plantacao)
-        plt.title(f'Boxplot do pH da {label_selecionado}')
-        plt.show()
-
         context = {
         'colheita': label_selecionado,
         'media_n': round(media_n, 2),
