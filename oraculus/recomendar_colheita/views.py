@@ -114,7 +114,6 @@ def gerar_relatorio_colheita(request):
 
     global context
 
-    #cnv  = canvas.Canvas("./relatorio/relatorio_colheita.pdf", pagesize=A4)
     cnv.setFont('Helvetica-Bold', 18)
     cnv.drawImage("./recomendar_colheita/relatorio/cabecalho.png", 15, 750)
 
