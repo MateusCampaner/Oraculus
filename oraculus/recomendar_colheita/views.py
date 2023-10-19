@@ -1,8 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-import csv
 import pandas as pd
+from django.http import FileResponse
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from io import BytesIO
+
 
 df=pd.read_csv('crop.csv')
 print(df.describe())
@@ -21,7 +24,8 @@ def enviar_colheita(request):
 
         return label_selecionado
     
-def calcular_media(request):
+def calcular_valores(request):
+    global context
     if request.method == 'POST':
         label_selecionado = request.POST['label']
 
@@ -102,7 +106,162 @@ def calcular_media(request):
 
         return render(request, 'recomendar_colheita.html', context)
 
-   
 
+def gerar_relatorio_colheita(request):
+    
+    buffer = BytesIO()
+    cnv = canvas.Canvas(buffer, pagesize=A4)
+
+    global context
+
+    cnv.setFont('Helvetica-Bold', 18)
+    cnv.drawImage("./recomendar_colheita/relatorio/cabecalho.png", 15, 750)
+
+    colheita = context.get('colheita')
+
+    # Adicionar texto (ajuste as coordenadas conforme necessário)
+    cnv.drawString(35, 720, f"Colheita: {colheita}")
+    cnv.drawString(35, 690, "Media dos valores da colheita")
+
+    media_n = context.get('media_n')
+    media_p = context.get('media_p')
+    media_k = context.get('media_k')
+    media_temperature = context.get('media_temperature')
+    media_humidity = context.get('media_humidity')
+    media_ph = context.get('media_ph')
+    media_rainfall = context.get('media_rainfall')
+
+    min_n = context.get('min_n')
+    min_p = context.get('min_p')
+    min_k = context.get('min_k')
+    min_temperature = context.get('min_temperature')
+    min_humidity = context.get('min_humidity')
+    min_ph = context.get('min_ph')
+    min_rainfall = context.get('min_rainfall')
+
+    max_n = context.get('max_n')
+    max_p = context.get('max_p')
+    max_k = context.get('max_k')
+    max_temperature = context.get('max_temperature')
+    max_humidity = context.get('max_humidity')
+    max_ph = context.get('max_ph')
+    max_rainfall = context.get('max_rainfall')
+
+    std_n = context.get('std_n')
+    std_p = context.get('std_p')
+    std_k = context.get('std_k')
+    std_temperature = context.get('std_temperature')
+    std_humidity = context.get('std_humidity')
+    std_ph = context.get('std_ph')
+    std_rainfall = context.get('std_rainfall')
+
+
+
+    cnv.setFont('Helvetica', 14)
+
+    data_media = [
+        ["Nitrogênio", "Potássio", "Fósforo", "Temperatura", "Umidade", "pH", "Chuva"],
+        [f"{media_n}", f"{media_p}", f"{media_k}", f"{media_temperature}", f"{media_humidity}", f"{media_ph}", f"{media_rainfall}"],
+    ]
+
+    media_x = 35
+    media_y = 650
+
+    col_widths = [72, 72, 72, 90, 72, 72, 72]
+
+    row_height = 20
+
+    for row in data_media:
+        for i, cell in enumerate(row):
+            cnv.rect(media_x, media_y, col_widths[i], row_height)
+            cnv.drawString(media_x + 5, media_y + 5, cell)
+            media_x += col_widths[i]
+        media_y -= row_height
+        media_x = 35
+
+    cnv.setFont('Helvetica-Bold', 18)
+    cnv.drawString(35, 600, "Valores mínimos do solo para a colheita")
+
+    cnv.setFont('Helvetica', 14)
+
+    data_min = [
+        ["Nitrogênio", "Potássio", "Fósforo", "Temperatura", "Umidade", "pH", "Chuva"],
+        [f"{min_n}", f"{min_p}", f"{min_k}", f"{min_temperature}", f"{min_humidity}", f"{min_ph}", f"{min_rainfall}"],
+    ]   
+
+
+    min_x = 35
+    min_y = 560
+
+    col_widths = [72, 72, 72, 90, 72, 72, 72]
+
+    row_height = 20
+
+    for row in data_min:
+        for i, cell in enumerate(row):
+            cnv.rect(min_x, min_y, col_widths[i], row_height)
+            cnv.drawString(min_x + 5, min_y + 5, cell)
+            min_x += col_widths[i]
+        min_y -= row_height
+        min_x = 35
+
+    cnv.setFont('Helvetica-Bold', 18)
+    cnv.drawString(35, 510, "Valores maximos do solo para a colheita")
+
+    cnv.setFont('Helvetica', 14)
+
+    data_max = [
+        ["Nitrogênio", "Potássio", "Fósforo", "Temperatura", "Umidade", "pH", "Chuva"],
+        [f"{max_n}", f"{max_p}", f"{max_k}", f"{max_temperature}", f"{max_humidity}", f"{max_ph}", f"{max_rainfall}"],
+    ]
+
+
+    max_x = 35
+    max_y = 470
+
+    col_widths = [72, 72, 72, 90, 72, 72, 72]
+
+    row_height = 20
+
+    for row in data_max:
+        for i, cell in enumerate(row):
+            cnv.rect(max_x, max_y, col_widths[i], row_height)
+            cnv.drawString(max_x + 5, max_y + 5, cell)
+            max_x += col_widths[i]
+        max_y -= row_height
+        max_x = 35
+    cnv.setFont('Helvetica-Bold', 18)
+    cnv.drawString(35, 420, "Desvio padrão para a colheita")
+
+    cnv.setFont('Helvetica', 14)
+
+    data_std = [
+        ["Nitrogênio", "Potássio", "Fósforo", "Temperatura", "Umidade", "pH", "Chuva"],
+        [f"{std_n}", f"{std_p}", f"{std_k}", f"{std_temperature}", f"{std_humidity}", f"{std_ph}", f"{std_rainfall}"],
+    ]
+
+    std_x = 35
+    std_y = 380
+
+    col_widths = [72, 72, 72, 90, 72, 72, 72]
+
+    row_height = 20
+
+    for row in data_std:
+        for i, cell in enumerate(row):
+            cnv.rect(std_x, std_y, col_widths[i], row_height)
+            cnv.drawString(std_x + 5, std_y + 5, cell)
+            std_x += col_widths[i]
+        std_y -= row_height
+        std_x = 35
+        
+    cnv.showPage()
+    cnv.save()
+
+    buffer.seek(0)
+
+    response = FileResponse(buffer, as_attachment=True, filename=f"relatorio_colheita_{colheita}.pdf")
+    
+    return response
 
 

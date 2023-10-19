@@ -28,7 +28,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
-    width: 50px;
+    width: 60px;
   }
 
   .hidden {
@@ -46,7 +46,8 @@
   </div>
 
   <div class="d-flex justify-content align-items-center mt-3">
-    <div class="dropdown">
+    <div class="dropdown d-flex">
+      <!--
         <button class="btn btn-primary dropdown-toggle custom-margin" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             Selecione uma cultura
         </button>
@@ -82,8 +83,8 @@
               <li><a class="dropdown-item" href="" data-value="Juta">Juta</a></li>
               <li><a class="dropdown-item" href="" data-value="Café">Café</a></li>
         </ul>
-
-        <form method="POST" id="selecionar-form" action="{% url 'calcular_media' %}">
+      -->
+        <form method="POST" id="selecionar-form" action="{% url 'calcular_valores' %}">
 
           {% csrf_token %}
 
@@ -135,13 +136,13 @@
     <table class="table table-striped table-sm">
       <thead>
         <tr>
-          <th scope="col">N</th>
-          <th scope="col">P</th>
-          <th scope="col">K</th>
-          <th scope="col">Temperatura</th>
-          <th scope="col">Umidade</th>
-          <th scope="col">ph</th>
-          <th scope="col">Chuva</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Nitrogênio</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Fósforo</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Potássio</th>
+          <th scope="col"><img src="../static/img/thermometer-half.svg" alt="logo-oraculus" width="16px" height="16px"> Temperatura</th>
+          <th scope="col"><img src="../static/img/droplet-half.svg" alt="logo-oraculus" width="16px" height="16px"> Umidade</th>
+          <th scope="col"><img src="../static/img/moisture.svg" alt="logo-oraculus" width="16px" height="16px"> ph</th>
+          <th scope="col"><img src="../static/img/cloud-rain-fill.svg" alt="logo-oraculus" width="16px" height="16px"> Chuva</th>
         </tr>
       </thead>
       <tbody>
@@ -162,13 +163,13 @@
     <table class="table table-striped table-sm">
       <thead>
         <tr>
-          <th scope="col">N</th>
-          <th scope="col">P</th>
-          <th scope="col">K</th>
-          <th scope="col">Temperatura</th>
-          <th scope="col">Umidade</th>
-          <th scope="col">ph</th>
-          <th scope="col">Chuva</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Nitrogênio</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Fósforo</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Potássio</th>
+          <th scope="col"><img src="../static/img/thermometer-half.svg" alt="logo-oraculus" width="16px" height="16px"> Temperatura</th>
+          <th scope="col"><img src="../static/img/droplet-half.svg" alt="logo-oraculus" width="16px" height="16px"> Umidade</th>
+          <th scope="col"><img src="../static/img/moisture.svg" alt="logo-oraculus" width="16px" height="16px"> ph</th>
+          <th scope="col"><img src="../static/img/cloud-rain-fill.svg" alt="logo-oraculus" width="16px" height="16px"> Chuva</th>
         </tr>
       </thead>
       <tbody>
@@ -189,13 +190,13 @@
     <table class="table table-striped table-sm">
       <thead>
         <tr>
-          <th scope="col">N</th>
-          <th scope="col">P</th>
-          <th scope="col">K</th>
-          <th scope="col">Temperatura</th>
-          <th scope="col">Umidade</th>
-          <th scope="col">ph</th>
-          <th scope="col">Chuva</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Nitrogênio</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Fósforo</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Potássio</th>
+          <th scope="col"><img src="../static/img/thermometer-half.svg" alt="logo-oraculus" width="16px" height="16px"> Temperatura</th>
+          <th scope="col"><img src="../static/img/droplet-half.svg" alt="logo-oraculus" width="16px" height="16px"> Umidade</th>
+          <th scope="col"><img src="../static/img/moisture.svg" alt="logo-oraculus" width="16px" height="16px"> ph</th>
+          <th scope="col"><img src="../static/img/cloud-rain-fill.svg" alt="logo-oraculus" width="16px" height="16px"> Chuva</th>
         </tr>
       </thead>
       <tbody>
@@ -216,13 +217,13 @@
     <table class="table table-striped table-sm">
       <thead>
         <tr>
-          <th scope="col">N</th>
-          <th scope="col">P</th>
-          <th scope="col">K</th>
-          <th scope="col">Temperatura</th>
-          <th scope="col">Umidade</th>
-          <th scope="col">ph</th>
-          <th scope="col">Chuva</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Nitrogênio</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Fósforo</th>
+          <th scope="col"><img src="../static/img/eyedropper.svg" alt="logo-oraculus" width="16px" height="16px"> Potássio</th>
+          <th scope="col"><img src="../static/img/thermometer-half.svg" alt="logo-oraculus" width="16px" height="16px"> Temperatura</th>
+          <th scope="col"><img src="../static/img/droplet-half.svg" alt="logo-oraculus" width="16px" height="16px"> Umidade</th>
+          <th scope="col"><img src="../static/img/moisture.svg" alt="logo-oraculus" width="16px" height="16px"> ph</th>
+          <th scope="col"><img src="../static/img/cloud-rain-fill.svg" alt="logo-oraculus" width="16px" height="16px"> Chuva</th>
         </tr>
       </thead>
       <tbody>
@@ -240,9 +241,13 @@
 
     <hr>
 
-      <button id="downloadCSV" class="btn btn-success rounded-pill px-3 mx-right">
-        <i class="bi bi-journal-arrow-down pe-2"></i> Gerar Relatório
-      </button>
+      <a href="{% url 'gerar_relatorio_colheita' %}" class="btn btn-success rounded-pill px-3 mx-right"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z"/>
+          <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+          <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+        </svg>
+        Gerar Relatório</a>
       
   </div>
 
