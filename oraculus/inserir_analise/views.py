@@ -50,7 +50,8 @@ X_test_scaled = scaler.transform(X_test)
 
 # Aplicar o modelo KNN
 from sklearn.neighbors import KNeighborsClassifier
-knn = KNeighborsClassifier()
+qtdNeighbors = n_neighbors=8
+knn = KNeighborsClassifier(qtdNeighbors)
 knn.fit(X_train_scaled, y_train)
 knn.score(X_test_scaled, y_test)
 
@@ -64,6 +65,7 @@ def fazer_previsao_knn(modelo, dados_de_entrada):
     return colheita_prevista
 
 def salvar_algoritmo_analise(request):
+
     N = request.POST.get('N')
     P = request.POST.get('P')
     K = request.POST.get('K')
@@ -75,6 +77,8 @@ def salvar_algoritmo_analise(request):
     dados_analise = np.array([N, P, K, Temperatura, Umidade, pH, Chuva])
 
     colheita_prevista = fazer_previsao_knn(knn, dados_analise)
+    acuracia_modelo = knn.score(X_test_scaled, y_test)
+    acuracia = f"{round((acuracia_modelo * 100), 3)} %"
 
     inclusao_colheita = Analise(
             N=N,
@@ -84,7 +88,7 @@ def salvar_algoritmo_analise(request):
             Umidade=Umidade,
             pH=pH,
             Chuva=Chuva,
-            Colheita=colheita_prevista
+            Colheita=colheita_prevista,
         )
 
     inclusao_colheita.save()
@@ -99,6 +103,7 @@ def salvar_algoritmo_analise(request):
         'Umidade': Umidade,
         'pH': pH,
         'Chuva': Chuva,
+        'Acuracia': acuracia
     }
 
     return render(request, 'resultado.html', context)
