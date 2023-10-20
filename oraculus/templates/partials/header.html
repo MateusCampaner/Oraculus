@@ -1,3 +1,21 @@
+<style>
+  #dropdown-parent {
+    position: relative;
+}
+
+ul.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+#configTable{
+    display: none;
+}
+
+</style>
+
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <a href="{% url 'home' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -20,38 +38,52 @@
         <li class="nav-item"><a href="{% url 'sobre' %}" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
         </svg> Sobre</a></li>
+        
+        <li class="nav-item" id="dropdown-parent">
+          <a href="#" id="configIA" class="nav-link active" aria-current="page">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+              </svg>
+              {{ user.username }}
+          </a>
+          <ul id="configTable" class="position-absolute gap-1 p-2 rounded-3 mx-0 shadow w-220px" data-bs-theme="light" style="display: none;">
+              <a class="dropdown-item rounded-2 active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+            </svg> Usuário: {{ user.username }}</a>
 
-        <li class="nav-item">
-            <a href="#" class="d-block link-body-emphasis text-decoration-none" aria-expanded="false"
-               data-toggle="modal" data-target="#profileModal">
-                <img src="../static/img/person-circle.svg" alt="mdo" width="48" height="48" class="rounded-circle">
+              <a class="dropdown-item rounded-2" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-2-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H11a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 5 7h2.5V6A1.5 1.5 0 0 1 6 4.5v-1zm-3 8A1.5 1.5 0 0 1 4.5 10h1A1.5 1.5 0 0 1 7 11.5v1A1.5 1.5 0 0 1 5.5 14h-1A1.5 1.5 0 0 1 3 12.5v-1zm6 0a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1A1.5 1.5 0 0 1 9 12.5v-1z"/>
+              </svg> Perfil: 
+              {% if user.is_superuser %}
+              Administrador
+              {% else %}
+              Usuário
+              {% endif %}
             </a>
-        </li>
-         
-      </ul>
+
+              <a href="{% url 'logout' %}" class="btn btn-danger" aria-current="page"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+              </svg> Logout</a>
+          </ul>
+      </li>
+      
+      
+      
+    </ul>
     </header>
 </div>
 
-<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                    <img src="../static/img/logo-oraculus.png" alt="logo-oraculus" width="62px" height="56px">
-                    <span class="fs-2 fw-bold">Oraculus</span>
-                </div>
-            </div>
+<script>
 
-            <div class="modal-body fw-bold">
-                <ul>
-                    <li>Conectado como: {{ user.username }}</li>
-                </ul>
-            </div>
+const configButton = document.getElementById("configIA");
+    const configTable = document.getElementById("configTable");
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <a href="{% url 'logout' %}" class="btn btn-danger" aria-current="page">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
+    configButton.addEventListener("click", function() {
+        if (configTable.style.display === "none" || configTable.style.display === "") {
+            configTable.style.display = "table";
+        } else {
+            configTable.style.display = "none";
+        }
+    });
+
+</script>

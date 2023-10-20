@@ -142,6 +142,7 @@
 
 
 <script>
+  
   const sendInfoButton = document.getElementById('showInfo');
   const recommendationTable = document.getElementById('analiseTable');
 
@@ -149,16 +150,6 @@
     recommendationTable.classList.toggle('hidden');
   });
 
-  document.getElementById("showInfo").addEventListener("click", function() {
-    var icon = document.getElementById("icon");
-    if (icon.classList.contains("bi-eye")) {
-        icon.classList.remove("bi-eye");
-        icon.classList.add("bi-eye-slash");
-    } else {
-        icon.classList.remove("bi-eye-slash");
-        icon.classList.add("bi-eye");
-    }
-});
 </script>
 
 {% include 'partials/footer.html' %}

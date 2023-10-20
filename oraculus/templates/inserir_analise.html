@@ -24,12 +24,6 @@
   }
 </style>
 
-{% include 'partials/modal_confirmacao.html' %}
-
-{% include 'partials/modal_upload_csv.html' %}
-
-
-
 <div class="container my-5">
     <div class="mb-5">
       <h1 class="text-body-emphasis">Inserir Análise</h1>
@@ -123,7 +117,7 @@
       <br>
       <br>
 
-      <table id="configTable" class="table table-striped table-sm">
+      <table class="table table-striped table-sm">
         <thead>
             <th scope="col"><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"> Número de vizinhos</th>
             <th scope="col"><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"> Algoritmo</th>
@@ -185,7 +179,7 @@
 
         document.addEventListener("DOMContentLoaded", function () {
       const addRowButton = document.getElementById("addRowButton");
-      const tabelaDados = document.getElementById("tabela-dados").getElementsByTagName('tbody')[0];
+      const tabelaDados = document.getElementById("tabela-dados");
 
       addRowButton.addEventListener("click", function () {
          const newRow = document.createElement("tr");
@@ -203,16 +197,6 @@
       });
    });
 
-    const configButton = document.getElementById("configIA");
-    const configTable = document.getElementById("configTable");
-
-    configButton.addEventListener("click", function() {
-        if (configTable.style.display === "none" || configTable.style.display === "") {
-            configTable.style.display = "table";
-        } else {
-            configTable.style.display = "none";
-        }
-    });
   </script>
 
 {% include 'partials/footer.html' %}
