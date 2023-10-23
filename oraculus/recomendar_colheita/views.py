@@ -8,7 +8,6 @@ from io import BytesIO
 
 
 df=pd.read_csv('crop.csv')
-print(df.describe())
 
 @login_required
 def recomendar_colheita(request):
