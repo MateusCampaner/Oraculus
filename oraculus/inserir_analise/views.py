@@ -128,4 +128,4 @@ def rodar_algoritmo_analise(request):
 
     return render(request, 'resultado.html', context)
 
-#jogar o crud da analise aqui
+
