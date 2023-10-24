@@ -19,16 +19,17 @@
     width: 50px;
   }
 
-  .hidden {
-    display: none;
-  }
+  #sendInfo:disabled {
+  background-color: #6c757d;
+  } 
+
 </style>
 
 <div class="container my-5">
     <div class="mb-5">
       <h1 class="text-body-emphasis">Inserir Análise</h1>
       <p>
-        Configure o algoritmo de IA e insira os dados de uma análise de solo para recomendar o melhor tipo de plantio
+        Configure e treine o algoritmo de IA e insira os dados de uma análise de solo para recomendar o melhor tipo de plantio
       </p>
 
       <br>
@@ -55,14 +56,8 @@
 
       <hr>
 
-      <button id="showInfo" class="btn btn-primary rounded-pill px-3">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-          <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-          <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-        </svg>
-      Configurações da IA</button>
+      <h4 class="text-body-emphasis pt-3 pb-1">Configuração e treinamento da IA</h4>
 
-      <br>
       <br>
 
       <div id="analiseTable" class="hidden">
@@ -101,6 +96,20 @@
 
         </tbody>
       </table>
+
+      <br>
+
+      <button type="submit" id="treinarIA" class="btn btn-success rounded-pill px-3" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cpu-fill" viewBox="0 0 16 16">
+          <path d="M6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+          <path d="M5.5.5a.5.5 0 0 0-1 0V2A2.5 2.5 0 0 0 2 4.5H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2A2.5 2.5 0 0 0 4.5 14v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14a2.5 2.5 0 0 0 2.5-2.5h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14A2.5 2.5 0 0 0 11.5 2V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5zm1 4.5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3A1.5 1.5 0 0 1 6.5 5z"/>
+        </svg>
+      Treinar algoritmo
+      </button>
+
+      <br>
+
+      <h4 class="text-body-emphasis pt-3 pb-1">Acurácia do modelo: </h4>
 
       <hr>
 
@@ -155,8 +164,7 @@
         </table>
       </div>
 
-      <button type="submit" id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false"
-      data-toggle="modal" data-target="#modalConfirm">
+      <button type="submit" id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false" disabled>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
         <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
       </svg>
@@ -174,18 +182,35 @@
 
       <hr>
 
-      
-
+      <form action="{% url 'rodar_analise' %}" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td><input type="number" name="N"></td>
+                <td><input type="number" name="P"></td>
+                <td><input type="number" name="K"></td>
+                <td><input type="float" name="Temperatura"></td>
+                <td><input type="float" name="Umidade"></td>
+                <td><input type="float" name="pH"></td>
+                <td><input type="float" name="Chuva"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Enviar">
+    </form>
+    
 <script>
 
-   const sendInfoButton = document.getElementById('showInfo');
-  const recommendationTable = document.getElementById('analiseTable');
+const treinarButton = document.getElementById("treinarIA");
+  const sendButton = document.getElementById("sendInfo");
 
-  sendInfoButton.addEventListener('click', () => {
-    recommendationTable.classList.toggle('hidden');
+  // Adiciona um ouvinte de evento de clique ao botão "Treinar algoritmo"
+  treinarButton.addEventListener("click", function () {
+    // Habilita o botão "Enviar dados" quando o botão "Treinar algoritmo" é clicado
+    sendButton.removeAttribute("disabled");
+    
   });
 
-
+   
     const slider = document.getElementById('customRange2');
     const sliderValue = document.getElementById('sliderValue');
 

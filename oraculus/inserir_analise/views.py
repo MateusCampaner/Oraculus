@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from analise.models import Analise
 from resultado.views import resultado
+from inserir_analise.forms import AnaliseSoloForm, AnaliseForm, ConfiguracaoAlgoritmoForm
+from analise.models import AnaliseSolo, Analise, ConfiguracaoAlgoritmo
+from django.utils import timezone
 
 import numpy as np
 import pandas as pd
@@ -16,7 +18,17 @@ import matplotlib.pyplot as plt
 
 @login_required
 def inserir_analise(request):
-    return render(request, "inserir_analise.html")
+    formAnaliseSolo = AnaliseSoloForm(request.POST)
+    formAnalise = AnaliseForm(request.POST)
+    formConfiguracaoAlgoritmo = ConfiguracaoAlgoritmoForm(request.POST)
+
+    forms = {
+        'formAnaliseSolo' : formAnaliseSolo,
+        'formAnalise' : formAnalise,
+        'formConfiguracaoAlgoritmo' : formConfiguracaoAlgoritmo,
+    }
+
+    return render(request, "inserir_analise.html", forms)
 
 # Leitura do csv
 df=pd.read_csv('crop.csv')
@@ -127,5 +139,54 @@ def rodar_algoritmo_analise(request):
     }
 
     return render(request, 'resultado.html', context)
+
+
+
+def rodar_analise(request):
+    modelAnaliseSolo = AnaliseSolo
+    modelAnalise = Analise
+    modelConfiguracaoAlgoritmo = ConfiguracaoAlgoritmo
+
+    formAnaliseSolo = AnaliseSoloForm(request.POST)
+    formAnalise = AnaliseForm(request.POST)
+    formConfiguracaoAlgoritmo = ConfiguracaoAlgoritmoForm(request.POST)
+
+    if request.method == 'POST':
+    # Crie o AnaliseSoloForm com os dados preenchidos automaticamente
+        usuario = request.user  # Supondo que você obtém o usuário atual
+        analise_solo_form = AnaliseSoloForm(request.POST, user=usuario)
+
+        if analise_solo_form.is_valid():
+            # Salve o AnaliseSoloForm
+            analise_solo = analise_solo_form.save()
+
+            # Preencha o ConfiguracaoAlgoritmoForm
+            configuracao_form = ConfiguracaoAlgoritmoForm(request.POST)
+            if configuracao_form.is_valid():
+                configuracao = configuracao_form.save(commit=False)
+                configuracao.analiseSolo = analise_solo  # Relacione com o AnaliseSolo
+
+                # Preencha o AnaliseForm
+                analise_form = AnaliseForm(request.POST)
+                if analise_form.is_valid():
+                    analise = analise_form.save(commit=False)
+                    analise.analiseSolo = analise_solo  # Relacione com o AnaliseSolo
+                    analise.save()
+
+                    configuracao.analise = analise  # Relacione com o Analise
+                    configuracao.save()
+
+                    return redirect('alguma_pagina_de_sucesso')  # Redirecione para uma página de sucesso
+
+    else:
+        analise_solo_form = AnaliseSoloForm(user=request.user)
+        configuracao_form = ConfiguracaoAlgoritmoForm()
+        analise_form = AnaliseForm()
+
+    return render(request, 'resultado.html', {
+        'analise_solo_form': analise_solo_form,
+        'configuracao_form': configuracao_form,
+        'analise_form': analise_form,
+    })
 
 
