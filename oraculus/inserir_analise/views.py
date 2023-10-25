@@ -5,6 +5,7 @@ from resultado.views import resultado
 from inserir_analise.forms import AnaliseSoloForm, AnaliseForm, ConfiguracaoAlgoritmoForm
 from analise.models import AnaliseSolo, Analise, ConfiguracaoAlgoritmo
 from django.utils import timezone
+from datetime import date
 
 import numpy as np
 import pandas as pd
@@ -16,59 +17,77 @@ warnings.simplefilter(action='ignore', category=UserWarning)
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-@login_required
-def inserir_analise(request):
-    formAnaliseSolo = AnaliseSoloForm(request.POST)
-    formAnalise = AnaliseForm(request.POST)
-    formConfiguracaoAlgoritmo = ConfiguracaoAlgoritmoForm(request.POST)
-
-    forms = {
-        'formAnaliseSolo' : formAnaliseSolo,
-        'formAnalise' : formAnalise,
-        'formConfiguracaoAlgoritmo' : formConfiguracaoAlgoritmo,
-    }
-
-    return render(request, "inserir_analise.html", forms)
-
-# Leitura do csv
-df=pd.read_csv('crop.csv')
-df.head()
-
-# Preparo da IA para entender os dados
-c=df.label.astype('category')
-targets = dict(enumerate(c.cat.categories))
-df['target']=c.cat.codes
-y=df.target
-X=df[['N','P','K','temperature','humidity','ph','rainfall']]
-
 # Preparar as escalas ph e rainfall
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-
-X_train, X_test, y_train, y_test = train_test_split(X, y,random_state=1, test_size=0.25)
-
-scaler = MinMaxScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-
-X_test_scaled = scaler.transform(X_test)
-
-# Aplicar o modelo KNN
 from sklearn.neighbors import KNeighborsClassifier
-qtdNeighbors = n_neighbors=5
-algoritmo = 'ball_tree'
-pesos = 'uniform'
-knn = KNeighborsClassifier(qtdNeighbors, algorithm=algoritmo, weights=pesos)
-knn.fit(X_train_scaled, y_train)
-knn.score(X_test_scaled, y_test)
+
+
+@login_required
+def inserir_analise(request):
+    return render(request, "inserir_analise.html")
+
+def configurar_algoritmo(request):
+
+    qtdTeste = request.POST.get('qtdTeste')
+    qtdVizinhos = request.POST.get('qtdVizinhos')
+    algoritmo = request.POST.get('algoritmo')
+    pesos = request.POST.get('pesos')
+
+    
+
+    inclusao_algoritmo = ConfiguracaoAlgoritmo(
+        qtdTeste=qtdTeste,
+        qtdVizinhos=qtdVizinhos,
+        algoritmo=algoritmo,
+        pesos=pesos,
+    )
+
+    inclusao_algoritmo.save()
+
+    context = {
+        'qtdTeste': qtdTeste,
+        'qtdVizinhos': qtdVizinhos,
+        'algoritmo': algoritmo,
+        'pesos':pesos,
+    }
+
+    return render(request, 'inserir_analise.html', context)
 
 # Função para fazer previsões com base nos dados inseridos manualmente
-def fazer_previsao_knn(modelo, dados_de_entrada):
+def fazer_previsao_knn(request, modelo, dados_de_entrada):
+    # Leitura do csv
+    df=pd.read_csv('crop.csv')
+    df.head()
+
+    # Preparo da IA para entender os dados
+    c=df.label.astype('category')
+    targets = dict(enumerate(c.cat.categories))
+    df['target']=c.cat.codes
+    y=df.target
+    X=df[['N','P','K','temperature','humidity','ph','rainfall']]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y,random_state=1, test_size=0.25)
+
+    scaler = MinMaxScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+
+    X_test_scaled = scaler.transform(X_test)
+
+    knn = KNeighborsClassifier(n_neighbors=5, algorithm='auto', weights='uniform')
+    knn.fit(X_train_scaled, y_train)
+    knn.score(X_test_scaled, y_test)
 
     dados_de_entrada_padronizados = scaler.transform(dados_de_entrada.reshape(1, -1))
     previsao = modelo.predict(dados_de_entrada_padronizados)
     colheita_prevista = targets.get(previsao[0])
 
-    return colheita_prevista
+    acuracia_modelo = knn.score(X_test_scaled, y_test)
+    acuracia = f"{round((acuracia_modelo * 100), 3)} %"
+
+
+    return (request, colheita_prevista)
+
 
 def salvar_algoritmo_analise(request):
 
@@ -83,8 +102,6 @@ def salvar_algoritmo_analise(request):
     dados_analise = np.array([N, P, K, Temperatura, Umidade, pH, Chuva])
 
     colheita_prevista = fazer_previsao_knn(knn, dados_analise)
-    acuracia_modelo = knn.score(X_test_scaled, y_test)
-    acuracia = f"{round((acuracia_modelo * 100), 3)} %"
 
     inclusao_colheita = Analise(
             N=N,
@@ -109,11 +126,12 @@ def salvar_algoritmo_analise(request):
         'Umidade': Umidade,
         'pH': pH,
         'Chuva': Chuva,
-        'Acuracia': acuracia
+        #'Acuracia': acuracia
     }
 
     return render(request, 'resultado.html', context)
 
+'''
 def rodar_algoritmo_analise(request):
     N = request.POST.get('N')
     P = request.POST.get('P')
@@ -139,9 +157,9 @@ def rodar_algoritmo_analise(request):
     }
 
     return render(request, 'resultado.html', context)
+'''
 
-
-
+'''
 def rodar_analise(request):
     modelAnaliseSolo = AnaliseSolo
     modelAnalise = Analise
@@ -152,7 +170,7 @@ def rodar_analise(request):
     formConfiguracaoAlgoritmo = ConfiguracaoAlgoritmoForm(request.POST)
 
     if request.method == 'POST':
-    # Crie o AnaliseSoloForm com os dados preenchidos automaticamente
+        # Crie o AnaliseSoloForm com os dados preenchidos automaticamente
         usuario = request.user  # Supondo que você obtém o usuário atual
         analise_solo_form = AnaliseSoloForm(request.POST, user=usuario)
 
@@ -183,10 +201,30 @@ def rodar_analise(request):
         configuracao_form = ConfiguracaoAlgoritmoForm()
         analise_form = AnaliseForm()
 
-    return render(request, 'resultado.html', {
+    return render(request, 'sua_template.html', {
         'analise_solo_form': analise_solo_form,
         'configuracao_form': configuracao_form,
         'analise_form': analise_form,
     })
+
+
+def roda_analise_solo(request):
+
+    usuario = request.user.username
+    data = timezone.now()
+
+    # Crie uma instância de AnaliseSolo com os valores necessários
+    nova_analise_solo = AnaliseSolo(usuario=usuario, data_analise=data)  # Supondo que você esteja usando o módulo timezone do Django para obter a data atual
+
+    # Salve a instância no banco de dados
+    nova_analise_solo.save()
+
+def detalhes_analise_solo(request, analise_solo_id):
+    # Suponha que você tenha recuperado a instância de AnaliseSolo com base no ID
+    analise_solo = AnaliseSolo.objects.get(pk=analise_solo_id)
+    
+    return render(request, 'inserir_analise.html', {'analise_solo': analise_solo})
+'''
+
 
 

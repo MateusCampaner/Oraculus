@@ -30,7 +30,6 @@ def calcular_valores(request):
 
         # Lê o arquivo CSV
         df = pd.read_csv('crop.csv')
-
         # Filtra os dados com base no rótulo selecionado
         dados_filtrados = df[df['label'] == label_selecionado]
 

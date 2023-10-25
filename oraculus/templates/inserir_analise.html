@@ -60,41 +60,53 @@
 
       <br>
 
-      <div id="analiseTable" class="hidden">
+      <div id="analiseTable">
 
-      <label for="customRange2" class="form-label">
-        <img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px">
-        <strong> Proporção Teste / Treino: <span id="sliderValue">25</span></strong></label>
-      <input type="range" class="form-range" min="0" max="100" value="25" id="customRange2">
+    <form action="{% url 'configurar_algoritmo' %}" method="POST">
 
-      <table class="table table-striped table-sm">
-        <thead>
-            <th scope="col"><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"> Número de vizinhos</th>
-            <th scope="col"><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"> Algoritmo</th>
-            <th scope="col"><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"> Pesos</th>
-        </thead>
-        </thead>
-        <tbody>
-          <td><input class="numeric-input" type="number" name="neighbors" value="5"></td>
-          <td>
-            <select name="label" id="select-label" class="form-select btn btn-secondary dropdown-toggle custom-margin">
-            
-            <option value="auto" class="dropdown-item">auto</option>
-            <option value="ball_tree" class="dropdown-item">ball_tree</option>
-            <option value="kd_tree" class="dropdown-item">kd_tree</option>
-            <option value="brute" class="dropdown-item">brute</option>
+      {% csrf_token %}
 
-            </select>
-          </td>
-          <td>
-            <select name="label" id="select-label" class="form-select btn btn-secondary dropdown-toggle custom-margin">
-            
-              <option value="uniform" class="dropdown-item">uniform</option>
-              <option value="distance" class="dropdown-item">distance</option>
-            </select>
-          </td>
+      <table>
+        <tr>
+          <label for="customRange2" class="form-label">
+            <img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px">
+            <strong> Proporção Teste / Treino: <span id="sliderValue">25</span></strong></label>
+          <input type="range" class="form-range" min="0" max="100" value="25" id="customRange2" name="qtdTeste">
+    
 
-        </tbody>
+            <table class="table table-striped table-sm">
+              <thead>
+                  <th scope="col"><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"> Número de vizinhos</th>
+                  <th scope="col"><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"> Algoritmo</th>
+                  <th scope="col"><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"> Pesos</th>
+              </thead>
+        
+              <tbody>
+
+                <td><input class="numeric-input" type="number" name="qtdVizinhos" value="5"></td>
+
+                <td>
+                  <select name="algoritmo" id="select-label" class="form-select btn btn-secondary dropdown-toggle custom-margin">
+                  
+                  <option value="auto" class="dropdown-item">auto</option>
+                  <option value="ball_tree" class="dropdown-item">ball_tree</option>
+                  <option value="kd_tree" class="dropdown-item">kd_tree</option>
+                  <option value="brute" class="dropdown-item">brute</option>
+      
+                  </select>
+                </td>
+
+                <td>
+                  <select name="pesos" id="select-label" class="form-select btn btn-secondary dropdown-toggle custom-margin">
+                  
+                    <option value="uniform" class="dropdown-item">uniform</option>
+                    <option value="distance" class="dropdown-item">distance</option>
+                  </select>
+                </td>
+      
+              </tbody>
+            </table>
+        </tr>
       </table>
 
       <br>
@@ -107,6 +119,10 @@
       Treinar algoritmo
       </button>
 
+
+    </form>
+
+      <br>
       <br>
 
       <h4 class="text-body-emphasis pt-3 pb-1">Acurácia do modelo: </h4>
@@ -182,31 +198,16 @@
 
       <hr>
 
-      <form action="{% url 'rodar_analise' %}" method="POST">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td><input type="number" name="N"></td>
-                <td><input type="number" name="P"></td>
-                <td><input type="number" name="K"></td>
-                <td><input type="float" name="Temperatura"></td>
-                <td><input type="float" name="Umidade"></td>
-                <td><input type="float" name="pH"></td>
-                <td><input type="float" name="Chuva"></td>
-            </tr>
-        </table>
-        <input type="submit" value="Enviar">
-    </form>
+  
     
 <script>
 
 const treinarButton = document.getElementById("treinarIA");
   const sendButton = document.getElementById("sendInfo");
 
-  // Adiciona um ouvinte de evento de clique ao botão "Treinar algoritmo"
+
   treinarButton.addEventListener("click", function () {
-    // Habilita o botão "Enviar dados" quando o botão "Treinar algoritmo" é clicado
-    sendButton.removeAttribute("disabled");
+  sendButton.removeAttribute("disabled");
     
   });
 

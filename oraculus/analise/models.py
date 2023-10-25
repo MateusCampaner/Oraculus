@@ -14,7 +14,7 @@ class Analise(models.Model):
     pH = models.FloatField()
     Chuva = models.FloatField()
     Colheita = models.CharField(max_length=50)
-    analiseSolo = models.ForeignKey(AnaliseSolo, on_delete=models.CASCADE)
+    #analiseSolo = models.ForeignKey(AnaliseSolo, on_delete=models.CASCADE)
 
 class ConfiguracaoAlgoritmo(models.Model):
     qtdTeste = models.FloatField()
@@ -22,4 +22,4 @@ class ConfiguracaoAlgoritmo(models.Model):
     algoritmo = models.CharField(max_length=15)
     pesos = models.CharField(max_length=15)
     acuracia = models.FloatField()
-    analiseSolo = models.ForeignKey(AnaliseSolo, on_delete=models.CASCADE)
+    #analiseSolo = models.ForeignKey(AnaliseSolo, on_delete=models.CASCADE)
