@@ -1,0 +1,142 @@
+{% load static %}
+
+{% include 'partials/head.html' %}
+
+{% include 'partials/header.html' %}
+
+<style>
+    .numeric-input::-webkit-inner-spin-button,
+    .numeric-input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  
+    .numeric-input {
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 50px;
+    }
+  
+</style>
+
+<div class="container my-5">
+    <div class="mb-5">
+      <h1 class="text-body-emphasis">Configuração do algoritmo</h1>
+      <p>
+        Configure e treine o algoritmo de IA para utiliza-lo em uma analise de solo
+      </p>
+
+      <a href="{% url 'inserir_analise' %}" class="btn btn-primary rounded-pill px-3 pe-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
+        Voltar</a>
+
+        <br>
+        <br>
+
+      <div id="analiseTable">
+
+        <form action="{% url 'treinar_algoritmo' %}" method="POST">
+    
+          {% csrf_token %}
+    
+          <table>
+            <tr>
+              <label for="customRange2" class="form-label">
+                <img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px">
+                <strong> Proporção Teste / Treino: <span id="sliderValue">25</span></strong></label>
+              <input type="range" class="form-range" min="0" max="100" value="25" id="customRange2" name="qtdTeste">
+        
+    
+                <table class="table table-striped table-sm">
+                  <thead>
+                      <th scope="col"><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"> Número de vizinhos</th>
+                      <th scope="col"><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"> Algoritmo</th>
+                      <th scope="col"><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"> Pesos</th>
+                  </thead>
+            
+                  <tbody>
+    
+                    <td><input class="numeric-input" type="number" name="qtdVizinhos" value="5"></td>
+    
+                    <td>
+                      <select name="algoritmo" id="select-label" class="form-select btn btn-secondary dropdown-toggle custom-margin">
+                      
+                      <option value="auto" class="dropdown-item">auto</option>
+                      <option value="ball_tree" class="dropdown-item">ball_tree</option>
+                      <option value="kd_tree" class="dropdown-item">kd_tree</option>
+                      <option value="brute" class="dropdown-item">brute</option>
+          
+                      </select>
+                    </td>
+    
+                    <td>
+                      <select name="pesos" id="select-label" class="form-select btn btn-secondary dropdown-toggle custom-margin">
+                      
+                        <option value="uniform" class="dropdown-item">uniform</option>
+                        <option value="distance" class="dropdown-item">distance</option>
+                      </select>
+                    </td>
+          
+                  </tbody>
+                </table>
+            </tr>
+          </table>
+    
+          <br>
+    
+          <button type="submit" id="treinarIA" class="btn btn-success rounded-pill px-3" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cpu-fill" viewBox="0 0 16 16">
+              <path d="M6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+              <path d="M5.5.5a.5.5 0 0 0-1 0V2A2.5 2.5 0 0 0 2 4.5H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2A2.5 2.5 0 0 0 4.5 14v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14a2.5 2.5 0 0 0 2.5-2.5h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14A2.5 2.5 0 0 0 11.5 2V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5zm1 4.5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3A1.5 1.5 0 0 1 6.5 5z"/>
+            </svg>
+          Treinar algoritmo
+          </button>
+
+          <a href="{% url 'ajuda' %}">
+            <button class="btn btn-primary rounded-pill px-3 mx-right">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
+              </svg> Ajuda
+            </button>
+          </a>
+
+        </form>
+
+    </div>
+
+        <hr>
+    
+        <h4 class="text-body-emphasis pt-3 pb-1">Acurácia do modelo: {{ acuracia }} %</h4>
+
+        <h4 class="text-body-emphasis pt-3 pb-1">Configurações do modelo</h4>
+        <ul>
+            <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ qtdTeste}}</strong></li>
+            <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ qtdVizinhos }}</strong></li>
+            <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ algoritmo }}</strong></li>
+            <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ pesos }}</strong></li>
+        </ul>
+          
+        <hr>
+
+
+
+    </div>
+<div>
+
+<script>
+
+const slider = document.getElementById('customRange2');
+    const sliderValue = document.getElementById('sliderValue');
+
+
+    slider.addEventListener('input', function() {
+      sliderValue.textContent = slider.value;
+    });
+
+</script>
+
+{% include 'partials/footer.html' %}
