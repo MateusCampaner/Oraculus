@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(layout="wide")
 
+
+
 # Leitura do csv
 df=pd.read_csv('../crop.csv')
 df.head()
@@ -30,10 +32,10 @@ X_test_scaled = scaler.transform(X_test)
 
 # Aplicar o modelo KNN
 from sklearn.neighbors import KNeighborsClassifier
-qtdNeighbors = n_neighbors=5
+qtdNeighbors = 5
 algoritmo = 'ball_tree'
 pesos = 'uniform'
-knn = KNeighborsClassifier(qtdNeighbors, algorithm=algoritmo, weights=pesos)
+knn = KNeighborsClassifier(n_neighbors=qtdNeighbors, algorithm=algoritmo, weights=pesos)
 knn.fit(X_train_scaled, y_train)
 knn.score(X_test_scaled, y_test)
 

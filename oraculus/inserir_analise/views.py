@@ -64,33 +64,51 @@ def treinar_algoritmo(request):
     acuracia_modelo = knn.score(X_test_scaled, y_test)
     acuracia = round((acuracia_modelo * 100), 3)
 
-    infos_algoritmo = ConfiguracaoAlgoritmo(
-        qtdTeste = qtdTeste,
-        qtdVizinhos = qtdVizinhos,
-        algoritmo = algoritmo,
-        pesos = pesos,
-        acuracia=acuracia,
-        )
-
-    infos_algoritmo.save()
-
-    context = {
+    dados_algoritmo= {
         'knn': knn,
         'X_train': X_train,
         'targets': targets,
-        'qtd_teste': qtdTeste,
+        'qtdTeste': qtdTeste,
         'qtdVizinhos': qtdVizinhos,
         'algoritmo': algoritmo,
         'pesos': pesos,
         'acuracia': acuracia
     }
 
-    knn, X_train, targets, qtdTeste, qtdVizinhos, algoritmo, pesos, acuracia
+    return render(request, 'configura_algoritmo.html', dados_algoritmo)
 
-    return render(request, 'configura_algoritmo.html', context)
+def salvar_algoritmo(request):
+    
+    qtdTeste = request.POST.get('qtdTeste')
+    qtdVizinhos = request.POST.get('qtdVizinhos')
+    algoritmo = request.POST.get('algoritmo')
+    pesos = request.POST.get('pesos')
+    acuracia = request.POST.get('acuracia')
 
 
-def fazer_previsao_knn(modelo, dados_de_entrada, X_train, targets, qtdTeste, qtdVizinhos, algoritmo, pesos, acuracia):
+    infos_algoritmo = ConfiguracaoAlgoritmo(
+        qtdTeste=qtdTeste,
+        qtdVizinhos=qtdVizinhos,
+        algoritmo=algoritmo,
+        pesos=pesos,
+        acuracia=acuracia,
+    )
+    infos_algoritmo.save()
+
+
+def fazer_previsao_knn(modelo, dados_de_entrada):
+    # Leitura do csv
+    df=pd.read_csv('crop.csv')
+
+    # Preparo da IA para entender os dados
+    c=df.label.astype('category')
+    targets = dict(enumerate(c.cat.categories))
+    df['target']=c.cat.codes
+
+    y=df.target
+    X=df[['N','P','K','temperature','humidity','ph','rainfall']]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y,random_state=1, test_size=0.25)
     
     scaler = MinMaxScaler()
     X_train_scaled = scaler.fit_transform(X_train)

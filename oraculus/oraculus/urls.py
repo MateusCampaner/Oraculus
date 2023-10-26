@@ -3,7 +3,7 @@ from django.urls import path, include
 from home.views import home, ajuda, sobre
 from usuario.views import index
 from django.contrib.auth import views as auth_views
-from inserir_analise.views import inserir_analise, salvar_algoritmo_analise, treinar_algoritmo, configura_algoritmo #rodar_algoritmo_analise,rodar_analise, roda_analise_solo, detalhes_analise_solo
+from inserir_analise.views import inserir_analise, salvar_algoritmo_analise, treinar_algoritmo, configura_algoritmo, salvar_algoritmo #rodar_algoritmo_analise,rodar_analise, roda_analise_solo, detalhes_analise_solo
 from recomendar_colheita.views import recomendar_colheita, enviar_colheita, calcular_valores, gerar_relatorio_colheita
 from acessar_dados.views import acessar_dados, delete_analises, visualizar_analise
 from visualizar_analise.views import delete_analise, gerar_relatorio_analise
@@ -31,6 +31,7 @@ urlpatterns = [
     path("delete_inserir_analise/<int:id>/", delete_analises, name="delete_inserir_analise"),
     path("treinar_algoritmo", treinar_algoritmo, name="treinar_algoritmo"),
     path("configura_algoritmo", configura_algoritmo, name="configura_algoritmo"),
+    path("salvar_algoritmo", salvar_algoritmo, name="salvar_algoritmo"),
     #path("rodar_algoritmo_analise/", rodar_algoritmo_analise, name="rodar_algoritmo_analise"),
     #path("rodar_analise/", rodar_analise, name="rodar_analise"),
     #path("roda_analise_solo/", roda_analise_solo, name="roda_analise_solo"),
