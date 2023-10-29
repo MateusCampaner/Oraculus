@@ -32,7 +32,7 @@ def gerar_relatorio_analise(request):
     cnv.drawString(160, 720, f"Usuário: {usuario.username}")
     cnv.drawString(350, 720, f"Data: 00/00/0000")
 
-    cnv.drawString(35, 690, "Colheita recomendada: Bosta")
+    cnv.drawString(35, 690, "Colheita recomendada: Arroz")
 
     cnv.setFont('Helvetica', 14)
 

@@ -1,0 +1,228 @@
+{% load static %}
+
+{% include 'partials/head.html' %}
+
+{% include 'partials/header.html' %}
+
+<style>
+    .numeric-input::-webkit-inner-spin-button,
+    .numeric-input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  
+    .numeric-input {
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 50px;
+    }
+
+    .alert {
+    position: relative;
+    }
+
+    .progress {
+        height: 4px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .progress-bar {
+        width: 0;
+        transition: width 5s linear;
+    }
+
+  
+</style>
+
+<div class="container my-5">
+    <div class="mb-5">
+
+      {% for msg in messages %}
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        
+        {% endfor %}
+        
+      <h1 class="text-body-emphasis">Configuração do modelo</h1>
+      <p>
+        Configure e treine o modelo do algoritmo da IA para utiliza-lo em uma análise de solo
+      </p>
+
+      <a href="{% url 'inserir_analise' %}" class="btn btn-primary rounded-pill px-3 pe-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
+        Voltar</a>
+
+        <br>
+        <br>
+
+      <div id="analiseTable">
+
+        <form action="{% url 'treinar_algoritmo' %}" method="POST">
+    
+          {% csrf_token %}
+    
+          <table>
+            <tr>
+              <label for="customRange2" class="form-label">
+                <img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px">
+                <strong> Proporção Teste / Treino: <span id="sliderValue">25</span></strong></label>
+              <input type="range" class="form-range" min="0" max="100" value="25" id="customRange2" name="qtdTeste">
+        
+    
+                <table class="table table-striped table-sm">
+                  <thead>
+                      <th scope="col"><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"> Número de vizinhos</th>
+                      <th scope="col"><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"> Algoritmo</th>
+                      <th scope="col"><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"> Pesos</th>
+                  </thead>
+            
+                  <tbody>
+    
+                    <td><input class="numeric-input" type="number" name="qtdVizinhos" value="5"></td>
+    
+                    <td>
+                      <select name="algoritmo" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin">
+                      
+                      <option value="auto" class="dropdown-item">auto</option>
+                      <option value="ball_tree" class="dropdown-item">ball_tree</option>
+                      <option value="kd_tree" class="dropdown-item">kd_tree</option>
+                      <option value="brute" class="dropdown-item">brute</option>
+          
+                      </select>
+                    </td>
+    
+                    <td>
+                      <select name="pesos" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin">
+                      
+                        <option value="uniform" class="dropdown-item">uniform</option>
+                        <option value="distance" class="dropdown-item">distance</option>
+                      </select>
+                    </td>
+          
+                  </tbody>
+                </table>
+            </tr>
+          </table>
+    
+          <br>
+    
+          <button type="submit" id="treinarIA" class="btn btn-success rounded-pill px-3" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cpu-fill" viewBox="0 0 16 16">
+              <path d="M6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+              <path d="M5.5.5a.5.5 0 0 0-1 0V2A2.5 2.5 0 0 0 2 4.5H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2A2.5 2.5 0 0 0 4.5 14v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14a2.5 2.5 0 0 0 2.5-2.5h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14A2.5 2.5 0 0 0 11.5 2V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5zm1 4.5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3A1.5 1.5 0 0 1 6.5 5z"/>
+            </svg>
+          Treinar Modelo
+          </button>
+
+          <a href="{% url 'ajuda' %}">
+            <button class="btn btn-primary rounded-pill px-3 mx-right">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
+              </svg> Ajuda
+            </button>
+          </a>
+
+        </form>
+
+    </div>
+
+        <hr>
+
+       
+      
+    
+        <h4 class="text-body-emphasis pt-3 pb-1">Acurácia do modelo: {{ acuracia }} %</h4>
+
+        <h4 class="text-body-emphasis pt-3 pb-1">Configurações do modelo</h4>
+        <ul>
+            <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ qtdTeste}}</strong></li>
+            <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ qtdVizinhos }}</strong></li>
+            <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ algoritmo }}</strong></li>
+            <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ pesos }}</strong></li>
+        </ul>
+
+        
+
+        <form action="{% url 'salvar_algoritmo' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="qtdTeste" value="{{ qtdTeste }}" />
+          <input type="hidden" name="qtdVizinhos" value="{{ qtdVizinhos }}" />
+          <input type="hidden" name="algoritmo" value="{{ algoritmo }}" />
+          <input type="hidden" name="pesos" value="{{ pesos }}" />
+          <input type="hidden" name="acuracia" value="{{ acuracia }}" />
+        
+
+        <button type="submit" class="btn btn-success rounded-pill px-3 mx-right">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z"/>
+            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+          </svg>
+          Salvar Modelo</a>
+        </button>
+      </form>
+        <hr>
+
+        <h4 class="text-body-emphasis pt-3 pb-1">Matriz de confusão</h4>
+
+        <a href="{% url 'inserir_analise' %}" class="btn btn-success rounded-pill px-3 pe-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+          </svg>
+          Gerear matriz de confusão</a>
+
+          <br>
+          <br>
+
+      <iframe class="streamlit"
+      src="http://localhost:8501"
+      height="950"
+      style="width:100%;border:none;"
+      ></iframe>
+
+      <hr>
+
+    </div>
+<div>
+
+<script>
+
+const slider = document.getElementById('customRange2');
+    const sliderValue = document.getElementById('sliderValue');
+
+
+    slider.addEventListener('input', function() {
+      sliderValue.textContent = slider.value;
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var alertMessages = document.querySelectorAll(".alert");
+        alertMessages.forEach(function(alertMessage) {
+            var progressBar = alertMessage.querySelector(".progress-bar");
+
+            setTimeout(function() {
+                progressBar.style.width = "100%";
+                progressBar.setAttribute("aria-valuenow", 100);
+                
+                progressBar.addEventListener("transitionend", function() {
+                    alertMessage.classList.add("d-none");
+                });
+
+            }, 1000);
+        });
+    });
+</script>
+
+{% include 'partials/footer.html' %}

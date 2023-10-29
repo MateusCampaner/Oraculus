@@ -18,13 +18,12 @@
     font-size: 14px;
     width: 50px;
   }
+
+  #sendInfo:disabled {
+  background-color: #6c757d;
+  } 
+
 </style>
-
-{% include 'partials/modal_confirmacao.html' %}
-
-{% include 'partials/modal_upload_csv.html' %}
-
-
 
 <div class="container my-5">
     <div class="mb-5">
@@ -35,6 +34,7 @@
 
       <br>
 
+      <!--
       <a href="#" class="link-body-emphasis text-decoration-none" aria-expanded="false"
      data-toggle="modal" data-target="#modalUploadCSV">
       <button id="uploadCSV" class="btn btn-primary rounded-pill px-3 mx-right">
@@ -52,6 +52,64 @@
         </svg>
         Baixar modelo CSV
       </button>
+      -->
+
+
+
+        <a href="{% url 'configura_algoritmo' %}">
+          <button class="btn btn-success rounded-pill px-3 mx-right">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cpu-fill" viewBox="0 0 16 16">
+              <path d="M6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+              <path d="M5.5.5a.5.5 0 0 0-1 0V2A2.5 2.5 0 0 0 2 4.5H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2A2.5 2.5 0 0 0 4.5 14v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14a2.5 2.5 0 0 0 2.5-2.5h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14A2.5 2.5 0 0 0 11.5 2V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5zm1 4.5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3A1.5 1.5 0 0 1 6.5 5z"/>
+            </svg> Configurar Algoritmo
+          </button>
+        </a>
+      
+        <hr>
+
+        <h4 class="text-body-emphasis pt-3 pb-1">Selecionar Algoritmo</h4>
+
+        <select name="label" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin" style="width: 250px;">
+            
+              <option value="Arroz" class="dropdown-item">Algoritmo 10</option>
+              <option value="Milho" class="dropdown-item">Milho</option>
+              <option value="Grão de bico" class="dropdown-item">Grão de bico</option>
+              <option value="Feijão" class="dropdown-item">Feijão</option>
+              <option value="Guandu" class="dropdown-item">Guandu</option>
+              <option value="Feijão Traça" class="dropdown-item">Feijão Traça</option>
+              <option value="Feijão Mungu" class="dropdown-item">Feijão Mungu</option>
+              <option value="Feijão Preto" class="dropdown-item">Feijão Preto</option>
+              <option value="Lentilha" class="dropdown-item">Lentilha</option>
+              <option value="Romã" class="dropdown-item">Romã</option>
+              <option value="Banana" class="dropdown-item">Banana</option>
+              <option value="Manga" class="dropdown-item">Manga</option>
+              <option value="Uva" class="dropdown-item">Uva</option>
+              <option value="Melancia" class="dropdown-item">Melancia</option>
+              <option value="Melão" class="dropdown-item">Melão</option>
+              <option value="Maçã" class="dropdown-item">Maçã</option>
+              <option value="Laranja" class="dropdown-item">Laranja</option>
+              <option value="Mamão Papaya" class="dropdown-item">Mamão Papaya</option>
+              <option value="Coco" class="dropdown-item">Coco</option>
+              <option value="Algodão" class="dropdown-item">Algodão</option>
+              <option value="Juta" class="dropdown-item">Juta</option>
+              <option value="Café" class="dropdown-item">Café</option>
+          </select>
+
+          <h4 class="text-body-emphasis pt-3 pb-1">Configurações do modelo</h4>
+        <ul>
+            <li><img src="../static/img/percent.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Acurácia: {{ acuracia }} %</strong></li>
+            <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ qtdTeste}}</strong></li>
+            <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ qtdVizinhos }}</strong></li>
+            <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ algoritmo }}</strong></li>
+            <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ pesos }}</strong></li>
+        </ul>
+   
+          <hr>
+
+
+
+
+    <h4 class="text-body-emphasis pt-3 pb-1">Dados da análise de solo</h4>
 
     </div>
 
@@ -90,8 +148,7 @@
         </table>
       </div>
 
-      <button type="submit" id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false"
-      data-toggle="modal" data-target="#modalConfirm">
+      <button type="submit" id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
         <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
       </svg>
@@ -106,11 +163,14 @@
           <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
         </svg>
       Adicionar Linha</button>
-      
-      
 
-      <script>
-        const addRowButton = document.getElementById("addRowButton");
+      <hr>
+
+  
+    
+<script>
+
+const addRowButton = document.getElementById("addRowButton");
         addRowButton.addEventListener("click", () => {
           const tbody = document.querySelector("tbody");
           const newRow = document.createElement("tr");
@@ -139,7 +199,7 @@
 
         document.addEventListener("DOMContentLoaded", function () {
       const addRowButton = document.getElementById("addRowButton");
-      const tabelaDados = document.getElementById("tabela-dados").getElementsByTagName('tbody')[0];
+      const tabelaDados = document.getElementById("tabela-dados");
 
       addRowButton.addEventListener("click", function () {
          const newRow = document.createElement("tr");
@@ -156,6 +216,20 @@
          tabelaDados.appendChild(newRow);
       });
    });
-      </script>
+
+const treinarButton = document.getElementById("treinarIA");
+  const sendButton = document.getElementById("sendInfo");
+
+
+  treinarButton.addEventListener("click", function () {
+  sendButton.removeAttribute("disabled");
+    
+  });
+
+   
+    
+
+
+</script>
 
 {% include 'partials/footer.html' %}

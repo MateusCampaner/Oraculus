@@ -29,7 +29,7 @@ def registrar(request):
             user.save()
             return HttpResponse('Usuário cadastrado com sucesso')
 
-    return render(request, 'registrar.html')
+    #return render(request, 'registrar.html')
 
 def login(request):
     if request.method == 'GET':
