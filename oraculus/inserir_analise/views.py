@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from resultado.views import resultado
-from inserir_analise.forms import AnaliseSoloForm, AnaliseForm, ConfiguracaoAlgoritmoForm
 from analise.models import AnaliseSolo, Analise, ConfiguracaoAlgoritmo
 from django.utils import timezone
 from datetime import date
 from django.http import JsonResponse
+from django.contrib import messages
 
 import numpy as np
 import pandas as pd
@@ -85,6 +85,8 @@ def salvar_algoritmo(request):
     pesos = request.POST.get('pesos')
     acuracia = request.POST.get('acuracia')
 
+    qtdTeste = float(qtdTeste.replace(',', '.'))
+    acuracia = float(acuracia.replace(',', '.'))
 
     infos_algoritmo = ConfiguracaoAlgoritmo(
         qtdTeste=qtdTeste,
@@ -94,6 +96,10 @@ def salvar_algoritmo(request):
         acuracia=acuracia,
     )
     infos_algoritmo.save()
+
+    messages.success(request, "Modelo salvo com sucesso")
+
+    return redirect(configura_algoritmo)
 
 
 def fazer_previsao_knn(modelo, dados_de_entrada):
@@ -181,100 +187,6 @@ def salvar_algoritmo_analise(request):
 
     return render(request, 'resultado.html', context)
 
-'''
-def rodar_algoritmo_analise(request):
-    N = request.POST.get('N')
-    P = request.POST.get('P')
-    K = request.POST.get('K')
-    Umidade = request.POST.get('Umidade')
-    Temperatura = request.POST.get('Temperatura')
-    pH = request.POST.get('pH')
-    Chuva = request.POST.get('Chuva')
-
-    dados_analise = np.array([N, P, K, Umidade, Temperatura, pH, Chuva])
-
-    colheita_prevista = fazer_previsao_knn(knn, dados_analise)
-
-    context = {
-        'colheita_prevista': colheita_prevista,
-        'N': N,
-        'P': P,
-        'K': K,
-        'Temperatura': Temperatura,
-        'Umidade': Umidade,
-        'pH': pH,
-        'Chuva': Chuva,
-    }
-
-    return render(request, 'resultado.html', context)
-'''
-
-'''
-def rodar_analise(request):
-    modelAnaliseSolo = AnaliseSolo
-    modelAnalise = Analise
-    modelConfiguracaoAlgoritmo = ConfiguracaoAlgoritmo
-
-    formAnaliseSolo = AnaliseSoloForm(request.POST)
-    formAnalise = AnaliseForm(request.POST)
-    formConfiguracaoAlgoritmo = ConfiguracaoAlgoritmoForm(request.POST)
-
-    if request.method == 'POST':
-        # Crie o AnaliseSoloForm com os dados preenchidos automaticamente
-        usuario = request.user  # Supondo que você obtém o usuário atual
-        analise_solo_form = AnaliseSoloForm(request.POST, user=usuario)
-
-        if analise_solo_form.is_valid():
-            # Salve o AnaliseSoloForm
-            analise_solo = analise_solo_form.save()
-
-            # Preencha o ConfiguracaoAlgoritmoForm
-            configuracao_form = ConfiguracaoAlgoritmoForm(request.POST)
-            if configuracao_form.is_valid():
-                configuracao = configuracao_form.save(commit=False)
-                configuracao.analiseSolo = analise_solo  # Relacione com o AnaliseSolo
-
-                # Preencha o AnaliseForm
-                analise_form = AnaliseForm(request.POST)
-                if analise_form.is_valid():
-                    analise = analise_form.save(commit=False)
-                    analise.analiseSolo = analise_solo  # Relacione com o AnaliseSolo
-                    analise.save()
-
-                    configuracao.analise = analise  # Relacione com o Analise
-                    configuracao.save()
-
-                    return redirect('alguma_pagina_de_sucesso')  # Redirecione para uma página de sucesso
-
-    else:
-        analise_solo_form = AnaliseSoloForm(user=request.user)
-        configuracao_form = ConfiguracaoAlgoritmoForm()
-        analise_form = AnaliseForm()
-
-    return render(request, 'sua_template.html', {
-        'analise_solo_form': analise_solo_form,
-        'configuracao_form': configuracao_form,
-        'analise_form': analise_form,
-    })
-
-
-def roda_analise_solo(request):
-
-    usuario = request.user.username
-    data = timezone.now()
-
-    # Crie uma instância de AnaliseSolo com os valores necessários
-    nova_analise_solo = AnaliseSolo(usuario=usuario, data_analise=data)  # Supondo que você esteja usando o módulo timezone do Django para obter a data atual
-
-    # Salve a instância no banco de dados
-    nova_analise_solo.save()
-
-def detalhes_analise_solo(request, analise_solo_id):
-    # Suponha que você tenha recuperado a instância de AnaliseSolo com base no ID
-    analise_solo = AnaliseSolo.objects.get(pk=analise_solo_id)
-    
-    return render(request, 'inserir_analise.html', {'analise_solo': analise_solo})
-'''
 
 
 

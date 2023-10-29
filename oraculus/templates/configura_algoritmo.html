@@ -18,14 +18,44 @@
       font-size: 14px;
       width: 50px;
     }
+
+    .alert {
+    position: relative;
+    }
+
+    .progress {
+        height: 4px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .progress-bar {
+        width: 0;
+        transition: width 5s linear;
+    }
+
   
 </style>
 
 <div class="container my-5">
     <div class="mb-5">
-      <h1 class="text-body-emphasis">Configuração do algoritmo</h1>
+
+      {% for msg in messages %}
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        
+        {% endfor %}
+        
+      <h1 class="text-body-emphasis">Configuração do modelo</h1>
       <p>
-        Configure e treine o algoritmo de IA para utiliza-lo em uma analise de solo
+        Configure e treine o modelo do algoritmo da IA para utiliza-lo em uma análise de solo
       </p>
 
       <a href="{% url 'inserir_analise' %}" class="btn btn-primary rounded-pill px-3 pe-3">
@@ -63,7 +93,7 @@
                     <td><input class="numeric-input" type="number" name="qtdVizinhos" value="5"></td>
     
                     <td>
-                      <select name="algoritmo" id="select-label" class="form-select btn btn-secondary dropdown-toggle custom-margin">
+                      <select name="algoritmo" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin">
                       
                       <option value="auto" class="dropdown-item">auto</option>
                       <option value="ball_tree" class="dropdown-item">ball_tree</option>
@@ -74,7 +104,7 @@
                     </td>
     
                     <td>
-                      <select name="pesos" id="select-label" class="form-select btn btn-secondary dropdown-toggle custom-margin">
+                      <select name="pesos" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin">
                       
                         <option value="uniform" class="dropdown-item">uniform</option>
                         <option value="distance" class="dropdown-item">distance</option>
@@ -93,7 +123,7 @@
               <path d="M6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
               <path d="M5.5.5a.5.5 0 0 0-1 0V2A2.5 2.5 0 0 0 2 4.5H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2A2.5 2.5 0 0 0 4.5 14v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14a2.5 2.5 0 0 0 2.5-2.5h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14A2.5 2.5 0 0 0 11.5 2V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5zm1 4.5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3A1.5 1.5 0 0 1 6.5 5z"/>
             </svg>
-          Treinar algoritmo
+          Treinar Modelo
           </button>
 
           <a href="{% url 'ajuda' %}">
@@ -109,6 +139,9 @@
     </div>
 
         <hr>
+
+       
+      
     
         <h4 class="text-body-emphasis pt-3 pb-1">Acurácia do modelo: {{ acuracia }} %</h4>
 
@@ -120,17 +153,38 @@
             <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ pesos }}</strong></li>
         </ul>
 
-        <a href="{% url 'salvar_algoritmo' %}" class="btn btn-success rounded-pill px-3 mx-right"></i>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z"/>
-              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
-            </svg>
-            Salvar Algoritmo</a>
-          
+        
+
+        <form action="{% url 'salvar_algoritmo' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="qtdTeste" value="{{ qtdTeste }}" />
+          <input type="hidden" name="qtdVizinhos" value="{{ qtdVizinhos }}" />
+          <input type="hidden" name="algoritmo" value="{{ algoritmo }}" />
+          <input type="hidden" name="pesos" value="{{ pesos }}" />
+          <input type="hidden" name="acuracia" value="{{ acuracia }}" />
+        
+
+        <button type="submit" class="btn btn-success rounded-pill px-3 mx-right">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z"/>
+            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+          </svg>
+          Salvar Modelo</a>
+        </button>
+      </form>
         <hr>
 
         <h4 class="text-body-emphasis pt-3 pb-1">Matriz de confusão</h4>
+
+        <a href="{% url 'inserir_analise' %}" class="btn btn-success rounded-pill px-3 pe-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+          </svg>
+          Gerear matriz de confusão</a>
+
+          <br>
+          <br>
 
       <iframe class="streamlit"
       src="http://localhost:8501"
@@ -153,6 +207,22 @@ const slider = document.getElementById('customRange2');
       sliderValue.textContent = slider.value;
     });
 
+    document.addEventListener("DOMContentLoaded", function() {
+        var alertMessages = document.querySelectorAll(".alert");
+        alertMessages.forEach(function(alertMessage) {
+            var progressBar = alertMessage.querySelector(".progress-bar");
+
+            setTimeout(function() {
+                progressBar.style.width = "100%";
+                progressBar.setAttribute("aria-valuenow", 100);
+                
+                progressBar.addEventListener("transitionend", function() {
+                    alertMessage.classList.add("d-none");
+                });
+
+            }, 1000);
+        });
+    });
 </script>
 
 {% include 'partials/footer.html' %}
