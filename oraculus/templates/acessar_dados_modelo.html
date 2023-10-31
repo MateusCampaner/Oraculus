@@ -1,0 +1,106 @@
+{% load static %}
+
+{% include 'partials/head.html' %}
+
+{% include 'partials/header.html' %}
+
+<style>
+    .numeric-input::-webkit-inner-spin-button,
+    .numeric-input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  
+    .numeric-input {
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 50px;
+    }
+  </style>
+
+<body>
+
+    <div class="container my-5">
+      <div class="mb-5">
+        <h1 class="text-body-emphasis">Modelos Treinados</h1>
+        <p>
+          Acesse os dados dos seus modelos treinados
+        </p>
+  
+        <br>
+  
+        <main class="container">
+  
+            <a href="{% url 'acessar_dados_analise' %}" class="btn btn-primary px-3 pe-3"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-clipboard-data" viewBox="0 0 16 16">
+                    <path d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0V9z"/>
+                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                  </svg> Análise
+              </a>
+      
+              <a href="{% url 'acessar_dados_modelo' %}" class="btn btn-secondary px-3 pe-3"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cpu-fill" viewBox="0 0 16 16">
+                    <path d="M6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+                    <path d="M5.5.5a.5.5 0 0 0-1 0V2A2.5 2.5 0 0 0 2 4.5H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2A2.5 2.5 0 0 0 4.5 14v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14a2.5 2.5 0 0 0 2.5-2.5h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14A2.5 2.5 0 0 0 11.5 2V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5zm1 4.5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3A1.5 1.5 0 0 1 6.5 5z"/>
+                  </svg> Modelo
+              </a>
+  
+          <br>
+          <br>
+  
+          <div class="input-group mb-3">
+  
+            <input type="text" class="form-control link-body-emphasis text-decoration-none" placeholder="Pesquisar" id="searchInput">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg></button>
+          </div>
+  
+          <br>
+  
+          <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-0">Modelos</h6>
+  
+            {% for modelo in modelos %}
+            <div class="d-flex text-body-secondary pt-3">
+              <img src="../static/img/cpu.svg" alt="logo-oraculus" width="32px" height="32px">
+              <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                
+                <div class="d-flex justify-content-between">
+  
+                  <h4><strong class="text-body-emphasis ps-2"><a href="{% url 'visualizar_modelo' modelo.id %}">Modelo {{ modelo.id }}</a></strong></h4>
+  
+                <a href="{% url 'delete_modelos' modelo.id %}" class="btn btn-danger rounded-pill px-3 pe-3"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                  </svg> Deletar
+                </a>
+  
+                </div>
+
+                <h4 class="text-body-emphasis pt-3 pb-1">Acurácia: {{ modelo.acuracia }} %</h4>
+  
+                <ul>
+                  <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ modelo.qtdTeste}}</strong></li>
+                  <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ modelo.qtdVizinhos }}</strong></li>
+                  <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ modelo.algoritmo }}</strong></li>
+                  <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ modelo.pesos }}</strong></li>
+                </ul>
+
+              </div>
+            </div>
+            
+            {% endfor %}
+  
+        </main>
+  
+      </div>
+    </div>
+  
+  </body>
+
+{% include 'partials/footer.html' %}
