@@ -71,33 +71,20 @@
 
         <select name="label" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin" style="width: 250px;">
             
-              <option value="Arroz" class="dropdown-item">Algoritmo 10</option>
-              <option value="Milho" class="dropdown-item">Milho</option>
-              <option value="Grão de bico" class="dropdown-item">Grão de bico</option>
-              <option value="Feijão" class="dropdown-item">Feijão</option>
-              <option value="Guandu" class="dropdown-item">Guandu</option>
-              <option value="Feijão Traça" class="dropdown-item">Feijão Traça</option>
-              <option value="Feijão Mungu" class="dropdown-item">Feijão Mungu</option>
-              <option value="Feijão Preto" class="dropdown-item">Feijão Preto</option>
-              <option value="Lentilha" class="dropdown-item">Lentilha</option>
-              <option value="Romã" class="dropdown-item">Romã</option>
-              <option value="Banana" class="dropdown-item">Banana</option>
-              <option value="Manga" class="dropdown-item">Manga</option>
-              <option value="Uva" class="dropdown-item">Uva</option>
-              <option value="Melancia" class="dropdown-item">Melancia</option>
-              <option value="Melão" class="dropdown-item">Melão</option>
-              <option value="Maçã" class="dropdown-item">Maçã</option>
-              <option value="Laranja" class="dropdown-item">Laranja</option>
-              <option value="Mamão Papaya" class="dropdown-item">Mamão Papaya</option>
-              <option value="Coco" class="dropdown-item">Coco</option>
-              <option value="Algodão" class="dropdown-item">Algodão</option>
-              <option value="Juta" class="dropdown-item">Juta</option>
-              <option value="Café" class="dropdown-item">Café</option>
+              <option value="Padrão" class="dropdown-item">Modelo padrão - 97,636%</option>
+
+              {% for modelo in modelos %}
+              
+              <option value="Modelo" class="dropdown-item">Modelo {{modelo.id}} - {{ modelo.acuracia }}%</option>
+
+              {% endfor %}
+              
+  
           </select>
 
           <h4 class="text-body-emphasis pt-3 pb-1">Configurações do modelo</h4>
         <ul>
-            <li><img src="../static/img/percent.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Acurácia: {{ acuracia }} %</strong></li>
+            <li><h5>Acurácia: {{ modelo.acuracia }} %</h5></li>
             <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ qtdTeste}}</strong></li>
             <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ qtdVizinhos }}</strong></li>
             <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ algoritmo }}</strong></li>

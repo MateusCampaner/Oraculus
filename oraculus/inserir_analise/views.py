@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from resultado.views import resultado
-from analise.models import AnaliseSolo, Analise, ConfiguracaoAlgoritmo
+from analise.models import Analise, ConfiguracaoAlgoritmo
 from django.utils import timezone
 from datetime import date
 from django.http import JsonResponse
@@ -23,9 +23,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import KNeighborsClassifier
 
+from django.contrib.auth.models import User
+
 @login_required
 def inserir_analise(request):
-    return render(request, "inserir_analise.html")
+    modelos = ConfiguracaoAlgoritmo.objects.all()
+    return render(request, "inserir_analise.html", {'modelos': modelos})
 
 def configura_algoritmo(request):
     return render(request, "configura_algoritmo.html")
@@ -88,7 +91,11 @@ def salvar_algoritmo(request):
     qtdTeste = float(qtdTeste.replace(',', '.'))
     acuracia = float(acuracia.replace(',', '.'))
 
+
+    usuario = User.objects.get(username='m4ec')
+
     infos_algoritmo = ConfiguracaoAlgoritmo(
+        usuario=usuario,
         qtdTeste=qtdTeste,
         qtdVizinhos=qtdVizinhos,
         algoritmo=algoritmo,
@@ -160,6 +167,8 @@ def salvar_algoritmo_analise(request):
 
     colheita_prevista = fazer_previsao_knn(knn, dados_analise)
 
+    usuario = User.objects.get(username='mateus')
+
     inclusao_colheita = Analise(
             N=N,
             P=P,
@@ -169,9 +178,48 @@ def salvar_algoritmo_analise(request):
             pH=pH,
             Chuva=Chuva,
             Colheita=colheita_prevista,
+            usuario=usuario,
         )
 
     inclusao_colheita.save()
+
+    dados_filtrados = df[df['label'] == colheita_prevista]
+
+    # Calculando a média
+    media_n = dados_filtrados['N'].mean()
+    media_p = dados_filtrados['P'].mean()
+    media_k = dados_filtrados['K'].mean()
+    media_temperature = dados_filtrados['temperature'].mean()
+    media_humidity = dados_filtrados['humidity'].mean()
+    media_ph = dados_filtrados['ph'].mean()
+    media_rainfall = dados_filtrados['rainfall'].mean()
+
+    #Calculando o desvio padrão
+    std_n = dados_filtrados['N'].std()
+    std_p = dados_filtrados['P'].std()
+    std_k = dados_filtrados['K'].std()
+    std_temperature = dados_filtrados['temperature'].std()
+    std_humidity = dados_filtrados['humidity'].std()
+    std_ph = dados_filtrados['ph'].std()
+    std_rainfall = dados_filtrados['rainfall'].std()
+
+    N = int(N)
+    P = int(P)
+    K = int(K)
+    Temperatura = float(Temperatura)
+    Umidade = float(Umidade)
+    pH = float(pH)
+    Chuva = float(Chuva)
+
+    #Calculando o Score-Z
+    scoreZ_n = (N - media_n) / std_n
+    scoreZ_p = (P - media_p) / std_p
+    scoreZ_k = (K - media_k) / std_k
+    scoreZ_temperature = (Temperatura - media_temperature) / std_temperature
+    scoreZ_humidity = (Umidade - media_humidity) / std_humidity
+    scoreZ_ph = (pH - media_ph) / std_ph
+    scoreZ_rainfall = (Chuva - media_rainfall) / std_rainfall
+
 
     context = {
         'colheita_prevista': colheita_prevista,
@@ -182,7 +230,13 @@ def salvar_algoritmo_analise(request):
         'Umidade': Umidade,
         'pH': pH,
         'Chuva': Chuva,
-        #'Acuracia': acuracia
+        'scoreZ_n': round(scoreZ_n, 2),
+        'scoreZ_p': round(scoreZ_p, 2),
+        'scoreZ_k': round(scoreZ_k, 2),
+        'scoreZ_temperature': round(scoreZ_temperature, 2),
+        'scoreZ_humidity': round(scoreZ_humidity, 2),
+        'scoreZ_ph': round(scoreZ_ph, 2),
+        'scoreZ_rainfall': round(scoreZ_rainfall, 2),
     }
 
     return render(request, 'resultado.html', context)

@@ -47,43 +47,7 @@
 
   <div class="d-flex justify-content align-items-center mt-3">
     <div class="dropdown d-flex">
-      <!--
-        <button class="btn btn-primary dropdown-toggle custom-margin" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            Selecione uma cultura
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="max-height: 200px; overflow-y: auto;">
-            <li>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Pesquisar" id="searchInput">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">
-                      <i class="bi bi-search pe-2"></i></button>
-                </div>
-            </li>
-            <li>
-              <li><a class="dropdown-item" href="" data-value="Arroz">Arroz</a></li>
-              <li><a class="dropdown-item" href="" data-value="Milho">Milho</a></li>
-              <li><a class="dropdown-item" href="" data-value="Grão de bico">Grão de bico</a></li>
-              <li><a class="dropdown-item" href="" data-value="Feijão">Feijão</a></li>
-              <li><a class="dropdown-item" href="" data-value="Guandu">Guandu</a></li>
-              <li><a class="dropdown-item" href="" data-value="Feijão Traça">Feijão Traça</a></li>
-              <li><a class="dropdown-item" href="" data-value="Feijão Mungu">Feijão Mungu</a></li>
-              <li><a class="dropdown-item" href="" data-value="Feijão Preto">Feijão Preto</a></li>
-              <li><a class="dropdown-item" href="" data-value="Lentilha">Lentilha</a></li>
-              <li><a class="dropdown-item" href="" data-value="Romã">Romã</a></li>
-              <li><a class="dropdown-item" href="" data-value="Banana">Banana</a></li>
-              <li><a class="dropdown-item" href="" data-value="Manga">Manga</a></li>
-              <li><a class="dropdown-item" href="" data-value="Uva">Uva</a></li>
-              <li><a class="dropdown-item" href="" data-value="Melancia">Melancia</a></li>
-              <li><a class="dropdown-item" href="" data-value="Melão">Melão</a></li>
-              <li><a class="dropdown-item" href="" data-value="Maçã">Maçã</a></li>
-              <li><a class="dropdown-item" href="" data-value="Laranja">Laranja</a></li>
-              <li><a class="dropdown-item" href="" data-value="Mamão Papaya">Mamão Papaya</a></li>
-              <li><a class="dropdown-item" href="" data-value="Coco">Coco</a></li>
-              <li><a class="dropdown-item" href="" data-value="Algodão">Algodão</a></li>
-              <li><a class="dropdown-item" href="" data-value="Juta">Juta</a></li>
-              <li><a class="dropdown-item" href="" data-value="Café">Café</a></li>
-        </ul>
-      -->
+
         <form method="POST" id="selecionar-form" action="{% url 'calcular_valores' %}">
 
           {% csrf_token %}
@@ -115,7 +79,7 @@
           </select>
 
           <button id="sendInfo" class="btn btn-success px-3" aria-expanded="false">
-            <i class="bi bi-arrow-up-right pe-2"></i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+            <i class="bi bi-arrow-up-right pe-2"></i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z"/>
             </svg> Recomendar Colheita
           </button>
