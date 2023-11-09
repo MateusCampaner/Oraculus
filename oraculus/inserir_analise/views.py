@@ -91,7 +91,6 @@ def salvar_algoritmo(request):
     qtdTeste = float(qtdTeste.replace(',', '.'))
     acuracia = float(acuracia.replace(',', '.'))
 
-
     usuario = User.objects.get(username='m4ec')
 
     infos_algoritmo = ConfiguracaoAlgoritmo(
@@ -102,6 +101,7 @@ def salvar_algoritmo(request):
         pesos=pesos,
         acuracia=acuracia,
     )
+    
     infos_algoritmo.save()
 
     messages.success(request, "Modelo salvo com sucesso")
@@ -166,22 +166,6 @@ def salvar_algoritmo_analise(request):
     knn.score(X_test_scaled, y_test)
 
     colheita_prevista = fazer_previsao_knn(knn, dados_analise)
-
-    usuario = User.objects.get(username='mateus')
-
-    inclusao_colheita = Analise(
-            N=N,
-            P=P,
-            K=K,
-            Temperatura=Temperatura,
-            Umidade=Umidade,
-            pH=pH,
-            Chuva=Chuva,
-            Colheita=colheita_prevista,
-            usuario=usuario,
-        )
-
-    inclusao_colheita.save()
 
     dados_filtrados = df[df['label'] == colheita_prevista]
 

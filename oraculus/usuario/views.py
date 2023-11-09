@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate
@@ -21,13 +20,18 @@ def registrar(request):
         user = User.objects.filter(username=username).first()
 
         if user:
-            return HttpResponse('Usuário já existe')
+            messages.error(request, "Usuário já existe")
+
+            return render(request, 'registrar.html')
         
           
         else:
             user = User.objects.create_user(username=username, email=email, password=senha)
             user.save()
-            return HttpResponse('Usuário cadastrado com sucesso')
+
+            messages.success(request, "Usuário cadastrado com sucesso")
+
+            return render(request, 'registrar.html')
 
     #return render(request, 'registrar.html')
 
@@ -45,7 +49,9 @@ def login(request):
 
             return redirect(home)
         else:
-            return HttpResponse('Usuário ou senha inválidos')
+            messages.error(request, "Usuário ou senha inválidos")
+
+            return render(request, 'login.html')
 
 @login_required
 def plataforma(request):

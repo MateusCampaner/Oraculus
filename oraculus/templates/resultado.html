@@ -19,15 +19,24 @@
     width: 50px;
   }
 
-  .hidden {
-    display: none;
-  }
+  .alert {
+    position: relative;
+    }
 
 </style>
 
-
 <div class="container my-5">
   <div class="mb-5">
+
+    {% for msg in messages %}
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  
+    {% endfor %}
+
     <h1 class="text-body-emphasis">Resultado Análise</h1>
 
     <div class="my-3 p-3 bg-body rounded shadow-sm">
@@ -46,12 +55,27 @@
 
     <br>
 
-    <button type=submit class="btn btn-success rounded-pill px-3 mx-right">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
-        <path d="M11 2H9v3h2V2Z"/>
-        <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0ZM1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5Zm3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4v4.5ZM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5V15Z"/>
-      </svg> Salvar análise
-   </button>
+    <form action="{% url 'salvar_analises' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="N" value="{{ N }}" />
+      <input type="hidden" name="P" value="{{ P }}" />
+      <input type="hidden" name="K" value="{{ K }}" />
+      <input type="hidden" name="Temperatura" value="{{ Temperatura }}" />
+      <input type="hidden" name="Umidade" value="{{ Umidade }}" />
+      <input type="hidden" name="pH" value="{{ pH }}" />
+      <input type="hidden" name="Chuva" value="{{ Chuva }}" />
+      <input type="hidden" name="colheita_prevista" value="{{ colheita_prevista }}" />
+    
+      <button type=submit class="btn btn-success rounded-pill px-3 mx-right">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
+          <path d="M11 2H9v3h2V2Z"/>
+          <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0ZM1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5Zm3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4v4.5ZM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5V15Z"/>
+        </svg> Salvar análise
+     </button>
+    
+  </form>
+
+    
 
   </div>
 
@@ -141,7 +165,7 @@
   </div>
 </div>
 
-
+<script src="{% static '../static/js/bootstrap.js' %}"></script>
 
 <script>
   
@@ -159,7 +183,15 @@
     IaInfoTable.classList.toggle('hidden');
   });
 
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var alert = document.querySelector('.alert');
+    var closeButton = document.querySelector('.btn-close');
   
+    closeButton.addEventListener('click', function () {
+      alert.style.display = 'none';
+    });
+  });
 
 </script>
 
