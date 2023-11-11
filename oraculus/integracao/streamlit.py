@@ -24,53 +24,58 @@ qtdVizinhos = int(qtdVizinhos)
 qtdTeste = float(qtdTeste.replace(',', '.'))
 acuracia = float(acuracia.replace(',', '.'))
 
+st.set_page_config(page_title=f"Oraculus Dashboard {modelo_id}", page_icon="../static/img/logo-oraculus.png", layout="wide")
 
-# Use os valores conforme necessário
-st.write(f'Modelo ID: {modelo_id}')
-st.write(f'Usuário: {usuario}')
-st.write(f'Data de Análise: {data_analise}')
-st.write(f'Acurácia: {acuracia}')
-st.write(f'Quantidade de Testes: {qtdTeste}')
-st.write(f'Quantidade de Vizinhos: {qtdVizinhos}')
-st.write(f'Algoritmo: {algoritmo}')
-st.write(f'Pesos: {pesos}')
+st.sidebar.header(f"Modelo {modelo_id}")
 
-# Leitura do csv
-df=pd.read_csv('../crop.csv')
-df.head()
+st.sidebar.write(f'Usuário: {usuario}')
+st.sidebar.write(f'Data de Análise: {data_analise}')
+st.sidebar.write(f'Acurácia: {acuracia} %')
+st.sidebar.write(f'Quantidade de Testes: {qtdTeste}')
+st.sidebar.write(f'Quantidade de Vizinhos: {qtdVizinhos}')
+st.sidebar.write(f'Algoritmo: {algoritmo}')
+st.sidebar.write(f'Pesos: {pesos}')
 
-# Preparo da IA para entender os dados
-c=df.label.astype('category')
-targets = dict(enumerate(c.cat.categories))
-df['target']=c.cat.codes
-y=df.target
-X=df[['N','P','K','temperature','humidity','ph','rainfall']]
+if st.sidebar.button("Vusualizar Dados"):
 
-# Preparar as escalas ph e rainfall
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
+    st.title("Matriz de confusão")
 
-X_train, X_test, y_train, y_test = train_test_split(X, y,random_state=1, test_size=qtdTeste)
+    # Leitura do csv
+    df=pd.read_csv('../crop.csv')
+    df.head()
 
-scaler = MinMaxScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+    # Preparo da IA para entender os dados
+    c=df.label.astype('category')
+    targets = dict(enumerate(c.cat.categories))
+    df['target']=c.cat.codes
+    y=df.target
+    X=df[['N','P','K','temperature','humidity','ph','rainfall']]
 
-# Aplicar o modelo KNN
-from sklearn.neighbors import KNeighborsClassifier
-knn = KNeighborsClassifier(n_neighbors=qtdVizinhos, algorithm=algoritmo, weights=pesos)
-knn.fit(X_train_scaled, y_train)
-knn.score(X_test_scaled, y_test)
+    # Preparar as escalas ph e rainfall
+    from sklearn.model_selection import train_test_split
+    from sklearn.preprocessing import MinMaxScaler
 
-from sklearn.metrics import confusion_matrix
-mat=confusion_matrix(y_test,knn.predict(X_test_scaled))
-df_cm = pd.DataFrame(mat, list(targets.values()), list(targets.values()))
-sns.set(font_scale=1.0) 
-plt.figure(figsize = (12,12))
-sns.heatmap(df_cm, annot=True, annot_kws={"size": 12},cmap="terrain")
+    X_train, X_test, y_train, y_test = train_test_split(X, y,random_state=1, test_size=qtdTeste)
 
-fig, ax = plt.subplots(figsize=(12, 8))
-sns.heatmap(pd.DataFrame(mat, list(targets.values()), list(targets.values())), annot=True, annot_kws={"size": 10}, cmap="terrain", ax=ax)
-st.pyplot(fig)
+    scaler = MinMaxScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+
+    # Aplicar o modelo KNN
+    from sklearn.neighbors import KNeighborsClassifier
+    knn = KNeighborsClassifier(n_neighbors=qtdVizinhos, algorithm=algoritmo, weights=pesos)
+    knn.fit(X_train_scaled, y_train)
+    knn.score(X_test_scaled, y_test)
+
+    from sklearn.metrics import confusion_matrix
+    mat=confusion_matrix(y_test,knn.predict(X_test_scaled))
+    df_cm = pd.DataFrame(mat, list(targets.values()), list(targets.values()))
+    sns.set(font_scale=1.0) 
+    plt.figure(figsize = (20, 20))
+    sns.heatmap(df_cm, annot=True, annot_kws={"size": 15},cmap="terrain")
+
+    fig, ax = plt.subplots(figsize=(12, 8))
+    sns.heatmap(pd.DataFrame(mat, list(targets.values()), list(targets.values())), annot=True, annot_kws={"size": 10}, cmap="terrain", ax=ax)
+    st.pyplot(fig)
 
     

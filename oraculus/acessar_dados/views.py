@@ -119,9 +119,4 @@ def visualizar_modelo(request, id):
     modelos = ConfiguracaoAlgoritmo.objects.get(id=id)
     return render(request, 'visualizar_modelo.html', {'modelos': modelos})
 
-def dashboard_modelo(request, id):
-    modelo = ConfiguracaoAlgoritmo.objects.get(id=id)
-    url = f'http://localhost:8501/?modelo_id={modelo.id}&modelo_qtdTeste={modelo.qtdTeste}'
-
-    return redirect(url)
 
