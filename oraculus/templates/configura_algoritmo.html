@@ -157,35 +157,6 @@
         </button>
       </form>
         <hr>
-
-        <h4 class="text-body-emphasis pt-3 pb-1">Matriz de confusão</h4>
-
-        <form action="{% url 'gerar_matriz_confusao' %}" method="POST">
-          {% csrf_token %}
-          <input type="hidden" name="qtdTeste" value="{{ qtdTeste }}" />
-          <input type="hidden" name="qtdVizinhos" value="{{ qtdVizinhos }}" />
-          <input type="hidden" name="algoritmo" value="{{ algoritmo }}" />
-          <input type="hidden" name="pesos" value="{{ pesos }}" />
-        
-        <button type="submit" class="btn btn-success rounded-pill px-3 pe-2 mx-right">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
-            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
-          </svg>
-          Gerar Matriz de Confusão
-        </button>
-      </form>
-
-          <br>
-          <br>
-
-      <iframe class="streamlit"
-      src="http://localhost:8501"
-      height="950"
-      style="width:100%;border:none;"
-      ></iframe>
-
-      <hr>
-
     </div>
 <div>
 

@@ -25,6 +25,7 @@ from sklearn.neighbors import KNeighborsClassifier
 
 from django.contrib.auth.models import User
 
+
 @login_required
 def inserir_analise(request):
     modelos = ConfiguracaoAlgoritmo.objects.all()

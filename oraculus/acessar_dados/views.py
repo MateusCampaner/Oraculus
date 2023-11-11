@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from analise.models import Analise, ConfiguracaoAlgoritmo
 import pandas as pd
+from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 @login_required
 def acessar_dados(request):
@@ -116,3 +118,10 @@ def delete_modelos(request, id):
 def visualizar_modelo(request, id):
     modelos = ConfiguracaoAlgoritmo.objects.get(id=id)
     return render(request, 'visualizar_modelo.html', {'modelos': modelos})
+
+def dashboard_modelo(request, id):
+    modelo = ConfiguracaoAlgoritmo.objects.get(id=id)
+    url = f'http://localhost:8501/?modelo_id={modelo.id}&modelo_qtdTeste={modelo.qtdTeste}'
+
+    return redirect(url)
+

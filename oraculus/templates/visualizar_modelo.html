@@ -116,25 +116,22 @@
           <li><img src="../../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ modelos.qtdVizinhos }}</strong></li>
           <li><img src="../../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ modelos.algoritmo }}</strong></li>
           <li><img src="../../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ modelos.pesos }}</strong></li>
-        </ul>      
+        </ul> 
+        
+        <hr>
 
-        <h4 class="text-body-emphasis pt-3 pb-1">Matriz de confusão</h4>
+        <h4 class="text-body-emphasis pt-3 pb-1">Dashboard do Modelo</h4>
 
-        <a href="{% url 'inserir_analise' %}" class="btn btn-success rounded-pill px-3 pe-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
-            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
-          </svg>
-          Gerear matriz de confusão</a>
+        <p>Acesse o dashboard do modelo para ter mais infromações sobre o modelo treinado no botão abaixo</p>
 
-          <br>
-          <br>
-
-      <iframe class="streamlit"
-      src="http://localhost:8501"
-      height="950"
-      style="width:100%;border:none;"
-      ></iframe>
-              
+      <a href="http://localhost:8501?id={{ modelos.id }}&user={{ modelos.usuario }}&data={{ modelos.data_analise }}&acuracia={{ modelos.acuracia }}&qtdTeste={{ modelos.qtdTeste }}&qtdVizinhos={{ modelos.qtdVizinhos }}&algoritmo={{ modelos.algoritmo }}&pesos={{ modelos.pesos }}">
+        <button class="btn btn-primary rounded-pill px-3 mt-2 mx-right">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-speedometer2" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+            <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z"/>
+          </svg> Acessar Dashboard
+        </button>
+      </a>
 
       <hr>
 
