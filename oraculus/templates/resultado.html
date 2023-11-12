@@ -12,12 +12,19 @@
   }
 
   .numeric-input {
-    padding: 4px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 50px;
-  }
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 50px;
+      text-align: center;
+      background-color: #F2F2F2;
+    }
+
+    input:focus {
+      outline: none; 
+      border: 1px solid #ccc;
+    }
 
   .alert {
     position: relative;
@@ -96,7 +103,7 @@
           </tr>
         </thead>
         <tbody>
-          <form action="{% url 'salvar_algoritmo_analise' %}" method="POST">
+          <form action="{% url 'salvar_analises' %}" method="POST">
 
             {% csrf_token %}
           <tr>
@@ -150,14 +157,14 @@
 
     <hr>
 
-    <h4 class="text-body-emphasis pb-1">Modelo utilizado: {{ modelos.id }} </h4>
-    <h4 class="text-body-emphasis pb-1">Acurácia: {{ modelos.acuracia }} %</h4>
+    <h4 class="text-body-emphasis pb-1">Modelo utilizado: {{ id_modelo }} </h4>
+    <h4 class="text-body-emphasis pb-1">Acurácia: {{ acuracia }} %</h4>
 
       <ul>
-        <li><img src="../../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ modelos.qtdTeste}}</strong></li>
-        <li><img src="../../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ modelos.qtdVizinhos }}</strong></li>
-        <li><img src="../../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ modelos.algoritmo }}</strong></li>
-        <li><img src="../../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ modelos.pesos }}</strong></li>
+        <li><img src="../../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ qtdTeste}}</strong></li>
+        <li><img src="../../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ qtdVizinhos }}</strong></li>
+        <li><img src="../../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ algoritmo }}</strong></li>
+        <li><img src="../../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ pesos }}</strong></li>
       </ul> 
 
     <hr>

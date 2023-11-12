@@ -23,17 +23,24 @@
     margin: 0;
   }
 
-  .numeric-input {
-    padding: 4px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 60px;
-  }
-
   .hidden {
     display: none;
   }
+
+  .numeric-input {
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 50px;
+      text-align: center;
+      background-color: #F2F2F2;
+    }
+
+    input:focus {
+      outline: none; 
+      border: 1px solid #ccc;
+    }
 </style>
 
 
@@ -48,9 +55,9 @@
   <div class="d-flex justify-content align-items-center mt-3">
     <div class="dropdown d-flex">
 
-        <form method="POST" id="selecionar-form" action="{% url 'calcular_valores' %}">
+          <form method="POST" id="selecionar-form" action="{% url 'calcular_valores' %}">
 
-          {% csrf_token %}
+            {% csrf_token %}
 
           <select name="label" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin">
             

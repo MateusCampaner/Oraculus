@@ -109,6 +109,36 @@ def salvar_algoritmo(request):
 
     return redirect(configura_algoritmo)
 
+def selecionar_modelo(request):
+    modelos = ConfiguracaoAlgoritmo.objects.all() 
+
+    if request.method == 'POST':
+        modelo_id = request.POST.get('label')
+
+
+        if modelo_id == 'Padrão':
+            acuracia = 97.636
+            qtdTeste = 0.25
+            qtdVizinhos = 5
+            algoritmo = 'auto'
+            pesos = 'uniform'
+        else:
+            modelo = ConfiguracaoAlgoritmo.objects.get(id=modelo_id)
+            acuracia = modelo.acuracia
+            qtdTeste = modelo.qtdTeste
+            qtdVizinhos = modelo.qtdVizinhos
+            algoritmo = modelo.algoritmo
+            pesos = modelo.pesos
+
+        return render(request, 'inserir_analise.html', {
+            'modelos': modelos,
+            'id': modelo_id,
+            'acuracia': acuracia,
+            'qtdTeste': qtdTeste,
+            'qtdVizinhos': qtdVizinhos,
+            'algoritmo': algoritmo,
+            'pesos': pesos,
+        })
 
 def fazer_previsao_knn(modelo, dados_de_entrada):
     # Leitura do csv
@@ -134,7 +164,18 @@ def fazer_previsao_knn(modelo, dados_de_entrada):
 
     return colheita_prevista
 
-def salvar_algoritmo_analise(request):
+def rodar_algoritmo_analise(request):
+
+    id_modelo = request.POST.get('id_modelo')
+    qtdTeste = request.POST.get('qtdTeste')
+    qtdVizinhos = request.POST.get('qtdVizinhos')
+    algoritmo = request.POST.get('algoritmo')
+    pesos = request.POST.get('pesos')
+    acuracia = request.POST.get('acuracia')
+
+    qtdTeste = float(qtdTeste.replace(',', '.'))
+    qtdVizinhos = int(qtdVizinhos)
+    acuracia = float(acuracia.replace(',', '.'))
 
     N = request.POST.get('N')
     P = request.POST.get('P')
@@ -148,7 +189,6 @@ def salvar_algoritmo_analise(request):
 
     df=pd.read_csv('crop.csv')
 
-    # Preparo da IA para entender os dados
     c=df.label.astype('category')
     targets = dict(enumerate(c.cat.categories))
     df['target']=c.cat.codes
@@ -156,13 +196,13 @@ def salvar_algoritmo_analise(request):
     y=df.target
     X=df[['N','P','K','temperature','humidity','ph','rainfall']]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y,random_state=1, test_size=0.25)
+    X_train, X_test, y_train, y_test = train_test_split(X, y,random_state=1, test_size=qtdTeste)
 
     scaler = MinMaxScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    knn = KNeighborsClassifier(n_neighbors=5, algorithm='auto', weights='uniform')
+    knn = KNeighborsClassifier(n_neighbors=qtdVizinhos, algorithm=algoritmo, weights=pesos)
     knn.fit(X_train_scaled, y_train)
     knn.score(X_test_scaled, y_test)
 
@@ -207,6 +247,12 @@ def salvar_algoritmo_analise(request):
 
 
     context = {
+        'id_modelo': id_modelo,
+        'acuracia' : acuracia,
+        'qtdTeste' : qtdTeste,
+        'qtdVizinhos' : qtdVizinhos,
+        'algoritmo' : algoritmo,
+        'pesos' : pesos,
         'colheita_prevista': colheita_prevista,
         'N': N,
         'P': P,
