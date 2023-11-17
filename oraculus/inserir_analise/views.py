@@ -45,6 +45,14 @@ def treinar_algoritmo(request):
     qtdTeste = qtdTeste / 100
     qtdVizinhos = int(qtdVizinhos)
 
+    if qtdVizinhos > 1650:
+        messages.error(request, "O valor máximo de Número de Vizinhos é 1650, escolha um valor menor")
+        return redirect(configura_algoritmo) 
+    
+    elif qtdVizinhos < 1:
+        messages.error(request, "O valor mínimo de Número de Vizinhos é 1, escolha um valor maior")
+        return redirect(configura_algoritmo) 
+
     # Leitura do csv
     df=pd.read_csv('crop.csv')
 
@@ -83,16 +91,21 @@ def treinar_algoritmo(request):
 
 def salvar_algoritmo(request):
     
+    username = request.POST.get('username')
     qtdTeste = request.POST.get('qtdTeste')
     qtdVizinhos = request.POST.get('qtdVizinhos')
     algoritmo = request.POST.get('algoritmo')
     pesos = request.POST.get('pesos')
     acuracia = request.POST.get('acuracia')
 
+    if not (username and qtdTeste and qtdVizinhos and algoritmo and pesos and acuracia):
+        messages.error(request, "Modelo não treinado, realize um treinamento de modelo para salvar")
+        return redirect(configura_algoritmo)
+    
     qtdTeste = float(qtdTeste.replace(',', '.'))
     acuracia = float(acuracia.replace(',', '.'))
 
-    usuario = User.objects.get(username='m4ec')
+    usuario = User.objects.filter(username=username).first()
 
     infos_algoritmo = ConfiguracaoAlgoritmo(
         usuario=usuario,
@@ -173,6 +186,10 @@ def rodar_algoritmo_analise(request):
     pesos = request.POST.get('pesos')
     acuracia = request.POST.get('acuracia')
 
+    if not (id_modelo and qtdTeste and qtdVizinhos and algoritmo and pesos and acuracia):
+        messages.error(request, "Modelo não selecionado, selecione ou treine um modelo para realizar a predição")
+        return redirect(inserir_analise)
+
     qtdTeste = float(qtdTeste.replace(',', '.'))
     qtdVizinhos = int(qtdVizinhos)
     acuracia = float(acuracia.replace(',', '.'))
@@ -185,6 +202,61 @@ def rodar_algoritmo_analise(request):
     pH = request.POST.get('pH')
     Chuva = request.POST.get('Chuva')
 
+    if not N:
+        messages.error(request, "Valor de Nitrogênio nulo, por favor insira um valor")
+        return redirect(inserir_analise)
+    elif not P:
+        messages.error(request, "Valor de Fósforo nulo, por favor insira um valor")
+        return redirect(inserir_analise)
+    elif not K:
+        messages.error(request, "Valor de Potássio nulo, por favor insira um valor")
+        return redirect(inserir_analise)
+    elif not Temperatura:
+        messages.error(request, "Valor de Temperatura nulo, por favor insira um valor")
+        return redirect(inserir_analise)
+    elif not Umidade:
+        messages.error(request, "Valor de Umidade nulo, por favor insira um valor")
+        return redirect(inserir_analise)
+    elif not pH:
+        messages.error(request, "Valor de pH nulo, por favor insira um valor")
+        return redirect(inserir_analise)
+    elif not Chuva:
+        messages.error(request, "Valor de Chuva nulo, por favor insira um valor")
+        return redirect(inserir_analise)
+    
+    N = int(N)
+    P = int(P)
+    K = int(K)
+    Temperatura = float(Temperatura)
+    Umidade = float(Umidade)
+    pH = float(pH)
+    Chuva = float(Chuva)
+
+    if isinstance(Temperatura, str):
+            messages.error(request, "Valor de Temperatura não pode ser um texto, por favor insira um valor numérico")
+            return redirect(inserir_analise)
+    elif isinstance(Umidade, str):
+            messages.error(request, "Valor de Umidade não pode ser um texto, por favor insira um valor numérico")
+            return redirect(inserir_analise)
+    elif isinstance(pH, str):
+            messages.error(request, "Valor de pH não pode ser um texto, por favor insira um valor numérico")
+            return redirect(inserir_analise)
+    elif isinstance(Chuva, str):
+            messages.error(request, "Valor de Chuva não pode ser um texto, por favor insira um valor numérico")
+            return redirect(inserir_analise)
+    if N < 0:
+        messages.error(request, "Valor de Nitrogênio não pode ser negativo, por favor insira um valor acima de 0")
+        return redirect(inserir_analise)
+    elif P < 0:
+        messages.error(request, "Valor de Fósforo não pode ser negativo, por favor insira um valor acima de 0")
+        return redirect(inserir_analise)
+    elif K < 0:
+        messages.error(request, "Valor de Potássio não pode ser negativo, por favor insira um valor acima de 0")
+        return redirect(inserir_analise)
+    elif pH < 1 or pH > 14:
+        messages.error(request, "Valor para o pH inválido, escolha um número entre 1 a 14")
+        return redirect(inserir_analise)
+    
     dados_analise = np.array([N, P, K, Temperatura, Umidade, pH, Chuva])
 
     df=pd.read_csv('crop.csv')

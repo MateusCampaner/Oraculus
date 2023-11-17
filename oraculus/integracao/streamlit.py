@@ -36,7 +36,7 @@ st.sidebar.write(f'Quantidade de Vizinhos: {qtdVizinhos}')
 st.sidebar.write(f'Algoritmo: {algoritmo}')
 st.sidebar.write(f'Pesos: {pesos}')
 
-if st.sidebar.button("Vusualizar Dados"):
+if st.sidebar.button("Visualizar Dados"):
 
     st.title("Matriz de confusão")
 

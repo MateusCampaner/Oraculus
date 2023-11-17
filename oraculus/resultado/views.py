@@ -18,6 +18,8 @@ def get_analises(request):
 
 def salvar_analises(request):
 
+    username = request.POST.get('username')
+    #id_modelo = request.POST.get('id_modelo')
     N = request.POST.get('N')
     P = request.POST.get('P')
     K = request.POST.get('K')
@@ -27,7 +29,7 @@ def salvar_analises(request):
     Chuva = request.POST.get('Chuva')
     Colheita = request.POST.get('colheita_prevista')
 
-    usuario = User.objects.get(username='mateus')
+    usuario = User.objects.filter(username=username).first()
 
     Temperatura = float(Temperatura.replace(',', '.'))
     Umidade = float(Umidade.replace(',', '.'))
@@ -44,6 +46,7 @@ def salvar_analises(request):
         Chuva=Chuva,
         Colheita=Colheita,
         usuario=usuario,
+        #id_modelo=id_modelo
     )
 
     resultado_analise.save()

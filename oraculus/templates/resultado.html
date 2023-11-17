@@ -44,7 +44,7 @@
   
     {% endfor %}
 
-    <h1 class="text-body-emphasis">Resultado Análise</h1>
+    <h1 class="text-body-emphasis">Resultado Análises</h1>
 
     <div class="my-3 p-3 bg-body rounded shadow-sm">
       <h6 class="border-bottom pb-2 mb-0">Com base nos seus resultados a melhor colheita é:</h6>
@@ -64,6 +64,8 @@
 
     <form action="{% url 'salvar_analises' %}" method="POST">
       {% csrf_token %}
+      <input type="hidden" name="id_modelo" value="{{ id_modelo }}" />
+      <input type="hidden" name="username" value="{{ user.username }}" />
       <input type="hidden" name="N" value="{{ N }}" />
       <input type="hidden" name="P" value="{{ P }}" />
       <input type="hidden" name="K" value="{{ K }}" />
