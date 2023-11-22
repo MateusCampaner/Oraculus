@@ -201,16 +201,37 @@
               </ul> 
 
               <hr>
+              <form action="{% url 'gerar_relatorio_analise' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ id }}"/>
+                <input type="hidden" name="username" value="{{ user.username }}" />
+                <input type="hidden" name="data_analise" value="{{ data_analise }}" />
+                <input type="hidden" name="N" value="{{ N }}" />
+                <input type="hidden" name="P" value="{{ P }}" />
+                <input type="hidden" name="K" value="{{ K }}" />
+                <input type="hidden" name="Temperatura" value="{{ Temperatura }}" />
+                <input type="hidden" name="Umidade" value="{{ Umidade }}" />
+                <input type="hidden" name="pH" value="{{ pH }}" />
+                <input type="hidden" name="Chuva" value="{{ Chuva }}" />
+                <input type="hidden" name="colheita_prevista" value="{{ Colheita }}" />
+                <input type="hidden" name="scoreZ_n" value="{{ scoreZ_n }}">
+                <input type="hidden" name="scoreZ_p" value="{{ scoreZ_p }}">
+                <input type="hidden" name="scoreZ_k" value="{{ scoreZ_k }}">
+                <input type="hidden" name="scoreZ_temperature" value="{{ scoreZ_temperature }}">
+                <input type="hidden" name="scoreZ_humidity" value="{{ scoreZ_humidity }}">
+                <input type="hidden" name="scoreZ_ph" value="{{ scoreZ_ph }}">
+                <input type="hidden" name="scoreZ_rainfall" value="{{ scoreZ_rainfall }}">
 
-              <a href="{% url 'gerar_relatorio_analise' %}" class="btn btn-success rounded-pill px-3 mx-right"></i>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z"/>
-                  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-                  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
-                </svg>
-                Gerar Relatório</a>
 
-                
+                <button type=submit class="btn btn-success rounded-pill px-3 mx-right">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z"/>
+                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                  </svg>
+                  Gerar Relatório
+
+                </form>
 
       </div>
     </div>

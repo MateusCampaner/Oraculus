@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from analise.models import Analise
+from analise.models import Analise, ConfiguracaoAlgoritmo
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -17,9 +17,9 @@ def get_analises(request):
     return render(request, 'resultado.html', {'analises': analises})
 
 def salvar_analises(request):
-
+    id_modelo = request.POST.get('id_modelo')
     username = request.POST.get('username')
-    #id_modelo = request.POST.get('id_modelo')
+    configuracao_algoritmo = request.POST.get('id_modelo')
     N = request.POST.get('N')
     P = request.POST.get('P')
     K = request.POST.get('K')
@@ -36,6 +36,11 @@ def salvar_analises(request):
     pH = float(pH.replace(',', '.'))
     Chuva = float(Chuva.replace(',', '.'))
 
+    
+    
+    configuracao_algoritmo = ConfiguracaoAlgoritmo.objects.get(id=id_modelo)
+
+
     resultado_analise = Analise(
         N=N,
         P=P,
@@ -46,7 +51,7 @@ def salvar_analises(request):
         Chuva=Chuva,
         Colheita=Colheita,
         usuario=usuario,
-        #id_modelo=id_modelo
+        configuracao_algoritmo=configuracao_algoritmo,
     )
 
     resultado_analise.save()

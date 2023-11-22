@@ -19,30 +19,46 @@ def delete_analise(request, id):
     return redirect(acessar_dados)
 
 def gerar_relatorio_analise(request):
+    id = request.POST.get('id')
+    username = request.POST.get('username')
+    data_analise = request.POST.get('data_analise')
+    N = request.POST.get('N')
+    P = request.POST.get('P')
+    K = request.POST.get('K')
+    Temperatura = request.POST.get('Temperatura')
+    Umidade = request.POST.get('Umidade')
+    pH = request.POST.get('pH')
+    Chuva = request.POST.get('Chuva')
+    Colheita = request.POST.get('colheita_prevista')
+    scoreZ_n = request.POST.get('scoreZ_n')
+    scoreZ_p = request.POST.get('scoreZ_p')
+    scoreZ_k = request.POST.get('scoreZ_k')
+    scoreZ_temperature = request.POST.get('scoreZ_temperature')
+    scoreZ_humidity = request.POST.get('scoreZ_humidity')
+    scoreZ_ph = request.POST.get('scoreZ_ph')
+    scoreZ_rainfall = request.POST.get('scoreZ_rainfall')
 
     buffer = BytesIO()
     cnv = canvas.Canvas(buffer, pagesize=A4)
 
-    usuario = request.user
-
     cnv.setFont('Helvetica-Bold', 18)
     cnv.drawImage("./recomendar_colheita/relatorio/cabecalho.png", 15, 750)
 
-    cnv.drawString(35, 720, f"Análise {1}")
-    cnv.drawString(160, 720, f"Usuário: {usuario.username}")
-    cnv.drawString(350, 720, f"Data: 00/00/0000")
+    cnv.drawString(35, 720, f"Análise {id}")
+    cnv.drawString(160, 720, f"Usuário: {username}")
+    cnv.drawString(35, 690, f"Data: {data_analise}")
 
-    cnv.drawString(35, 690, "Colheita recomendada: Arroz")
+    cnv.drawString(35, 650, f"Colheita recomendada: {Colheita}")
 
     cnv.setFont('Helvetica', 14)
 
     data_media = [
         ["Nitrogênio", "Potássio", "Fósforo", "Temperatura", "Umidade", "pH", "Chuva"],
-        [f"{00000}", f"{00000}", f"{00000}", f"{00000}", f"{00000}", f"{00000}", f"{00000}"],
+        [f"{N}", f"{P}", f"{K}", f"{Temperatura}", f"{Umidade}", f"{pH}", f"{Chuva}"],
     ]
 
     anal_x = 35
-    anal_y = 650
+    anal_y = 610
 
     col_widths = [72, 72, 72, 90, 72, 72, 72]
 
@@ -57,17 +73,17 @@ def gerar_relatorio_analise(request):
         anal_x = 35
 
     cnv.setFont('Helvetica-Bold', 18)
-    cnv.drawString(35, 600, "Score-Z dos valores da colheita")
+    cnv.drawString(35, 560, "Score-Z dos valores da colheita")
 
     cnv.setFont('Helvetica', 14)
 
     data_media = [
         ["Nitrogênio", "Potássio", "Fósforo", "Temperatura", "Umidade", "pH", "Chuva"],
-        [f"{00000}", f"{00000}", f"{00000}", f"{00000}", f"{00000}", f"{00000}", f"{00000}"],
+        [f"{scoreZ_n}", f"{scoreZ_p}", f"{scoreZ_k}", f"{scoreZ_temperature}", f"{scoreZ_humidity}", f"{scoreZ_ph}", f"{scoreZ_rainfall}"],
     ]
 
     scoreZ_x = 35
-    scoreZ_y = 560
+    scoreZ_y = 520
 
     col_widths = [72, 72, 72, 90, 72, 72, 72]
 
@@ -86,6 +102,6 @@ def gerar_relatorio_analise(request):
 
     buffer.seek(0)
 
-    response = FileResponse(buffer, as_attachment=True, filename="analise.pdf")
+    response = FileResponse(buffer, as_attachment=True, filename=f"analise_{id}.pdf")
     
     return response

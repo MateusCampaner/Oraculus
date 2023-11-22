@@ -227,23 +227,31 @@ def rodar_algoritmo_analise(request):
     N = int(N)
     P = int(P)
     K = int(K)
-    Temperatura = float(Temperatura)
-    Umidade = float(Umidade)
-    pH = float(pH)
-    Chuva = float(Chuva)
 
-    if isinstance(Temperatura, str):
-            messages.error(request, "Valor de Temperatura não pode ser um texto, por favor insira um valor numérico")
-            return redirect(inserir_analise)
-    elif isinstance(Umidade, str):
-            messages.error(request, "Valor de Umidade não pode ser um texto, por favor insira um valor numérico")
-            return redirect(inserir_analise)
-    elif isinstance(pH, str):
-            messages.error(request, "Valor de pH não pode ser um texto, por favor insira um valor numérico")
-            return redirect(inserir_analise)
-    elif isinstance(Chuva, str):
-            messages.error(request, "Valor de Chuva não pode ser um texto, por favor insira um valor numérico")
-            return redirect(inserir_analise)
+    try:
+        Temperatura = float(Temperatura)
+    except (ValueError, TypeError):
+        messages.error(request, "Valor de Temperatura não pode ser um texto, por favor insira um valor numérico")
+        return redirect(inserir_analise)
+    
+    try:
+        Umidade = float(Umidade)
+    except (ValueError, TypeError):
+        messages.error(request, "Valor de Umidade não pode ser um texto, por favor insira um valor numérico")
+        return redirect(inserir_analise)
+    
+    try:
+        pH = float(pH)
+    except (ValueError, TypeError):
+        messages.error(request, "Valor de pH não pode ser um texto, por favor insira um valor numérico")
+        return redirect(inserir_analise)
+    
+    try:
+        Chuva = float(Chuva)
+    except (ValueError, TypeError):
+        messages.error(request, "Valor de Chuva não pode ser um texto, por favor insira um valor numérico")
+        return redirect(inserir_analise)
+            
     if N < 0:
         messages.error(request, "Valor de Nitrogênio não pode ser negativo, por favor insira um valor acima de 0")
         return redirect(inserir_analise)
