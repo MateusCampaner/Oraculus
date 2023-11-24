@@ -15,7 +15,6 @@ def acessar_dados_analise(request):
         analises = Analise.objects.all()
 
     elif request.user.is_authenticated:
-
         analises = Analise.objects.filter(usuario=request.user)
     else:
         analises = []
