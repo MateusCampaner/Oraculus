@@ -190,21 +190,21 @@
 
               <hr>
 
-              <h4 class="text-body-emphasis pb-1">Modelo utilizado: {{ modelos.id }} </h4>
-              <h4 class="text-body-emphasis pb-1">Acurácia: {{ modelos.acuracia }} %</h4>
+              <h4 class="text-body-emphasis pb-1">Modelo utilizado: {{ configuracao_algoritmo.id }} </h4>
+              <h4 class="text-body-emphasis pb-1">Acurácia: {{ configuracao_algoritmo.acuracia }} %</h4>
 
               <ul>
-                <li><img src="../../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ modelos.qtdTeste}}</strong></li>
-                <li><img src="../../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ modelos.qtdVizinhos }}</strong></li>
-                <li><img src="../../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ modelos.algoritmo }}</strong></li>
-                <li><img src="../../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ modelos.pesos }}</strong></li>
+                <li><img src="../../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ configuracao_algoritmo.qtdTeste}}</strong></li>
+                <li><img src="../../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ configuracao_algoritmo.qtdVizinhos }}</strong></li>
+                <li><img src="../../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ configuracao_algoritmo.algoritmo }}</strong></li>
+                <li><img src="../../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ configuracao_algoritmo.pesos }}</strong></li>
               </ul> 
 
               <hr>
               <form action="{% url 'gerar_relatorio_analise' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="id" value="{{ id }}"/>
-                <input type="hidden" name="username" value="{{ user.username }}" />
+                <input type="hidden" name="username" value="{{ usuario }}" />
                 <input type="hidden" name="data_analise" value="{{ data_analise }}" />
                 <input type="hidden" name="N" value="{{ N }}" />
                 <input type="hidden" name="P" value="{{ P }}" />

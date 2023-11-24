@@ -261,8 +261,17 @@ def rodar_algoritmo_analise(request):
     elif K < 0:
         messages.error(request, "Valor de Potássio não pode ser negativo, por favor insira um valor acima de 0")
         return redirect(inserir_analise)
+    elif Temperatura < -10 or Temperatura > 50:
+        messages.error(request, "Valor de Temperatura deve ser entre -10° C e 50° C")
+        return redirect(inserir_analise)
+    elif Umidade < 0 or Umidade > 100:
+        messages.error(request, "Valor de Umidade deve ser entre 0 e 100")
+        return redirect(inserir_analise)
     elif pH < 1 or pH > 14:
         messages.error(request, "Valor para o pH inválido, escolha um número entre 1 a 14")
+        return redirect(inserir_analise)
+    elif Chuva < 0:
+        messages.error(request, "Valor de Chuva, não pode ser negativo")
         return redirect(inserir_analise)
     
     dados_analise = np.array([N, P, K, Temperatura, Umidade, pH, Chuva])

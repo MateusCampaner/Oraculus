@@ -11,11 +11,27 @@ def acessar_dados(request):
     return render(request, "acessar_dados.html")
 
 def acessar_dados_analise(request):
-    analises = Analise.objects.all()
+    if request.user.is_superuser:
+        analises = Analise.objects.all()
+
+    elif request.user.is_authenticated:
+
+        analises = Analise.objects.filter(usuario=request.user)
+    else:
+        analises = []
+
     return render(request, "acessar_dados_analise.html", {'analises': analises})
 
 def acessar_dados_modelo(request):
-    modelos = ConfiguracaoAlgoritmo.objects.all()
+    if request.user.is_superuser:
+        modelos = ConfiguracaoAlgoritmo.objects.all()
+
+    elif request.user.is_authenticated:
+
+        modelos = ConfiguracaoAlgoritmo.objects.filter(usuario=request.user)
+    else:
+        modelos = []  
+    
     return render(request, "acessar_dados_modelo.html", {"modelos": modelos})
 
 def get_analises(request):
@@ -46,6 +62,7 @@ def visualizar_analise(request, id):
     id = analises.id
     data_analise = analises.data_analise
     usuario = analises.usuario
+    configuracao_algoritmo = analises.configuracao_algoritmo
 
     # Calculando a média
     media_n = dados_filtrados['N'].mean()
@@ -102,6 +119,7 @@ def visualizar_analise(request, id):
         'scoreZ_humidity': round(scoreZ_humidity, 2),
         'scoreZ_ph': round(scoreZ_ph, 2),
         'scoreZ_rainfall': round(scoreZ_rainfall, 2),
+        'configuracao_algoritmo': configuracao_algoritmo,
     }
 
     return render(request, 'visualizar_analise.html', context)

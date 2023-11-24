@@ -36,10 +36,10 @@ def salvar_analises(request):
     pH = float(pH.replace(',', '.'))
     Chuva = float(Chuva.replace(',', '.'))
 
-    
-    
-    configuracao_algoritmo = ConfiguracaoAlgoritmo.objects.get(id=id_modelo)
+    if id_modelo == "Padrão":
+        id_modelo = 49
 
+    configuracao_algoritmo = ConfiguracaoAlgoritmo.objects.get(id=id_modelo)
 
     resultado_analise = Analise(
         N=N,
