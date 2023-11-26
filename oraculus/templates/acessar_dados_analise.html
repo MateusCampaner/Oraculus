@@ -61,7 +61,7 @@
   
           <div class="input-group mb-3">
 
-            <input type="text" class="form-control link-body-emphasis text-decoration-none" placeholder="Pesquisar" id="searchInput">
+            <input type="text" id="filtroColheita" class="form-control link-body-emphasis text-decoration-none" placeholder="Pesquisar por nome da colheita">
             <button class="btn btn-primary" type="button" id="button-addon2">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -70,15 +70,13 @@
 
           </div>
 
-          <input type="text" id="filtroColheita" placeholder="Pesquisar por nome da colheita">
-
           <br>
   
           <div class="my-3 p-3 bg-body rounded shadow-sm">
             <h4 class="border-bottom pb-2 mb-0">Análises</h4>
   
             {% for analise in analises %}
-            <div class="analise" data-colheita="{{ analise.Colheita | lower }}"></div>
+            <div class="analise" data-colheita="{{ analise.Colheita | lower }}">
               
             <div class="filtros d-flex text-body-secondary pt-3">
               <img src="../static/img/clipboard-data.svg" alt="logo-oraculus" width="32px" height="32px">
@@ -91,7 +89,7 @@
                 </div>
 
                   <h4 class="text-body-emphasis pb-1">Usuário: {{ analise.usuario }}</h4>
-                  <h4 id="resultadoPesquisa" class="text-body-emphasis pt-3 pb-1">{{ analise.Colheita }}</h4>
+                  <h4 id="resultadoPesquisa" class="text-body-emphasis pt-3 pb-1">Colheita: {{ analise.Colheita }}</h4>
   
                   <div class="table-responsive small">
                     <table class="table table-striped table-sm tabela-dados">
@@ -125,7 +123,8 @@
               </div>
             </div>
               
-            {% endfor %}
+          </div>
+          {% endfor %}
   
         </main>
   
@@ -145,7 +144,6 @@
             const colheita = analise.getAttribute('data-colheita');
             const shouldDisplay = colheita.includes(filtro);
 
-            // Exibe ou oculta a análise conforme corresponda ao filtro
             if (shouldDisplay) {
                 analise.style.display = 'block';
             } else {

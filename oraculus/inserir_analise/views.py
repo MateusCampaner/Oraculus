@@ -45,8 +45,14 @@ def treinar_algoritmo(request):
     qtdTeste = qtdTeste / 100
     qtdVizinhos = int(qtdVizinhos)
 
-    if qtdVizinhos > 1650:
-        messages.error(request, "O valor máximo de Número de Vizinhos é 1650, escolha um valor menor")
+    QTD_DADOS_DATASET = 2200
+    PEDACO_DADOS_DATASET = 22
+
+    tratamento_vizinhos = (QTD_DADOS_DATASET - (PEDACO_DADOS_DATASET * (qtdTeste * 100)))
+    tratamento_vizinhos = int(tratamento_vizinhos)
+
+    if qtdVizinhos > tratamento_vizinhos:
+        messages.error(request, f"O valor máximo de Número de Vizinhos é {tratamento_vizinhos}, escolha um valor menor, ou diminua a proporção de Teste / Treino")
         return redirect(configura_algoritmo) 
     
     elif qtdVizinhos < 1:

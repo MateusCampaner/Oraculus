@@ -90,25 +90,18 @@ description="",
 color_name="orange-70",
 )
 
-graficos = ['Matriz de Confusão', '📈 Gauss - Seidel']
-selecao = st.sidebar.selectbox("Escolha seu gráfico", graficos)
+st.title("Matriz de Confusão")
 
-if selecao == 'Matriz de Confusão':
+from sklearn.metrics import confusion_matrix
+mat=confusion_matrix(y_test,knn.predict(X_test_scaled))
+df_cm = pd.DataFrame(mat, list(targets.values()), list(targets.values()))
+sns.set(font_scale=1.0) 
+plt.figure(figsize = (20, 20))
+sns.heatmap(df_cm, annot=True, annot_kws={"size": 15},cmap="terrain")
 
-    st.title("Matriz de Confusão")
-
-    from sklearn.metrics import confusion_matrix
-    mat=confusion_matrix(y_test,knn.predict(X_test_scaled))
-    df_cm = pd.DataFrame(mat, list(targets.values()), list(targets.values()))
-    sns.set(font_scale=1.0) 
-    plt.figure(figsize = (20, 20))
-    sns.heatmap(df_cm, annot=True, annot_kws={"size": 15},cmap="terrain")
-
-    fig, ax = plt.subplots(figsize=(12, 8))
-    sns.heatmap(pd.DataFrame(mat, list(targets.values()), list(targets.values())), annot=True, annot_kws={"size": 10}, cmap="terrain", ax=ax)
-    st.pyplot(fig)
-else:
-    st.header("📈 Gauss - Seidel")
+fig, ax = plt.subplots(figsize=(12, 8))
+sns.heatmap(pd.DataFrame(mat, list(targets.values()), list(targets.values())), annot=True, annot_kws={"size": 10}, cmap="terrain", ax=ax)
+st.pyplot(fig)
 
 
 def voltar(url):
