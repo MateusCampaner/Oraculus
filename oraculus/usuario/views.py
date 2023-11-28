@@ -17,6 +17,18 @@ def registrar(request):
         email = request.POST.get('email')
         senha = request.POST.get('senha')
 
+        if username == '':
+            messages.error(request, "Username vazio, insira um Username")
+            return render(request, 'registrar.html')
+        
+        elif email == '':
+            messages.error(request, "Email vazio, insira um Email")
+            return render(request, 'registrar.html')
+        
+        elif senha == '':
+            messages.error(request, "Senha vazia, insira uma Senha")
+            return render(request, 'registrar.html')
+        
         user = User.objects.filter(username=username).first()
 
         if user:

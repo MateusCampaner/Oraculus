@@ -190,7 +190,11 @@
 
               <hr>
 
-              <h4 class="text-body-emphasis pb-1">Modelo utilizado: {{ configuracao_algoritmo.id }} </h4>
+              {% if configuracao_algoritmo.id == 1 %}
+              <h4 class="text-body-emphasis pb-1">Modelo utilizado: Padrão </h4>
+              {% else %}
+              <h4 class="text-body-emphasis pb-1">Modelo utilizado: {{ configuracao_algoritmo.id }}</h4>
+              {% endif %}
               <h4 class="text-body-emphasis pb-1">Acurácia: {{ configuracao_algoritmo.acuracia }} %</h4>
 
               <ul>

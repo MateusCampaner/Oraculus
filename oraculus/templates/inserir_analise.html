@@ -61,9 +61,9 @@
               <option value="Padrão" class="dropdown-item">Modelo padrão : 97,636%</option>
 
               {% for modelo in modelos %}
-              
-              <option value="{{modelo.id}}" class="dropdown-item">Modelo {{modelo.id}} : {{ modelo.acuracia }}%</option>
-
+                {% if modelo.id != 1 and modelo.usuario_id == user.id or user.is_superuser%}
+                    <option value="{{ modelo.id }}" class="dropdown-item">Modelo {{ modelo.id }} : {{ modelo.acuracia }}%</option>
+                {% endif %}
               {% endfor %}
               
           </select>

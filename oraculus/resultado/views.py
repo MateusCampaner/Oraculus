@@ -37,7 +37,7 @@ def salvar_analises(request):
     Chuva = float(Chuva.replace(',', '.'))
 
     if id_modelo == "Padrão":
-        id_modelo = 49
+        id_modelo = 1
 
     configuracao_algoritmo = ConfiguracaoAlgoritmo.objects.get(id=id_modelo)
 

@@ -46,6 +46,16 @@
 
 <div class="container my-5">
   <div class="mb-5">
+
+    {% for msg in messages %}
+
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      
+      {% endfor %}
+
     <h1 class="text-body-emphasis">Recomendar Colheita</h1>
     <p>
       Escolha abaixo um tipo de colheita, e nosso Oráculo te recomendará as melhores características de solo para ela
@@ -214,52 +224,64 @@
 
     <hr>
 
-      <a href="{% url 'gerar_relatorio_colheita' %}" class="btn btn-success rounded-pill px-3 mx-right"></i>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z"/>
-          <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-          <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
-        </svg>
-        Gerar Relatório</a>
+        <form action="{% url 'gerar_relatorio_colheita' %}" method="POST">
+          {% csrf_token %}
+
+          <input type="hidden" name="colheita" value="{{ colheita }}">
+          <input type="hidden" name="media_n" value="{{ media_n }}">
+          <input type="hidden" name="media_p" value="{{ media_p }}">
+          <input type="hidden" name="media_k" value="{{ media_k }}">
+          <input type="hidden" name="media_temperature" value="{{ media_temperature }}">
+          <input type="hidden" name="media_humidity" value="{{ media_humidity }}">
+          <input type="hidden" name="media_ph" value="{{ media_ph }}">
+          <input type="hidden" name="media_rainfall" value="{{ media_rainfall }}">
+          <input type="hidden" name="min_n" value="{{ min_n }}">
+          <input type="hidden" name="min_p" value="{{ min_p }}">
+          <input type="hidden" name="min_k" value="{{ min_k }}">
+          <input type="hidden" name="min_temperature" value="{{ min_temperature }}">
+          <input type="hidden" name="min_humidity" value="{{ min_humidity }}">
+          <input type="hidden" name="min_ph" value="{{ min_ph }}">
+          <input type="hidden" name="min_rainfall" value="{{ min_rainfall }}">
+          <input type="hidden" name="max_n" value="{{ max_n }}">
+          <input type="hidden" name="max_p" value="{{ max_p }}">
+          <input type="hidden" name="max_k" value="{{ max_k }}">
+          <input type="hidden" name="max_temperature" value="{{ max_temperature }}">
+          <input type="hidden" name="max_humidity" value="{{ max_humidity }}">
+          <input type="hidden" name="max_ph" value="{{ max_ph }}">
+          <input type="hidden" name="max_rainfall" value="{{ max_rainfall }}">
+          <input type="hidden" name="std_n" value="{{ std_n }}">
+          <input type="hidden" name="std_p" value="{{ std_p }}">
+          <input type="hidden" name="std_k" value="{{ std_k }}">
+          <input type="hidden" name="std_temperature" value="{{ std_temperature }}">
+          <input type="hidden" name="std_humidity" value="{{ std_humidity }}">
+          <input type="hidden" name="std_ph" value="{{ std_ph }}">
+          <input type="hidden" name="std_rainfall" value="{{ std_rainfall }}">
+          
+          <button type=submit class="btn btn-success rounded-pill px-3 mx-right">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z"/>
+              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+            </svg>
+            Gerar Relatório
+
+          </form>
       
   </div>
 
 </div>
 
 <script>
-  const searchInput = document.getElementById('searchInput');
-  const dropdownItems = document.querySelectorAll('.dropdown-item');
-  const dropdownToggle = document.querySelector('.dropdown-toggle');
-  const selectedCropValue = document.getElementById('selectedCropValue');
 
-  searchInput.addEventListener('input', function() {
-      const searchTerm = searchInput.value.toLowerCase();
-
-      dropdownItems.forEach(item => {
-          const itemText = item.textContent.trim().toLowerCase();
-          if (itemText.includes(searchTerm)) {
-              item.style.display = 'block';
-          } else {
-              item.style.display = 'none';
-          }
-      });
-  });
-
-  dropdownItems.forEach(item => {
-    item.addEventListener('click', function(event) {
-      event.preventDefault();
-      dropdownToggle.textContent = item.textContent;
-      selectedCropValue.textContent = `${item.textContent}`;
-    });
-  });
-
-  const sendInfoButton = document.getElementById('sendInfo');
-    const recommendationTable = document.getElementById('recommendationTable');
-
-    sendInfoButton.addEventListener('click', () => {
-      recommendationTable.classList.toggle('hidden');
-    });
+document.addEventListener("DOMContentLoaded", function () {
+      var alert = document.querySelector('.alert');
+      var closeButton = document.querySelector('.btn-close');
   
+      closeButton.addEventListener('click', function () {
+        alert.style.display = 'none';
+      });
+    });
+    
 </script>
 
 {% include 'partials/footer.html' %}

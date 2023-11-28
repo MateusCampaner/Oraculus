@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 import pandas as pd
 from django.http import FileResponse
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from io import BytesIO
+from django.contrib import messages
 
 df=pd.read_csv('crop.csv')
 
@@ -105,53 +106,52 @@ def calcular_valores(request):
 
 
 def gerar_relatorio_colheita(request):
-    
+    colheita = request.POST.get('colheita')
+
+    if not colheita:
+        messages.error(request, "Selecione uma colheita para gerar um relatório")
+        return redirect(recomendar_colheita)
+
+    media_n = request.POST.get('media_n')
+    media_p = request.POST.get('media_p')
+    media_k = request.POST.get('media_k')
+    media_temperature = request.POST.get('media_temperature')
+    media_humidity = request.POST.get('media_humidity')
+    media_ph = request.POST.get('media_ph')
+    media_rainfall = request.POST.get('media_rainfall')
+
+    min_n = request.POST.get('min_n')
+    min_p = request.POST.get('min_p')
+    min_k = request.POST.get('min_k')
+    min_temperature = request.POST.get('min_temperature')
+    min_humidity = request.POST.get('min_humidity')
+    min_ph = request.POST.get('min_ph')
+    min_rainfall = request.POST.get('min_rainfall')
+
+    max_n = request.POST.get('max_n')
+    max_p = request.POST.get('max_p')
+    max_k = request.POST.get('max_k')
+    max_temperature = request.POST.get('max_temperature')
+    max_humidity = request.POST.get('max_humidity')
+    max_ph = request.POST.get('max_ph')
+    max_rainfall = request.POST.get('max_rainfall')
+
+    std_n = request.POST.get('std_n')
+    std_p = request.POST.get('std_p')
+    std_k = request.POST.get('std_k')
+    std_temperature = request.POST.get('std_temperature')
+    std_humidity = request.POST.get('std_humidity')
+    std_ph = request.POST.get('std_ph')
+    std_rainfall = request.POST.get('std_rainfall')
+
     buffer = BytesIO()
     cnv = canvas.Canvas(buffer, pagesize=A4)
-
-    global context
 
     cnv.setFont('Helvetica-Bold', 18)
     cnv.drawImage("./recomendar_colheita/relatorio/cabecalho.png", 15, 750)
 
-    colheita = context.get('colheita')
-
-    # Adicionar texto (ajuste as coordenadas conforme necessário)
     cnv.drawString(35, 720, f"Colheita: {colheita}")
     cnv.drawString(35, 690, "Media dos valores da colheita")
-
-    media_n = context.get('media_n')
-    media_p = context.get('media_p')
-    media_k = context.get('media_k')
-    media_temperature = context.get('media_temperature')
-    media_humidity = context.get('media_humidity')
-    media_ph = context.get('media_ph')
-    media_rainfall = context.get('media_rainfall')
-
-    min_n = context.get('min_n')
-    min_p = context.get('min_p')
-    min_k = context.get('min_k')
-    min_temperature = context.get('min_temperature')
-    min_humidity = context.get('min_humidity')
-    min_ph = context.get('min_ph')
-    min_rainfall = context.get('min_rainfall')
-
-    max_n = context.get('max_n')
-    max_p = context.get('max_p')
-    max_k = context.get('max_k')
-    max_temperature = context.get('max_temperature')
-    max_humidity = context.get('max_humidity')
-    max_ph = context.get('max_ph')
-    max_rainfall = context.get('max_rainfall')
-
-    std_n = context.get('std_n')
-    std_p = context.get('std_p')
-    std_k = context.get('std_k')
-    std_temperature = context.get('std_temperature')
-    std_humidity = context.get('std_humidity')
-    std_ph = context.get('std_ph')
-    std_rainfall = context.get('std_rainfall')
-
 
 
     cnv.setFont('Helvetica', 14)

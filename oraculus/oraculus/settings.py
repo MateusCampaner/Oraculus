@@ -76,7 +76,7 @@ WSGI_APPLICATION = "oraculus.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": 'oraculus_2',
+        "NAME": 'oraculus_db',
         "USER": 'root',
         "PASSWORD": 'root',
         "HOST": 'localhost',
