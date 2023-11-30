@@ -34,7 +34,7 @@
 
       <h1 class="text-body-emphasis">Inserir Análise</h1>
       <p>
-        Insira os dados de uma análise de solo para recomendar o melhor tipo de plantio
+        Selecione um modelo e insira os dados de uma análise de solo para recomendar o melhor tipo de plantio
       </p>
 
       <br>
@@ -56,9 +56,9 @@
 
           {% csrf_token %}
 
-        <select name="label" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin" style="width: 250px;">
+          <select name="label" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin" style="width: 250px;">
             
-              <option value="Padrão" class="dropdown-item">Modelo padrão : 97,636%</option>
+              <option value="Padrão" class="dropdown-item">Modelo Padrão : 97,636%</option>
 
               {% for modelo in modelos %}
                 {% if modelo.id != 1 and modelo.usuario_id == user.id or user.is_superuser%}
@@ -81,13 +81,13 @@
           <hr>
 
           <h4 class="text-body-emphasis pt-3 pb-1">Configurações do Modelo {{ id }}</h4>
-        <ul>
-            <li><h5>Acurácia: {{ acuracia }} %</h5></li>
-            <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ qtdTeste}}</strong></li>
-            <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ qtdVizinhos }}</strong></li>
-            <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ algoritmo }}</strong></li>
-            <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ pesos }}</strong></li>
-        </ul>
+          <ul>
+              <li><h5>Acurácia: {{ acuracia }} %</h5></li>
+              <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ qtdTeste}}</strong></li>
+              <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ qtdVizinhos }}</strong></li>
+              <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ algoritmo }}</strong></li>
+              <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ pesos }}</strong></li>
+          </ul>
    
           <hr>
 
@@ -95,6 +95,10 @@
 
 
     <h4 class="text-body-emphasis pt-3 pb-1">Dados da análise de solo</h4>
+
+    <p>
+      Insira os dados na análsie de solo para obter uma recomendação de colheita
+    </p>
 
     </div>
 
@@ -130,11 +134,13 @@
                 <td><input class="numeric-input" type="float" name="Umidade" value=""></td>
                 <td><input class="numeric-input" type="float" name="pH" value=""></td>
                 <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
-  
+
+                <!--
                 <td><button type="button" class="btn btn-danger remove-row-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                 </svg></button>
               </td>
+                -->
               
               </tr>
 
@@ -151,12 +157,15 @@
 
       </form>
       
-      <button id="addRowButton" class="btn btn-primary rounded-pill px-3">
+
+        <button id="addRowButton" class="btn btn-primary rounded-pill px-3" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
           <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
         </svg>
       Adicionar Linha</button>
+      
+      
 
       <button id="ajuda" class="btn btn-primary rounded-pill px-3">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16">

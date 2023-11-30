@@ -43,6 +43,11 @@ def treinar_algoritmo(request):
 
     qtdTeste = float(qtdTeste)
     qtdTeste = qtdTeste / 100
+
+    if 'e' in qtdVizinhos:
+        messages.error(request, "Valor de Número de vizinhos não pode ser um texto, por favor insira um valor numérico")
+        return redirect(configura_algoritmo) 
+    
     qtdVizinhos = int(qtdVizinhos)
 
     QTD_DADOS_DATASET = 2200
@@ -233,30 +238,32 @@ def rodar_algoritmo_analise(request):
     N = int(N)
     P = int(P)
     K = int(K)
+ 
 
     try:
-        Temperatura = float(Temperatura)
+        Temperatura = float(Temperatura.replace(',', '.'))
     except (ValueError, TypeError):
         messages.error(request, "Valor de Temperatura não pode ser um texto, por favor insira um valor numérico")
         return redirect(inserir_analise)
-    
+
     try:
-        Umidade = float(Umidade)
+        Umidade = float(Umidade.replace(',', '.'))
     except (ValueError, TypeError):
         messages.error(request, "Valor de Umidade não pode ser um texto, por favor insira um valor numérico")
         return redirect(inserir_analise)
-    
+
     try:
-        pH = float(pH)
+        pH = float(pH.replace(',', '.'))
     except (ValueError, TypeError):
         messages.error(request, "Valor de pH não pode ser um texto, por favor insira um valor numérico")
         return redirect(inserir_analise)
-    
+
     try:
-        Chuva = float(Chuva)
+        Chuva = float(Chuva.replace(',', '.'))
     except (ValueError, TypeError):
         messages.error(request, "Valor de Chuva não pode ser um texto, por favor insira um valor numérico")
         return redirect(inserir_analise)
+
             
     if N < 0:
         messages.error(request, "Valor de Nitrogênio não pode ser negativo, por favor insira um valor acima de 0")
