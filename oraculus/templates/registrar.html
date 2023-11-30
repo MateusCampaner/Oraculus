@@ -24,7 +24,18 @@
     <body class="bg-body-tertiary">  
         
     <div class="container">
+
+    {% for msg in messages %}
+
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ msg }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    
+    {% endfor %}
+
         <div class="py-2 text-center">
+
           <p class="lead">
                 Registre-se para utlizar o Oraculus
           </p>
@@ -70,9 +81,17 @@
         </div>
     </div>
 
-      </div>
-    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    
-    </body>
+   </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var alert = document.querySelector('.alert');
+        var closeButton = document.querySelector('.btn-close');
+
+        closeButton.addEventListener('click', function () {
+            alert.style.display = 'none';
+        });
+    });
+</script>
 
 {% include 'partials/footer.html' %}

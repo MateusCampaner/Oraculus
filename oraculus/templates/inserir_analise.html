@@ -18,91 +18,76 @@
     font-size: 14px;
     width: 50px;
   }
-
-  #sendInfo:disabled {
-  background-color: #6c757d;
-  } 
-
 </style>
 
 <div class="container my-5">
     <div class="mb-5">
+
+      {% for msg in messages %}
+
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      
+      {% endfor %}
+
       <h1 class="text-body-emphasis">Inserir Análise</h1>
       <p>
-        Insira os dados de uma análise de solo para recomendar o melhor tipo de plantio
+        Selecione um modelo e insira os dados de uma análise de solo para recomendar o melhor tipo de plantio
       </p>
 
       <br>
-
-      <!--
-      <a href="#" class="link-body-emphasis text-decoration-none" aria-expanded="false"
-     data-toggle="modal" data-target="#modalUploadCSV">
-      <button id="uploadCSV" class="btn btn-primary rounded-pill px-3 mx-right">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-          <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-        </svg>
-         Importar CSV</button>
-      </a>
-
-      <button id="downloadCSV" class="btn btn-success rounded-pill px-3 mx-right">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-        </svg>
-        Baixar modelo CSV
-      </button>
-      -->
-
-
 
         <a href="{% url 'configura_algoritmo' %}">
           <button class="btn btn-success rounded-pill px-3 mx-right">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cpu-fill" viewBox="0 0 16 16">
               <path d="M6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
               <path d="M5.5.5a.5.5 0 0 0-1 0V2A2.5 2.5 0 0 0 2 4.5H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2A2.5 2.5 0 0 0 4.5 14v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14a2.5 2.5 0 0 0 2.5-2.5h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14A2.5 2.5 0 0 0 11.5 2V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5zm1 4.5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3A1.5 1.5 0 0 1 6.5 5z"/>
-            </svg> Configurar Algoritmo
+            </svg> Configurar Modelo
           </button>
         </a>
       
         <hr>
 
-        <h4 class="text-body-emphasis pt-3 pb-1">Selecionar Algoritmo</h4>
+        <h4 class="text-body-emphasis pt-3 pb-1">Selecionar Modelo</h4>
 
-        <select name="label" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin" style="width: 250px;">
+        <form method="POST" id="selecionar-form" action="{% url 'selecionar_modelo' %}">
+
+          {% csrf_token %}
+
+          <select name="label" id="select-label" class="form-select btn btn-primary dropdown-toggle custom-margin" style="width: 250px;">
             
-              <option value="Arroz" class="dropdown-item">Algoritmo 10</option>
-              <option value="Milho" class="dropdown-item">Milho</option>
-              <option value="Grão de bico" class="dropdown-item">Grão de bico</option>
-              <option value="Feijão" class="dropdown-item">Feijão</option>
-              <option value="Guandu" class="dropdown-item">Guandu</option>
-              <option value="Feijão Traça" class="dropdown-item">Feijão Traça</option>
-              <option value="Feijão Mungu" class="dropdown-item">Feijão Mungu</option>
-              <option value="Feijão Preto" class="dropdown-item">Feijão Preto</option>
-              <option value="Lentilha" class="dropdown-item">Lentilha</option>
-              <option value="Romã" class="dropdown-item">Romã</option>
-              <option value="Banana" class="dropdown-item">Banana</option>
-              <option value="Manga" class="dropdown-item">Manga</option>
-              <option value="Uva" class="dropdown-item">Uva</option>
-              <option value="Melancia" class="dropdown-item">Melancia</option>
-              <option value="Melão" class="dropdown-item">Melão</option>
-              <option value="Maçã" class="dropdown-item">Maçã</option>
-              <option value="Laranja" class="dropdown-item">Laranja</option>
-              <option value="Mamão Papaya" class="dropdown-item">Mamão Papaya</option>
-              <option value="Coco" class="dropdown-item">Coco</option>
-              <option value="Algodão" class="dropdown-item">Algodão</option>
-              <option value="Juta" class="dropdown-item">Juta</option>
-              <option value="Café" class="dropdown-item">Café</option>
+              <option value="Padrão" class="dropdown-item">Modelo Padrão : 97,636%</option>
+
+              {% for modelo in modelos %}
+                {% if modelo.id != 1 and modelo.usuario_id == user.id or user.is_superuser%}
+                    <option value="{{ modelo.id }}" class="dropdown-item">Modelo {{ modelo.id }} : {{ modelo.acuracia }}%</option>
+                {% endif %}
+              {% endfor %}
+              
           </select>
 
-          <h4 class="text-body-emphasis pt-3 pb-1">Configurações do modelo</h4>
-        <ul>
-            <li><img src="../static/img/percent.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Acurácia: {{ acuracia }} %</strong></li>
-            <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ qtdTeste}}</strong></li>
-            <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ qtdVizinhos }}</strong></li>
-            <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ algoritmo }}</strong></li>
-            <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ pesos }}</strong></li>
-        </ul>
+          <button id="sendInfo" class="btn btn-success px-3" aria-expanded="false">
+            <i class="bi bi-arrow-up-right pe-2"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16">
+              <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
+              <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+            </svg> Selecionar Modelo
+          </button>
+
+          </form>
+
+          <hr>
+
+          <h4 class="text-body-emphasis pt-3 pb-1">Configurações do Modelo {{ id }}</h4>
+          <ul>
+              <li><h5>Acurácia: {{ acuracia }} %</h5></li>
+              <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: {{ qtdTeste}}</strong></li>
+              <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : {{ qtdVizinhos }}</strong></li>
+              <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: {{ algoritmo }}</strong></li>
+              <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: {{ pesos }}</strong></li>
+          </ul>
    
           <hr>
 
@@ -110,6 +95,10 @@
 
 
     <h4 class="text-body-emphasis pt-3 pb-1">Dados da análise de solo</h4>
+
+    <p>
+      Insira os dados na análsie de solo para obter uma recomendação de colheita
+    </p>
 
     </div>
 
@@ -127,10 +116,155 @@
             </tr>
           </thead>
           <tbody>
-            <form action="{% url 'salvar_algoritmo_analise' %}" method="POST">
+            <form action="{% url 'rodar_algoritmo_analise' %}" method="POST">
 
               {% csrf_token %}
               <tr>
+                <input type="hidden" name="id_modelo" value="{{ id }}" />
+                <input type="hidden" name="qtdTeste" value="{{ qtdTeste }}" />
+                <input type="hidden" name="qtdVizinhos" value="{{ qtdVizinhos }}" />
+                <input type="hidden" name="algoritmo" value="{{ algoritmo }}" />
+                <input type="hidden" name="pesos" value="{{ pesos }}" />
+                <input type="hidden" name="acuracia" value="{{ acuracia }}" />
+
+                <td><input class="numeric-input" type="number" name="N" value=""></td>
+                <td><input class="numeric-input" type="number" name="P" value=""></td>
+                <td><input class="numeric-input" type="number" name="K" value=""></td>
+                <td><input class="numeric-input" type="float" name="Temperatura" value=""></td>
+                <td><input class="numeric-input" type="float" name="Umidade" value=""></td>
+                <td><input class="numeric-input" type="float" name="pH" value=""></td>
+                <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
+
+                <!--
+                <td><button type="button" class="btn btn-danger remove-row-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                </svg></button>
+              </td>
+                -->
+              
+              </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <button type="submit" id="enviarDados" class="btn btn-success rounded-pill px-3" aria-expanded="false">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+        <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+      </svg>
+      Enviar dados
+      </button>
+
+      </form>
+      
+
+        <button id="addRowButton" class="btn btn-primary rounded-pill px-3" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+        </svg>
+      Adicionar Linha</button>
+      
+      
+
+      <button id="ajuda" class="btn btn-primary rounded-pill px-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
+        </svg>
+      Ajuda</button>
+
+      <hr>
+
+      <div class="modal fade" id="modalAjuda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Inserir Análise - Ajuda</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Selecione um modelo antes de Enviar os Dados da Análise.
+
+                <br>
+
+                Os dados da Análise tem intervalo de Valores possíveis, são eles:
+              </p>
+              
+              <table class="table table-striped-columns pt-1">
+                <thead>
+              <tr>
+                <th scope="col">Dado</th>
+                <th scope="col">Mínimo</th>
+                <th scope="col">Máximo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Nitrogênio</th>
+                <td>0</td>
+                <td>Não possui</td>
+              </tr>
+              <tr>
+                <th scope="row">Fósforo</th>
+                <td>0</td>
+                <td>Não possui</td>
+              </tr>
+              <tr>
+                <th scope="row">Potássio</th>
+                <td>0</td>
+                <td>Não possui</td>
+              </tr>
+              <tr>
+                <th scope="row">Temperatura</th>
+                <td>-10</td>
+                <td>50</td>
+              </tr>
+              <tr>
+                <th scope="row">Umidade</th>
+                <td>0</td>
+                <td>100</td>
+              </tr>
+              <tr>
+                <th scope="row">pH</th>
+                <td>1</td>
+                <td>14</td>
+              </tr>
+              <tr>
+                <th scope="row">Chuva</th>
+                <td>0</td>
+                <td>Não possui</td>
+              </tr>
+            </tbody>
+          
+            </table>
+
+            </div>
+            
+          </div>
+        </div>
+      </div>  
+
+</div>
+
+</div>     
+    
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+      var alert = document.querySelector('.alert');
+      var closeButton = document.querySelector('.btn-close');
+  
+      closeButton.addEventListener('click', function () {
+        alert.style.display = 'none';
+      });
+    });
+
+    const addRowButton = document.getElementById("addRowButton");
+    addRowButton.addEventListener("click", () => {
+        const tbody = document.querySelector("tbody");
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
                 <td><input class="numeric-input" type="number" name="N" value=""></td>
                 <td><input class="numeric-input" type="number" name="P" value=""></td>
                 <td><input class="numeric-input" type="number" name="K" value=""></td>
@@ -141,61 +275,19 @@
   
                 <td><button type="button" class="btn btn-danger remove-row-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                </svg></button></td>
-              </tr>
+                </svg></button>
+                </td>
+        `;
+        tbody.appendChild(newRow);
 
-          </tbody>
-        </table>
-      </div>
-
-      <button type="submit" id="sendInfo" class="btn btn-success rounded-pill px-3" aria-expanded="false">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
-        <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
-      </svg>
-      Enviar dados
-      </button>
-
-      </form>
-      
-      <button id="addRowButton" class="btn btn-primary rounded-pill px-3">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-        </svg>
-      Adicionar Linha</button>
-
-      <hr>
-
-  
-    
-<script>
-
-const addRowButton = document.getElementById("addRowButton");
-        addRowButton.addEventListener("click", () => {
-          const tbody = document.querySelector("tbody");
-          const newRow = document.createElement("tr");
-          newRow.innerHTML = `
-                <td><input class="numeric-input" type="number" name="N" value=""></td>
-                <td><input class="numeric-input" type="number" name="P" value=""></td>
-                <td><input class="numeric-input" type="number" name="K" value=""></td>
-                <td><input class="numeric-input" type="float" name="Umidade" value=""></td>
-                <td><input class="numeric-input" type="float" name="Temperatura" value=""></td>
-                <td><input class="numeric-input" type="float" name="pH" value=""></td>
-                <td><input class="numeric-input" type="float" name="Chuva" value=""></td>
-                <td><button type="button" class="btn btn-danger remove-row-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-</svg></button></td>
-          `;
-          tbody.appendChild(newRow);
-      
-          const removeButtons = document.querySelectorAll(".remove-row-button");
-          removeButtons.forEach(button => {
+        const removeButtons = document.querySelectorAll(".remove-row-button");
+        removeButtons.forEach(button => {
             button.addEventListener("click", () => {
-              const row = button.parentNode.parentNode;
-              row.remove();
+                const row = button.parentNode.parentNode;
+                row.remove();
             });
-          });
         });
+    });
 
         document.addEventListener("DOMContentLoaded", function () {
       const addRowButton = document.getElementById("addRowButton");
@@ -217,18 +309,21 @@ const addRowButton = document.getElementById("addRowButton");
       });
    });
 
-const treinarButton = document.getElementById("treinarIA");
-  const sendButton = document.getElementById("sendInfo");
+  const botaoAjuda = document.getElementById('ajuda');
+  const modalAjuda = document.getElementById('modalAjuda');
 
-
-  treinarButton.addEventListener("click", function () {
-  sendButton.removeAttribute("disabled");
-    
+  botaoAjuda.addEventListener('click', function() {
+    modalAjuda.classList.add('show');
+    modalAjuda.style.display = 'block';
+    modalAjuda.setAttribute('aria-modal', 'true');
   });
 
-   
-    
-
+  const btnFechar = modalAjuda.querySelector('.btn-close');
+  btnFechar.addEventListener('click', function() {
+    modalAjuda.classList.remove('show');
+    modalAjuda.style.display = 'none';
+    modalAjuda.setAttribute('aria-modal', 'false');
+  });
 
 </script>
 

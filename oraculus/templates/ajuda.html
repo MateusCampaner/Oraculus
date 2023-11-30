@@ -13,8 +13,350 @@
           Ajuda sobre questoões de usabilidade do sistema
         </p>
   
-        <br>
+        <hr>
         
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+          <h4 class="border-bottom pb-2 mb-0">Oraculus - Ajuda</h4>
+
+          <div class="text-body-secondary pt-3">
+
+              <h5><strong class="d-block">1 - Como funciona a Configuração do modelo?</strong></h5>
+
+              <p>
+                Para realizar as recomendações de colheita no sistema, o usuário deve selecionar um modelo, sendo ele o 
+                Modelo padrão do sistema ou algum modelo previamente treinado.
+                Para se configurar um modelo, o usuário deve clicar no botão de Configurar Modelo, localizado na tela de
+                Inserir Análise.
+                Após isso o usuario poderá configurar as seguintes informações:
+
+                <ul class="pt-3"></h6>
+                  <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino</strong></li>
+                  <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos</strong></li>
+                  <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo</strong></li>
+                  <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos</strong></li>
+                </ul>
+
+                Após configurações selecionadas o usuário poderá clicar em Treinar Modelo, para treinar o algoritmo e obter a Acurácia (Precisão do Modelo)
+              </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+              <h5><strong class="d-block">2 - Quais são os dados do Modelo padrão?</strong></h5>
+
+              <p>
+                O usuario poderá utilizar um modelo padrão já previamente treinado pelo sistema,
+                chamado no sistema de Modelo padrão, seus valores são:
+              </p>
+                
+              <ul class="pt-3"></h6>
+                <li><h5>Acurácia: 97,636 %</h5></li>
+                <li><img src="../static/img/sliders.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Proporção Teste / Treino: 25</strong></li>
+                <li><img src="../static/img/robot.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Número de vizinhos : 5</strong></li>
+                <li><img src="../static/img/code-slash.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Algoritmo: auto</strong></li>
+                <li><img src="../static/img/magnet.svg" alt="logo-oraculus" width="16px" height="16px"><strong> Pesos: uniform</strong></li>
+              </ul>
+    
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">3 - O Modelo padrão é a melhor configuração do algoritmo?</strong></h5>
+
+            <p>
+              Não, o modelo padrão não é a melhor configuração possível do algoritmo, o usuário
+              poderá realizar a sua própria configuração com a finalidade de obter uma melhor acurácia e por
+              consequência uma melhor previsão na sua recomendação de colheita, mas por não ser a melhor configuração
+              possível o Modelo Padrão não é uma escolha ruim, ele é somente uma opção padrão para que não seja obrigatório,
+              a configuração de um modelo por parte do usuário.
+            </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">4 - O que a Proporção Teste / Treino afeta no modelo?</strong></h5>
+
+            <p>
+              Os valores de Proporção Teste / Treino, são referentes a porcentagem de dados que
+              serão utilizados para treino ou teste, quanto maior o valor, mais dados serão utilizados
+              para teste e quanto menor, menos dados serão utilizados para teste, o valor pode ser configurado de 1 até 99.
+            </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">5 - O que o Número de Vizinhos afeta no modelo?</strong></h5>
+
+            <p>
+              O valor de Nuḿero de Vizinhos, define o número de vizinhos do algoritmo KNN que
+              serão computados, quanto maior a quantidade de vizinhos mais dados próximos dos
+              dados inseridos pelo usuário serão levados em conta na análise.
+            </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">6 - O que o Algoritmo afeta no modelo?</strong></h5>
+
+            <p>
+              O Algoritmo a ser escolhido dentre as opções auto, ball_tree, kd_tree e brute, são
+              referentes ao algoritmo que será utilizado para computar os vizinhos próximos.
+
+              <ul>
+                <li>auto: Tentará decidir o algoritmo mais apropriado com base nos valores passados para o método de
+                  ajuste.
+                </li>
+                <li>
+                  ball_tree : Utiliza o BallTree do Scikit learn para problemas generalizados de N pontos.
+                </li>
+                <li>
+                  kd_tree : Utiliza o KDTree para problemas generalizados rápidos de N pontos.
+                </li>
+                <li>
+                  brute : Utiliza a técnica de força bruta para achar os melhores pontos.
+                </li>
+              </ul>
+            </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">7 - O que os Pesos afetam no modelo?</strong></h5>
+
+            <p>
+              Os dados de Pesos, são referentes aos pesos dos cálculos utilizados na distância entre os vizinhos.
+
+              <ul>
+                <li>
+                  uniform : Pesos uniformes, onde todos os pontos dos vizinhos tem um peso igual.
+                </li>
+                <li>
+                  distance : Os pontos dos pesos tem o inverso de sua distância, onde os vizinhos mais próximos do ponto 
+                  terão mais influência nos vizinhos mais distantes.
+                </li>
+              </ul>
+            </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">8 - Posso colocar qualquer valor quando estou inserindo minha análise?</strong></h5>
+
+            <p>
+              Não, os dados inseridos ná análise tem um interválo de valores mínimos e máximos possíveis, para saber quais são consulte a tabela abaixo:
+            </p>
+
+            <table class="table table-striped-columns pt-1">
+              <thead>
+            <tr>
+              <th scope="col">Dado</th>
+              <th scope="col">Mínimo</th>
+              <th scope="col">Máximo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Nitrogênio</th>
+              <td>0</td>
+              <td>Não possui</td>
+            </tr>
+            <tr>
+              <th scope="row">Fósforo</th>
+              <td>0</td>
+              <td>Não possui</td>
+            </tr>
+            <tr>
+              <th scope="row">Potássio</th>
+              <td>0</td>
+              <td>Não possui</td>
+            </tr>
+            <tr>
+              <th scope="row">Temperatura</th>
+              <td>-10</td>
+              <td>50</td>
+            </tr>
+            <tr>
+              <th scope="row">Umidade</th>
+              <td>0</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <th scope="row">pH</th>
+              <td>1</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <th scope="row">Chuva</th>
+              <td>0</td>
+              <td>Não possui</td>
+            </tr>
+          </tbody>
+        
+          </table>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">9 - Como funciona a recomendação de colheitas quando faço a inserção da minha análise de solo?</strong></h5>
+
+            <p>
+              A recomendação da colheita se da a partir do modelo selecionado, juntamente
+              com os dados de Nitrogênio, Fósforo, Potássio, Temperatura, umidade, pH e Chuva,
+              inseridos pelo usuário, aṕos isso o Oraculus utiliza os dados da análise de solo e
+              do modelo para determinar a melhor colheita a ser plantada.
+            </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">10 - Quais colheitas podem ser recomendadas pelo Oraculus?</strong></h5>
+
+            <p>
+              
+              O Oraculus pode realizar a recomendação de 20 colheitas diferentes sendo elas:
+              <ul>
+                <li>Arroz</li>
+                <li>Milho</li>
+                <li>Grão de bico</li>
+                <li>Feijão</li>
+                <li>Guandu</li>
+                <li>Feijão Traça</li>
+                <li>Feijão Mungu</li>
+                <li>Feijão Preto</li>
+                <li>Lentilha</li>
+                <li>Romã</li>
+                <li>Banana</li>
+                <li>Manga</li>
+                <li>Uva</li>
+                <li>Melancia</li>
+                <li>Melão</li>
+                <li>Maçã</li>
+                <li>Laranja</li>
+                <li>Mamão Papaya</li>
+                <li>Coco</li>
+                <li>Algodão</li>
+                <li>Juta</li>
+                <li>Café</li>
+              </ul>
+            </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">11 - Como funciona a tela de Recomendar Colheeita?</strong></h5>
+
+            <p>
+              Na tela de recomendar colheita o usuário poderá escolher uma colheita, e
+              verificar dados estatísticos sobre os valores da colheita selecionada, podendo
+              ajudar na tomada de alguma decisão caso o usuário já possua uma colheita.
+              Nesta tela também possui a opção de se tirar um relatório PDF para uso posterior,
+              caso necessário.
+            </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">12 - Posso recuperar uma Análise ou Modelo deletado?</strong></h5>
+
+            <p>
+              Não, após deletar uma Análise ou Modelo o mesmo não poderá mais ser recuperado, pois foi
+              deletado do banco de dados.
+            </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">13 - Como funciona o Dashboard do Modelo?</strong></h5>
+
+            <p>
+              O Dashboard do Modelo, traz as informações do modelo além de trazer a Matriz de Confusão do modelo treinado.
+              Com isso o usuário poderá ter informações visuais sobre o modelo.
+            </p>
+        
+          </div>
+
+          <hr>
+
+          <div class="text-body-secondary pt-3">
+
+            <h5><strong class="d-block">14 - Como posso obter mais informações sobre o sistema?</strong></h5>
+
+            <p>
+              Para obter mais informações sobre o sistema, você poderá acessar a tela de Sobre.
+              Caso deseja saber mais informações de utilização do sistema, ou dúvida sobre algum termo,
+              acesse as documentações do sistema abaixo:
+            </p>
+            
+            <ul>
+              <li>
+                <a href="https://drive.google.com/file/d/1pG7u2B-ZB_-7dny_ZoqERSmwmvBrMqcn/view?usp=drive_link">Acessar Documento de Glossário</a>
+              </li>
+
+              <li>
+                <a href="https://drive.google.com/file/d/1x8u0IklYCLcDzIiT9qcgMfleTaiG5Olc/view?usp=drive_link">Acessar Especificação de Acessar Dashboard</a>
+              </li>
+
+              <li>
+                <a href="https://drive.google.com/file/d/14IGLnKYNXmZJx2Mr7SxloNEe51_NRJ80/view?usp=drive_link">Acessar Especificação de Configurar Algoritmo de Classificação</a>
+              </li>
+              
+              <li>
+                <a href="https://drive.google.com/file/d/12aCFg4SRgFw9saumAHlnEcB1Fgc2IzU4/view?usp=drive_link">Acessar Especificação de Gerar Relatório</a>
+              </li>
+
+              <li>
+                <a href="https://drive.google.com/file/d/1mBD7UYhFW3vIQrgzQ4j4gKMUHlL7M9uz/view?usp=drive_link">Acessar Especificação de Gerenciar Resultados</a>
+              </li>
+
+              <li>
+                <a href="https://drive.google.com/file/d/1ySK9zHYBybeNiARjQyEIm625VZvySTYO/view?usp=drive_link">Acessar Especificação de Inserir Dados Análise</a>
+              </li>
+
+              <li>
+                <a href="https://drive.google.com/file/d/1aVTcMawkSeenLSnm9AmF7-cRs0pGvr9h/view?usp=drive_link">Acessar Especificação de Recomendar Colheita</a>
+              </li>
+            </ul>
+        
+          </div>
+
+          <hr>
+          
+        </div>
 
       </div>
     </div>
